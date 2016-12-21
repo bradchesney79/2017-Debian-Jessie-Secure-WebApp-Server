@@ -35,7 +35,7 @@ IPV6=<your linode IPV6 address>
 
 TARGETEMAIL=<your email with the junk email service>
 
-What is my linode IP?
+[What is my linode IP?](https://www.linode.com/docs/getting-started#finding-the-ip-address)
 
 #6 then cut/paste this in the command line to run these two scripts:
 
@@ -71,10 +71,5 @@ reminder that my instructions sucked - https://www.reddit.com/user/iAMthePRONY
 
 For me to test the whole thing as-is:
 
-wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh && cd /root/bin && . /root/bin/build-script.sh && . /root/bin/load-script.sh
+curl https://raw.githubusercontent.com/bradchesney79/2017-Debian-Jessie-Secure-WebApp-Server/master/init.sh | sh && cd /root/bin && . /root/bin/build-script.sh && . /root/bin/load-script.sh
 
-Takes ... on a Linode 1024:
-
-real 11m24.996s
-
-real 15m28s
