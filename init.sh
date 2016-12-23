@@ -2,23 +2,37 @@
 
 ####### INIT SCRIPT ####
 
-date +%s >> /root/basestarttime.txt
+mkdir -p /root/report
+
+date +%s >> /root/report/build-report.txt
+
+printf "\n\n##### Beginning init-script.sh\n\n" >> /root/report/build-report.sh
 
 mkdir -p /root/bin
 
 pushd /root/bin
 
+printf "\n\n## Downloading the git repo\n\n" >> /root/report/build-report.sh
+
 wget https://github.com/bradchesney79/2017-Debian-Jessie-Secure-WebApp-Server/archive/master.zip
+
+printf "\n\n## Unzipping the compressed git repo\n\n" >> /root/report/build-report.sh
 
 apt-get -y install unzip
 
 unzip /root/bin/master.zip
 
+printf "\n\n## Moving the files\n\n" >> /root/report/build-report.sh
+
 cp -R /root/bin/2017-Debian-Jessie-Secure-WebApp-Server-master/* /root/bin/
+
+printf "\n\n## Setting consistent file permissions\n\n" >> /root/report/build-report.sh
 
 chmod -R 770 /root/bin/*
 
 find /root/bin/* -type d -exec chmod -R 771 {} \;
+
+printf "\n\n## Removing spent resources\n\n" >> /root/report/build-report.sh
 
 rm -rf /root/init.sh /root/bin/2017-Debian-Jessie-Secure-WebApp-Server /root/bin/master.zip
 
