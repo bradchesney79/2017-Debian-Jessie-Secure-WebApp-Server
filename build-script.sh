@@ -8,7 +8,7 @@ printf "\n#                                                #"
 printf "\n#                                                #"
 printf "\n##################################################\n\n"
 
-printf "##### Entering build-script.sh\n\n" >> >> /root/report/build-report.sh
+printf "##### Entering build-script.sh\n\n" >> /root/report/build-report.sh
 
 pushd /root/bin
 
@@ -26,68 +26,68 @@ printf "\n########## CONFIGURE THE HOSTNAME & HOSTS OVERRIDES ###\n"
 
 printf "\n########## SET THE TIMEZONE & TIME ###\n\n"
 
-. /root/bin/scripts/0020-configure-time.sh
+. /root/bin/scripts/00200-configure-time.sh
 
 printf "\n########## APT SOURCES, FIRST UPDATE, & COMMON PACKAGES INSTALL ###\n\n"
 
-. /root/bin/scripts/0030-update-system.sh
+. /root/bin/scripts/00300-update-system.sh
 
 printf "\n########## ALLOW SUPPLEMENTAL SSH ALGORITHMS ###\n"
 
-. /root/bin/scripts/0040-configure-sshd.sh
+. /root/bin/scripts/00400-configure-sshd.sh
 
 printf "\n########## UPDATE THE IPTABLES RULES ###\n"
 
-. /root/bin/scripts/0050-iptables.sh
+. /root/bin/scripts/00500-iptables.sh
 
 printf "\n########## CONFIGURE FAIL2BAN ###\n"
 
-. /root/bin/scripts/0060-fail2ban.sh
+. /root/bin/scripts/00600-fail2ban.sh
 
 printf "\n########## INSTALL NGINX ###\n"
 
-. /root/bin/scripts/0070-install-nginx
+. /root/bin/scripts/00700-install-nginx
 
 printf "\n########## INSTALL MYSQL ###\n"
 
-. /root/bin/scripts/0080-install-mysql.sh
+. /root/bin/scripts/00800-install-mysql.sh
 
 printf "\n########## INSTALL PHP-FPM ###\n"
 
-. /root/bin/scripts/0090-install-php-fpm.sh
+. /root/bin/scripts/00900-install-php-fpm.sh
 
 printf "\n########## OPTIONALLY INSTALL DEVELOPMENT INSTANCE PACKAGES ###\n"
 
-. /root/bin/scripts/0100-install-dev-resources.sh
+. /root/bin/scripts/01000-install-dev-resources.sh
 
 printf "\n########## CONFIGURE NGINX ###\n\n"
 
-. /root/bin/scripts/0110-configure-nginx.sh
+. /root/bin/scripts/01100-configure-nginx.sh
 
 printf "\n########## CONFIGURE PHP-FPM ###\n"
 
-. /root/bin/scripts/0120-configure-php-fpm.sh
+. /root/bin/scripts/01200-configure-php-fpm.sh
 
 printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n"
 
 
 if [ "$DEV" = "true" ]
   then
-    . /root/bin/scripts/0130-install-dev-tools.sh
+    . /root/bin/scripts/01300-install-dev-tools.sh
     #printf "<?php phpinfo(); ?>" > /var/www/http/index.php
   fi
 
 printf "\n########## INSTALL MAIL ###\n"
 
-. /root/bin/scripts/0140-install-system-mail.sh
+. /root/bin/scripts/01400-install-system-mail.sh
 
 printf "\n########## CONFIGURE MAIL ###\n"
 
-. /root/bin/scripts/0150-install-system-mail.sh
+. /root/bin/scripts/01500-install-system-mail.sh
 
 printf "\n########## CONFIGURE SYSSTAT ###\n"
 
-. /root/bin/scripts/0160-configure-sysstat.sh
+. /root/bin/scripts/01600-configure-sysstat.sh
 #sed -i "s/ENABLED=\"false\"/ENABLED=\"true\"/" /etc/default/sysstat
 
 printf "\n########## CLEAN UP ###\n"
