@@ -13,15 +13,15 @@ printf "\n## PREPARE DIRECTORY STRUCTURE FOR DEFAULT SITE\n"
 
 rm -rf /var/www/html
 
-mkdir "$WEBROOT/http"
-mkdir "$WEBROOT/https"
-mkdir "$WEBROOT/fonts"
-mkdir "$WEBROOT/certs"
-mkdir "$WEBROOT/certs/$YEAR"
-mkdir "$WEBROOT/certs/$YEAR/$SSLPROVIDER"
-mkdir "$LOGDIR"
-mkdir "$WEBROOT/sockets"
-mkdir "$WEBROOT/tmp"
+mkdir -p "$WEBROOT/http"
+mkdir -p "$WEBROOT/https"
+mkdir -p "$WEBROOT/fonts"
+mkdir -p "$WEBROOT/certs"
+mkdir -p "$WEBROOT/certs/$YEAR"
+mkdir -p "$WEBROOT/certs/$YEAR/$SSLPROVIDER"
+mkdir -p "$LOGDIR"
+mkdir -p "$WEBROOT/sockets"
+mkdir -p "$WEBROOT/tmp"
 
 chown -R $USER:$USER $WEBROOT
 chmod -R 774 $WEBROOT
