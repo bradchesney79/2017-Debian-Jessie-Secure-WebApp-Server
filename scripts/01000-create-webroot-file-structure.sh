@@ -1,4 +1,4 @@
-printf "\n\n##### Beginning 01000-create-webroot-file-structure.sh\n\n" >> /root/report/build-report.sh
+printf "\n\n##### Beginning 01000-create-webroot-file-structure.sh\n\n" >> /root/report/build-report.txt
 
 printf "\n## CREATE WEBROOT FILE STRUCTURE\n\n"
 

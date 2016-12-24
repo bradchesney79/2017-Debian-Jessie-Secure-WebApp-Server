@@ -8,7 +8,7 @@ printf "\n#                                                #"
 printf "\n#                                                #"
 printf "\n##################################################\n\n"
 
-printf "##### Entering build-script.sh\n\n" >> /root/report/build-report.sh
+printf "##### Entering build-script.sh\n\n" >> /root/report/build-report.txt
 
 pushd /root/bin
 
@@ -16,9 +16,9 @@ printf "\n########## SCRIPT EXECUTION PARTICULARS ##########\n\n"
 
 . /root/bin/setup.conf
 
-printf "******/root/bin/setup.conf******" >> /root/report/build-report.sh
-printf "%s" "$(</root/bin/setup.conf)" >> /root/report/build-report.sh
-printf "******/root/bin/setup.conf******" >> /root/report/buid-report.sh
+printf "******/root/bin/setup.conf******" >> /root/report/build-report.txt
+printf "%s" "$(</root/bin/setup.conf)" >> /root/report/build-report.txt
+printf "******/root/bin/setup.conf******" >> /root/report/build-report.txt
 
 printf "\n########## CONFIGURE THE HOSTNAME & HOSTS OVERRIDES ###\n"
 
@@ -121,7 +121,7 @@ printf "\nThinking inside my head that a few minutes of uptime is trivial at thi
 
 printf "\nSet up Reverse DNS while you wait if applicable-- gets rid of those pesky problem with the server being referred to by the linode assigned machine name in most places."
 
-date +%s >> >> /root/report/build-report.sh
+date +%s >> /root/report/build-report.txt
 
 popd
 

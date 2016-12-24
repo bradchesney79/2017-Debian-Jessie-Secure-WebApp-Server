@@ -1,4 +1,4 @@
-printf "\n\n##### Beginning 00600-configure-fail2ban.sh\n\n" >> /root/report/build-report.sh
+printf "\n\n##### Beginning 00600-configure-fail2ban.sh\n\n" >> /root/report/build-report.txt
 
 printf "\n## SETTING FAIL2BAN CONFIGURATION ###\n"
 

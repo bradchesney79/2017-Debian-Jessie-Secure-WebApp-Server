@@ -1,4 +1,4 @@
-printf "\n\n##### Beginning 00500-iptables.sh\n\n" >> /root/report/build-report.sh
+printf "\n\n##### Beginning 00500-iptables.sh\n\n" >> /root/report/build-report.txt
 
 printf "\n## CREATING THE IPTABLES DIRECTORY IN /ETC ###\n"
 

@@ -1,4 +1,4 @@
-printf "\n\n##### Beginning 00800-install-and-configure-mysql.sh\n\n" >> /root/report/build-report.sh
+printf "\n\n##### Beginning 00800-install-and-configure-mysql.sh\n\n" >> /root/report/build-report.txt
 
 printf "\n## INSTALLING AND CONFIGURING MYSQL ###\n"
 

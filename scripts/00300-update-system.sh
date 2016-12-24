@@ -1,4 +1,4 @@
-printf "\n\n##### Beginning 00300-update-system.sh\n\n" >> /root/report/build-report.sh
+printf "\n\n##### Beginning 00300-update-system.sh\n\n" >> /root/report/build-report.txt
 
 printf "\n## UPDATE THE APT SOURCES \n\n"
 

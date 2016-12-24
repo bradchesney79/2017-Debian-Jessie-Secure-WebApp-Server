@@ -34,6 +34,6 @@ find /root/bin/* -type d -exec chmod -R 771 {} \;
 
 printf "\n\n## Removing spent resources\n\n" >> /root/report/build-report.sh
 
-rm -rf /root/init.sh /root/bin/2017-Debian-Jessie-Secure-WebApp-Server /root/bin/master.zip
+rm -rf /root/init.sh /root/bin/2017-Debian-Jessie-Secure-WebApp-Server-master /root/bin/master.zip
 
 popd

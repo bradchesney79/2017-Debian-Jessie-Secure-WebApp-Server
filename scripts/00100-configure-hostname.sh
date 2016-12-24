@@ -1,12 +1,10 @@
-printf "\n\n##### Beginning 00100-configure-hostname.sh\n\n" >> /root/report/build-report.sh
+printf "\n\n##### Beginning 00100-configure-hostname.sh\n\n" >> /root/report/build-report.txt
 
 printf "\n## SET THE HOSTNAME\n\n"
 
 hostnamectl set-hostname $HOSTNAME
 
-printf "\n########## UPDATE THE HOSTS FILE ###\n"
-
-printf "\nFully populate hosts file\n\n"
+printf "\n## POPULATE THE HOSTS FILE ###\n"
 
 cat <<EOF > /etc/hosts
 127.0.0.1           localhost.localdomain localhost

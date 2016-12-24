@@ -1,4 +1,4 @@
-printf "\n\n##### Beginning 00200-configure-time.sh\n\n" >> /root/report/build-report.sh
+printf "\n\n##### Beginning 00200-configure-time.sh\n\n" >> /root/report/build-report.txt
 
 printf "\n## SET THE TIME & TIME ZONE\n\n"
 

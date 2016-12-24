@@ -1,4 +1,4 @@
-printf "\n\n##### Beginning 00700-install-nginx-and-php7-fpm.sh\n\n" >> /root/report/build-report.sh
+printf "\n\n##### Beginning 00700-install-nginx-and-php7-fpm.sh\n\n" >> /root/report/build-report.txt
 
 printf "\n## INSTALLING THE PILE OF NGINX & PHP PACKAGES###\n"
 

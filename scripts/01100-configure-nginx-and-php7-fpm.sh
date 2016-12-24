@@ -1,4 +1,4 @@
-printf "\n\n##### Beginning 01100-configure-nginx-and-php7-fpm.sh\n\n" >> /root/report/build-report.sh
+printf "\n\n##### Beginning 01100-configure-nginx-and-php7-fpm.sh\n\n" >> /root/report/build-report.txt
 
 printf "\n## CREATE THE LIMITED PRIVILEGE USER FOR ADMINISTERING THE WEBSITE ###\n"
 useradd -d $WEBROOT -p $PASSWORD -c "Default Web Site User" $USER

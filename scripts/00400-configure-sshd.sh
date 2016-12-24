@@ -1,4 +1,4 @@
-printf "\n\n##### Beginning 00400-configure-sshd.sh\n\n" >> /root/report/build-report.sh
+printf "\n\n##### Beginning 00400-configure-sshd.sh\n\n" >> /root/report/build-report.txt
 
 printf "\n## CONFIGURE SSH TO USE SUPPLEMENTAL ALGORITHMS ###\n"
 
