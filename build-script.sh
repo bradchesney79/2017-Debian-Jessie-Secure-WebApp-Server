@@ -38,35 +38,31 @@ printf "\n########## ALLOW SUPPLEMENTAL SSH ALGORITHMS ###\n"
 
 printf "\n########## UPDATE THE IPTABLES RULES ###\n"
 
-. /root/bin/scripts/00500-iptables.sh
+. /root/bin/scripts/00500-configure-iptables.sh
 
 printf "\n########## CONFIGURE FAIL2BAN ###\n"
 
-. /root/bin/scripts/00600-fail2ban.sh
+. /root/bin/scripts/00600-configure-fail2ban.sh
 
 printf "\n########## INSTALL NGINX ###\n"
 
-. /root/bin/scripts/00700-install-nginx
+. /root/bin/scripts/00700-install-nginx-and-php7-fpm.sh
 
 printf "\n########## INSTALL MYSQL ###\n"
 
-. /root/bin/scripts/00800-install-mysql.sh
+. /root/bin/scripts/00800-install-and-configure-mysql.sh
 
-printf "\n########## INSTALL PHP-FPM ###\n"
+printf "\n########## CONFIGURE DEVELOPMENT INSTANCE PACKAGES ###\n"
 
-. /root/bin/scripts/00900-install-php-fpm.sh
+. /root/bin/scripts/00900-configure-dev-resources.sh
 
-printf "\n########## OPTIONALLY INSTALL DEVELOPMENT INSTANCE PACKAGES ###\n"
+printf "\n########## CREATE WEBROOT FILE STRUCTURE ###\n"
 
-. /root/bin/scripts/01000-install-dev-resources.sh
+. /root/bin/scripts/01000-create-webroot-file-structure.sh
 
-printf "\n########## CONFIGURE NGINX ###\n\n"
+printf "\n########## CONFIGURE NGINX AND PHP-FPM ###\n\n"
 
-. /root/bin/scripts/01100-configure-nginx.sh
-
-printf "\n########## CONFIGURE PHP-FPM ###\n"
-
-. /root/bin/scripts/01200-configure-php-fpm.sh
+. /root/bin/scripts/01100-configure-nginx-and-php7-fpm.sh
 
 printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n"
 
@@ -98,7 +94,7 @@ apt-get -y autoremove
 
 printf "\n########## START THE WEBSERVER SERVICES ###\n"
 
-systemctl start php5-fpm
+systemctl start php7-fpm
 systemctl start nginx
 
 printf "\n##################################################"
