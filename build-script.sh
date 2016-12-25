@@ -64,22 +64,13 @@ printf "\n########## CONFIGURE NGINX AND PHP-FPM ###\n\n"
 
 . /root/bin/scripts/01100-configure-nginx-and-php7-fpm.sh
 
-printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n"
+printf "\n########## INSTALL kWEBDEVELOPER RESOURCES ###\n"
 
+  . /root/bin/scripts/01300-install-dev-tools.sh
 
-if [ "$DEV" = "true" ]
-  then
-    . /root/bin/scripts/01300-install-dev-tools.sh
-    #printf "<?php phpinfo(); ?>" > /var/www/http/index.php
-  fi
+printf "\n########## INSTALL AND CONFIGURE MAIL ###\n"
 
-printf "\n########## INSTALL MAIL ###\n"
-
-. /root/bin/scripts/01400-install-system-mail.sh
-
-printf "\n########## CONFIGURE MAIL ###\n"
-
-. /root/bin/scripts/01500-install-system-mail.sh
+. /root/bin/scripts/01400-install-and-configure-system-mail.sh
 
 printf "\n########## CONFIGURE SYSSTAT ###\n"
 
