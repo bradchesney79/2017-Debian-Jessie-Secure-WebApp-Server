@@ -2,7 +2,7 @@ printf "\n\n##### Beginning 00600-configure-fail2ban.sh\n\n" >> /root/report/bui
 
 printf "\n## SETTING FAIL2BAN CONFIGURATION ###\n"
 
-cat <<EOF /etc/fail2ban/jail.local
+cat <<EOF > /etc/fail2ban/jail.local
 [ssh-iptables]
 enabled  = true
 filter   = sshd
