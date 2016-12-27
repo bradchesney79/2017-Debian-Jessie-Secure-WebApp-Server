@@ -28,4 +28,4 @@ mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
 
 printf "\n## PREVENT A DEBCONF ERROR RELATED TO NEW INSTALLS OF NGINX###\n"
 
-apt-get remove debconf* --purge
+apt-get -y remove debconf* --purge
