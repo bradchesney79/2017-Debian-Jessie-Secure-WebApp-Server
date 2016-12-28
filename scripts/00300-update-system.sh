@@ -16,8 +16,12 @@ deb http://packages.dotdeb.org jessie all
 deb http://repo.mysql.com/apt/debian/ jessie mysql-5.7
 EOF
 
+printf "\n## INSTALL THE DOTDEB GPG KEY ###\n"
+
 # gpg key for Dotdeb
 wget -q -O - http://www.dotdeb.org/dotdeb.gpg | apt-key add -
+
+printf "\n## INSTALL THE ORACLE MYSQL GPG KEY ###\n"
 
 # gpg key for Oracle Community MySQL Server 5.7
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 5072E1F5
