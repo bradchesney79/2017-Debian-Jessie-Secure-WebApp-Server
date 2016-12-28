@@ -36,7 +36,7 @@ apt-get -y upgrade
 
 printf "\n## INSTALL THE FIRST BATCHES OF PACKAGES ###\n"
 
-apt-get -y install sudo tcl perl python3 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf debconf-utils curl imagemagick expect
+apt-get -y install sudo tcl perl python3 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git curl imagemagick expect
 
 printf "\n## CLEAN UP ###\n"
 

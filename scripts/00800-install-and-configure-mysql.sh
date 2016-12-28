@@ -4,14 +4,12 @@ printf "\n## CONFIGRING MYSQL DEBCONF ###\n"
 
 export DEBIAN_FRONTEND="noninteractive"
 
+apt-get install -y debconf debconf-utils
+
 debconf-set-selections <<<  "mysql-server mysql-server/root_password select $DBROOTPASSWORD" 
 debconf-set-selections <<<  "mysql-server mysql-server/root_password_again select $DBROOTPASSWORD"
 
 printf "\n## INSTALLING MYSQL ###\n"
-
-apt-get clean
-apt-get update
-apt-get install --reinstall coreutils sysvinit-utils
 
 apt-get -y install mysql-server
 
@@ -43,3 +41,8 @@ mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
 printf "\n## PREVENT A DEBCONF ERROR RELATED TO NEW INSTALLS OF NGINX###\n"
 
 apt-get -y remove debconf* --purge
+
+apt-get clean
+apt-get update
+apt-get -y install --reinstall coreutils sysvinit-utils
+apt-get -y autoremove
