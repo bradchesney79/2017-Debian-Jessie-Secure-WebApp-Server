@@ -37,12 +37,3 @@ mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT SELECT, SHOW VIEW, RELOAD, 
 printf "\n## MAKE PRIVILEGES CHANGES LIVE ###\n"
 
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
-
-printf "\n## PREVENT A DEBCONF ERROR RELATED TO NEW INSTALLS OF NGINX###\n"
-
-apt-get -y remove debconf debconf-utils --purge
-
-apt-get clean
-apt-get update
-apt-get -y install --reinstall coreutils sysvinit-utils
-apt-get -y autoremove
