@@ -15,6 +15,7 @@ systemctl stop nginx
 
 printf "\n## INSTALLING PHP7 ###\n"
 
+#TODO Set this back to more full install
 # Full list of intended packages
 #apt-get install -y php7.0-fpm php7.0-common php7.0-curl php7.0-gd php7.0-imagick php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-xml php7.0-intl php7.0-xmlrpc php7.0-zip php-pear
 
@@ -25,7 +26,7 @@ systemctl stop php7.0-fpm
 if [ "$SSLPROVIDER"='lets-encrypt' ]
   then
   printf "\n## INSTALLING CERTBOT ###\n"
-  apt-get install -y certbot python-certbot
+  apt-get install -yt jessie-backports certbot python-certbot python-acme python-cryptography
 fi
 
 printf "\n## INSTALL XDEBUG IF DEV ENVIRONMENT ###\n"
