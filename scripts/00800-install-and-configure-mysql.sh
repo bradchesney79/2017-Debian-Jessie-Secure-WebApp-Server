@@ -9,6 +9,10 @@ debconf-set-selections <<<  "mysql-server mysql-server/root_password_again selec
 
 printf "\n## INSTALLING MYSQL ###\n"
 
+apt-get clean
+apt-get update
+apt-get install --reinstall coreutils sysvinit-utils
+
 apt-get -y install mysql-server
 
 printf "\n## SIMULATE MYSQL SAFE INSTALL ###\n"
