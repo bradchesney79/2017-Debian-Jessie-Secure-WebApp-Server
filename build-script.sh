@@ -16,9 +16,9 @@ printf "\n########## SCRIPT EXECUTION PARTICULARS ##########\n\n"
 
 . /root/bin/setup.conf
 
-printf "******/root/bin/setup.conf******" >> /root/report/build-report.txt
+printf "\n******/root/bin/setup.conf******\n" >> /root/report/build-report.txt
 printf "%s" "$(</root/bin/setup.conf)" >> /root/report/build-report.txt
-printf "******/root/bin/setup.conf******" >> /root/report/build-report.txt
+printf "\n******/root/bin/setup.conf******\n" >> /root/report/build-report.txt
 
 printf "\n########## CONFIGURE THE HOSTNAME & HOSTS OVERRIDES ###\n"
 
