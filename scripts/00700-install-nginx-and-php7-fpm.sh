@@ -3,7 +3,7 @@ printf "\n\n##### Beginning 00700-install-nginx-and-php7-fpm.sh\n\n" >> /root/re
 printf "\n## CREATE THE LIMITED PRIVILEGE USER FOR ADMINISTERING THE WEBSITE ###\n"
 useradd -d $WEBROOT -p $PASSWORD -c "Default Web Site User" $USER
 
-printf "\n## LOCK THE NOT USER ACCOUNT ###"
+printf "\n## LOCK THE NOT USER ACCOUNT ###\n"
 passwd -l $USER
 
 
