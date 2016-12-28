@@ -53,7 +53,7 @@ printf "\nhost -t txt default._domainkey.$DOMAIN default._domainkey.$DOMAIN desc
 
 printf "\n## SET UPDATE-EXIM4.CONF MAIL CONFIGS\n"
 
-cat <<EOF /etc/exim4/update-exim4.conf.conf
+cat <<EOF > /etc/exim4/update-exim4.conf.conf
 # /etc/exim4/update-exim4.conf.conf
 #
 # Edit this file and /etc/mailname by hand and execute update-exim4.conf
@@ -90,7 +90,7 @@ EOF
 
 #EOF is in quotes because I do not want any bash expansion of variables
 
-cat <<"EOF" /etc/exim4/conf.d/main/00_localmacros
+cat <<"EOF" > /etc/exim4/conf.d/main/00_localmacros
 DKIM_CANON = strict
 DKIM_SELECTOR = default
 DKIM_PRIVATE_KEY = /var/www/certs/dkim/dkim.default.key
