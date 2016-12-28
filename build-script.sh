@@ -64,7 +64,7 @@ printf "\n########## CONFIGURE NGINX AND PHP-FPM ###\n\n"
 
 . /root/bin/scripts/01100-configure-nginx-and-php7-fpm.sh
 
-printf "\n########## INSTALL kWEBDEVELOPER RESOURCES ###\n"
+printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n"
 
   . /root/bin/scripts/01300-install-dev-tools.sh
 
@@ -72,9 +72,9 @@ printf "\n########## INSTALL AND CONFIGURE MAIL ###\n"
 
 . /root/bin/scripts/01400-install-and-configure-system-mail.sh
 
-printf "\n########## CONFIGURE SYSSTAT ###\n"
+printf "\n########## INSTALL AND CONFIGURE SYSSTAT ###\n"
 
-. /root/bin/scripts/01600-configure-sysstat.sh
+. /root/bin/scripts/01600-install-and-configure-sysstat.sh
 #sed -i "s/ENABLED=\"false\"/ENABLED=\"true\"/" /etc/default/sysstat
 
 printf "\n########## CLEAN UP ###\n"
