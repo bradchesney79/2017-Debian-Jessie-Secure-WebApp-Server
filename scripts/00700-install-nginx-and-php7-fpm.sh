@@ -25,7 +25,7 @@ systemctl stop php7.0-fpm
 if [ "$SSLPROVIDER"='lets-encrypt' ]
   then
   printf "\n## INSTALLING CERTBOT ###\n"
-  apt-get install -y certbot
+  apt-get install -y certbot python-certbot
 fi
 
 printf "\n## INSTALL XDEBUG IF DEV ENVIRONMENT ###\n"
