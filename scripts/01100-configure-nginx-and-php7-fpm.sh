@@ -2,16 +2,6 @@ printf "\n\n##### Beginning 01100-configure-nginx-and-php7-fpm.sh\n\n" >> /root/
 
 printf "\n## CONFIGURING NGINX ###"
 
-#TODO Change the location of the SSL Cert
-
-#wget -O $WEBROOT/certs/$YEAR/$SSLPROVIDER/sub.class2.server.sha2.ca.pem https://www.startssl.com/certs/class2/sha2/pem/sub.class2.server.sha2.ca.pem
-#wget -O $WEBROOT/certs/$YEAR/$SSLPROVIDER/ca.pem https://www.startssl.com/certs/ca.pem
-
-printf "openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj \"/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN\"\n\n"
-
-openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN"
-
-
 echo "" > /etc/nginx/sites-available/default
 
 cat <<EOF > /etc/nginx/sites-available/default
@@ -51,9 +41,65 @@ EOF
 # $ is both a native dynamic character in nginx.conf & bash
 sed -i 's/request_uri/$request_uri/g' /etc/nginx/sites-available/default
 
+if [ "$SSLPROVIDER"='lets-encrypt' ]
+  then
+  printf "\n## INVOKE CERTBOT FOR LETS ENCRYPT MULTIDOMAIN CERT ###\n"
+  # multi-domain is not "wild card"
 
-printf "\n## PHP7-FPM ###\n"
+  certbot certonly --webroot -w /var/www/default/https \
+  -d $DOMAIN \
+  -d www.$DOMAIN \
+  -d alpha.$DOMAIN \
+  -d app.$DOMAIN \
+  -d admin.$DOMAIN \
+  -d api.$DOMAIN \
+  -d beta.$DOMAIN \
+  -d blog.$DOMAIN \
+  -d dev.$DOMAIN \
+  -d feed.$DOMAIN \
+  -d files.$DOMAIN \
+  -d forum.$DOMAIN \
+  -d ftp.$DOMAIN \
+  -d help.$DOMAIN \
+  -d image.$DOMAIN \
+  -d images.$DOMAIN \
+  -d imap.$DOMAIN \
+  -d img.$DOMAIN \
+  -d info.$DOMAIN \
+  -d lists.$DOMAIN \
+  -d live.$DOMAIN \
+  -d mail.$DOMAIN \
+  -d media.$DOMAIN \
+  -d mobile.$DOMAIN \
+  -d mysql.$DOMAIN \
+  -d news.$DOMAIN \
+  -d photos.$DOMAIN \
+  -d pic.$DOMAIN \
+  -d pop.$DOMAIN \
+  -d search.$DOMAIN \
+  -d secure.$DOMAIN \
+  -d smtp.$DOMAIN \
+  -d status.$DOMAIN \
+  -d store.$DOMAIN \
+  -d support.$DOMAIN \
+  -d videos.$DOMAIN \
+  -d vpn.$DOMAIN \
+  -d webmail.$DOMAIN \
+  -d wiki.$DOMAIN
 
+  #TODO Change the location of the SSL Cert  
+  #cp stock-location desired-location
+fi
+
+
+# For other SSL providers
+
+#printf "openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj \"/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN\"\n\n"
+
+#openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN"
+
+
+printf "\n## DEFAULT HTTP POOL ###\n"
 
 printf "\n## CONFIG PHP-FPM ###\n"
 
@@ -80,6 +126,7 @@ sed -i "s/user = www-data/user = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.c
 sed -i "s/group = www-data/group = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
 
 sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
+
 
 printf "\n## CONFIGURE PHP ###\n"
 

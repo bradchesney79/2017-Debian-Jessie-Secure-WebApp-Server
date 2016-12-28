@@ -7,16 +7,28 @@ printf "\n## LOCK THE NOT USER ACCOUNT ###"
 passwd -l $USER
 
 
-printf "\n## INSTALLING THE PILE OF NGINX & PHP PACKAGES###\n"
+printf "\n## INSTALLING NGINX ###\n"
  
-apt-get install -y nginx nginx-common php7.0-fpm php7.0-common php7.0-curl php7.0-gd php7.0-imagick php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-xml php7.0-intl php7.0-xmlrpc php7.0-zip php-pear
+apt-get install -y nginx nginx-common
 
 systemctl stop nginx
+
+printf "\n## INSTALLING PHP7 ###\n"
+
+apt-get install -y php7.0-fpm php7.0-common php7.0-curl php7.0-gd php7.0-imagick php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-xml php7.0-intl php7.0-xmlrpc php7.0-zip php-pear
+
 systemctl stop php7.0-fpm
+
+if [ "$SSLPROVIDER"='lets-encrypt' ]
+  then
+  printf "\n## INSTALLING CERTBOT ###\n"
+  apt-get install -y certbot
+fi
 
 printf "\n## INSTALL XDEBUG IF DEV ENVIRONMENT ###\n"
 
 if [ "$DEV" = "true" ]
     then
+    printf "\n## INSTALLING XDEBUG ###\n"
     apt-get install -y php7.0-xdebug
 fi
