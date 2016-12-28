@@ -71,7 +71,7 @@ cat <<EOF > /etc/exim4/update-exim4.conf.conf
 # Debconf configuration, but not all of them.
 #
 # This is a Debian specific file
-printf "\n
+
 dc_eximconfig_configtype='internet'
 dc_other_hostnames='localhost'
 dc_local_interfaces='127.0.0.1; ::1'
