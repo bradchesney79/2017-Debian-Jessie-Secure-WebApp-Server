@@ -1,7 +1,10 @@
 # 2017-Debian-Jessie-Secure-WebApp-Server
+
+I am facing a really neat and exciting fundamental change to how I've done autoloading-- I thought I'd be working on this next month. However, my situation has
+
 This is the 2017 version updated using the things I learned from the 2015 version
 
-A setup script for a Debian LAMP Webserver. Building with a security focus & geared towards higher performance than stock.
+A setup script for a Debian LAMP Webserver. Building with a security focus & geared towards higher performance than stock configuration that should run well everywhere-- considering that if we dumped all this shenanigans on a stock host it would possibly get bogged down.
 
 Initially this will be in implemented with bash until I arrive at an end result I am happy with.
 

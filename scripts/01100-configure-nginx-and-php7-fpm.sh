@@ -14,6 +14,15 @@ server {
   listen 443 ssl;
   server_name $DOMAIN;
   
+  # certbot will put a resource in the --webroot option path
+  location /.well-known/acme-challenge/ {
+        alias $WEBROOT/https/.wellknown/acme-challenge;
+        try_files $uri =404;
+    }
+  
+  # fairly standard nginx request pass off to php-fpm
+  # php-fpm generates & returns the content
+  # for nginx to send a response with
   location ~ [^/]\.php(/|$) {
     fastcgi_split_path_info ^(.+?\.php)(/.*)$;
     if (!-f $document_root$fastcgi_script_name) {
@@ -27,6 +36,11 @@ server {
     fastcgi_index index.php;
     include fastcgi_params;
   }
+  
+  # static contents regex match to directory stored in
+  location ~ \.(gif|jpg|png)$ {
+     root $WEBROOT/https/images;
+  }
 
   ssl_protocols TLSv1.1 TLSv1.2;
   ssl_certificate /etc/letsencrypt/live/$DOMAIN/fullchain.pem;
@@ -37,7 +51,7 @@ server {
 }
 EOF
 
-#sidestepping a missing variable issue
+# sidestepping a missing variable issue
 # $ is both a native dynamic character in nginx.conf & bash
 sed -i 's/request_uri/$request_uri/g' /etc/nginx/sites-available/default
 
@@ -46,7 +60,10 @@ if [ "$SSLPROVIDER"='lets-encrypt' ]
   printf "\n## INVOKE CERTBOT FOR LETS ENCRYPT MULTIDOMAIN CERT ###\n"
   # multi-domain is not "wild card"
 
-  certbot certonly --webroot -w /var/www/default/https \
+# This command triggered a "set up a new account" GUI
+
+  
+certbot certonly -w /var/www/https \
   -d $DOMAIN \
   -d www.$DOMAIN \
   -d alpha.$DOMAIN \
@@ -87,6 +104,7 @@ if [ "$SSLPROVIDER"='lets-encrypt' ]
   -d webmail.$DOMAIN \
   -d wiki.$DOMAIN
 
+
   #TODO Change the location of the SSL Cert  
   #cp stock-location desired-location
 fi
@@ -94,9 +112,25 @@ fi
 
 # For other SSL providers
 
+#### My non-multi-domain key & csr commands
+
+##output to screen the command with variables expanded
 #printf "openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj \"/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN\"\n\n"
 
+##run the command
 #openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN"
+
+
+##donor code
+#openssl req -new -sha256 -key domain.key -subj "/" -reqexts SAN -config <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:yoursite.com,DNS:www.yoursite.com")) > domain.csr
+
+#reworked experimental code
+
+#printf "[SAN]\nsubjectAltName=DNS:yoursite.com,DNS:www.yoursite.com" >> /etc/ssl/openssl.cnf
+
+#openssl req -nodes -sha256 -newkey rsa:4096 -keyout domain.key -subj "/" -reqexts SAN -out domain.csr
+
+
 
 
 printf "\n## DEFAULT HTTP POOL ###\n"

@@ -1,0 +1,255 @@
+Failed authorization procedure. webmail.rustbeltrebellion.com (http-01): urn:acme:error:unauthorized :: The client lacks sufficient authorization :: Invalid response from http://webmail.rustbeltrebellion.com/.well-known/acme-challenge/tAUtIu-M2bzhDn7QD7v99wuSXio58w4_GxA8WFM7vXc: "<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Roundcube Webmail :: Welcome to Roundcube Webmail</title>
+<meta name="Robots" con", images.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for images.rustbeltrebellion.com, ftp.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for ftp.rustbeltrebellion.com, files.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for files.rustbeltrebellion.com, www.rustbeltrebellion.com (http-01): urn:acme:error:unauthorized :: The client lacks sufficient authorization :: Invalid response from http://www.rustbeltrebellion.com/.well-known/acme-challenge/n69dwhgFIheEWOYRFtIXBa8nDNDfwRM1A76VvUfBN9Q: "<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p", blog.rustbeltrebellion.com (http-01): urn:acme:error:unauthorized :: The client lacks sufficient authorization :: Invalid response from http://blog.rustbeltrebellion.com/.well-known/acme-challenge/BhAyNahHa_HC_Mt64wpB5bZBP7WgdRRhtrdi1ltT1QA: "<!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=dev", news.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for news.rustbeltrebellion.com, info.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for info.rustbeltrebellion.com, photos.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for photos.rustbeltrebellion.com, app.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for app.rustbeltrebellion.com, media.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for media.rustbeltrebellion.com, smtp.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: Could not connect to smtp.rustbeltrebellion.com, wiki.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for wiki.rustbeltrebellion.com, status.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for status.rustbeltrebellion.com, pic.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for pic.rustbeltrebellion.com, img.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for img.rustbeltrebellion.com, imap.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: Could not connect to imap.rustbeltrebellion.com, mail.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for mail.rustbeltrebellion.com, dev.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for dev.rustbeltrebellion.com, mobile.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for mobile.rustbeltrebellion.com, image.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for image.rustbeltrebellion.com, feed.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for feed.rustbeltrebellion.com, secure.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for secure.rustbeltrebellion.com, admin.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for admin.rustbeltrebellion.com, lists.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for lists.rustbeltrebellion.com, search.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for search.rustbeltrebellion.com, pop.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: Could not connect to pop.rustbeltrebellion.com, vpn.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for vpn.rustbeltrebellion.com, support.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for support.rustbeltrebellion.com, alpha.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for alpha.rustbeltrebellion.com, help.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for help.rustbeltrebellion.com, api.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for api.rustbeltrebellion.com, mysql.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for mysql.rustbeltrebellion.com, store.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for store.rustbeltrebellion.com, forum.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for forum.rustbeltrebellion.com, beta.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for beta.rustbeltrebellion.com, videos.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for videos.rustbeltrebellion.com, rustbeltrebellion.com (http-01): urn:acme:error:unauthorized :: The client lacks sufficient authorization :: Invalid response from http://rustbeltrebellion.com/.well-known/acme-challenge/AQKwNZFgrKkiememCM-CijOzplQ006R9qej5SWs97UA: "<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p", live.rustbeltrebellion.com (http-01): urn:acme:error:connection :: The server could not connect to the client to verify the domain :: DNS problem: NXDOMAIN looking up A for live.rustbeltrebellion.com
+
+IMPORTANT NOTES:
+ - If you lose your account credentials, you can recover through
+   e-mails sent to bradchesney79@gmail.com.
+ - The following errors were reported by the server:
+
+   Domain: images.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   images.rustbeltrebellion.com
+
+   Domain: ftp.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   ftp.rustbeltrebellion.com
+
+   Domain: files.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   files.rustbeltrebellion.com
+
+   Domain: news.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   news.rustbeltrebellion.com
+
+   Domain: info.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   info.rustbeltrebellion.com
+
+   Domain: photos.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   photos.rustbeltrebellion.com
+
+   Domain: app.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   app.rustbeltrebellion.com
+
+   Domain: media.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   media.rustbeltrebellion.com
+
+   Domain: smtp.rustbeltrebellion.com
+   Type:   connection
+   Detail: Could not connect to smtp.rustbeltrebellion.com
+
+   Domain: wiki.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   wiki.rustbeltrebellion.com
+
+   Domain: status.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   status.rustbeltrebellion.com
+
+   Domain: pic.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   pic.rustbeltrebellion.com
+
+   Domain: img.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   img.rustbeltrebellion.com
+
+   Domain: imap.rustbeltrebellion.com
+   Type:   connection
+   Detail: Could not connect to imap.rustbeltrebellion.com
+
+   Domain: mail.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   mail.rustbeltrebellion.com
+
+   Domain: dev.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   dev.rustbeltrebellion.com
+
+   Domain: mobile.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   mobile.rustbeltrebellion.com
+
+   Domain: image.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   image.rustbeltrebellion.com
+
+   Domain: feed.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   feed.rustbeltrebellion.com
+
+   Domain: secure.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   secure.rustbeltrebellion.com
+
+   Domain: admin.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   admin.rustbeltrebellion.com
+
+   Domain: lists.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   lists.rustbeltrebellion.com
+
+   Domain: search.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   search.rustbeltrebellion.com
+
+   Domain: pop.rustbeltrebellion.com
+   Type:   connection
+   Detail: Could not connect to pop.rustbeltrebellion.com
+
+   Domain: vpn.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   vpn.rustbeltrebellion.com
+
+   Domain: support.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   support.rustbeltrebellion.com
+
+   Domain: alpha.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   alpha.rustbeltrebellion.com
+
+   Domain: help.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   help.rustbeltrebellion.com
+
+   Domain: api.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   api.rustbeltrebellion.com
+
+   Domain: mysql.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   mysql.rustbeltrebellion.com
+
+   Domain: store.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   store.rustbeltrebellion.com
+
+   Domain: forum.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   forum.rustbeltrebellion.com
+
+   Domain: beta.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   beta.rustbeltrebellion.com
+
+   Domain: videos.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   videos.rustbeltrebellion.com
+
+   Domain: live.rustbeltrebellion.com
+   Type:   connection
+   Detail: DNS problem: NXDOMAIN looking up A for
+   live.rustbeltrebellion.com
+
+   To fix these errors, please make sure that your domain name was
+   entered correctly and the DNS A record(s) for that domain
+   contain(s) the right IP address. Additionally, please check that
+   your computer has a publicly routable IP address and that no
+   firewalls are preventing the server from communicating with the
+   client. If you're using the webroot plugin, you should also verify
+   that you are serving files from the webroot path you provided.
+ - The following errors were reported by the server:
+
+   Domain: webmail.rustbeltrebellion.com
+   Type:   unauthorized
+   Detail: Invalid response from
+   http://webmail.rustbeltrebellion.com/.well-known/acme-challenge/tAUtIu-M2bzhDn7QD7v99wuSXio58w4_GxA8WFM7vXc:
+   "<!DOCTYPE html>
+   <html lang="en">
+   <head>
+   <title>Roundcube Webmail :: Welcome to Roundcube Webmail</title>
+   <meta name="Robots" con"
+
+   Domain: www.rustbeltrebellion.com
+   Type:   unauthorized
+   Detail: Invalid response from
+   http://www.rustbeltrebellion.com/.well-known/acme-challenge/n69dwhgFIheEWOYRFtIXBa8nDNDfwRM1A76VvUfBN9Q:
+   "<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+   <html><head>
+   <title>404 Not Found</title>
+   </head><body>
+   <h1>Not Found</h1>
+   <p"
+
+   Domain: blog.rustbeltrebellion.com
+   Type:   unauthorized
+   Detail: Invalid response from
+   http://blog.rustbeltrebellion.com/.well-known/acme-challenge/BhAyNahHa_HC_Mt64wpB5bZBP7WgdRRhtrdi1ltT1QA:
+   "<!DOCTYPE html>
+   <html lang=en>
+     <meta charset=utf-8>
+     <meta name=viewport content="initial-scale=1, minimum-scale=1,
+   width=dev"
+
+   Domain: rustbeltrebellion.com
+   Type:   unauthorized
+   Detail: Invalid response from
+   http://rustbeltrebellion.com/.well-known/acme-challenge/AQKwNZFgrKkiememCM-CijOzplQ006R9qej5SWs97UA:
+   "<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+   <html><head>
+   <title>404 Not Found</title>
+   </head><body>
+   <h1>Not Found</h1>
+   <p"
+
+   To fix these errors, please make sure that your domain name was
+   entered correctly and the DNS A record(s) for that domain
+   contain(s) the right IP address.
+ - Your account credentials have been saved in your Certbot
+   configuration directory at /etc/letsencrypt. You should make a
+   secure backup of this folder now. This configuration directory will
+   also contain certificates and private keys obtained by Certbot so
+   making regular backups of this folder is ideal.
