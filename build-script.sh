@@ -116,4 +116,5 @@ date +%s >> /root/report/build-report.txt
 
 popd
 
-exit 0
+#TODO remove this --exits the ssh connection
+#exit 0
