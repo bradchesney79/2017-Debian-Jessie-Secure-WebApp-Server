@@ -55,7 +55,7 @@ EOF
 # $ is both a native dynamic character in nginx.conf & bash
 sed -i 's/request_uri/$request_uri/g' /etc/nginx/sites-available/default
 
-if [ "$SSLPROVIDER"='lets-encrypt' ]
+if [ "$SSLPROVIDER"='letsencrypt' ]
   then
   printf "\n## INVOKE CERTBOT FOR LETS ENCRYPT MULTIDOMAIN CERT ###\n"
   # multi-domain is not "wild card"
@@ -63,46 +63,49 @@ if [ "$SSLPROVIDER"='lets-encrypt' ]
 # This command triggered a "set up a new account" GUI
 
   
-certbot certonly -w /var/www/https \
+certbot certonly $STAGING -w /var/www/https \
   -d $DOMAIN \
-  -d www.$DOMAIN \
-  -d alpha.$DOMAIN \
-  -d app.$DOMAIN \
-  -d admin.$DOMAIN \
-  -d api.$DOMAIN \
-  -d beta.$DOMAIN \
-  -d blog.$DOMAIN \
-  -d dev.$DOMAIN \
-  -d feed.$DOMAIN \
-  -d files.$DOMAIN \
-  -d forum.$DOMAIN \
-  -d ftp.$DOMAIN \
-  -d help.$DOMAIN \
-  -d image.$DOMAIN \
-  -d images.$DOMAIN \
-  -d imap.$DOMAIN \
-  -d img.$DOMAIN \
-  -d info.$DOMAIN \
-  -d lists.$DOMAIN \
-  -d live.$DOMAIN \
-  -d mail.$DOMAIN \
-  -d media.$DOMAIN \
-  -d mobile.$DOMAIN \
-  -d mysql.$DOMAIN \
-  -d news.$DOMAIN \
-  -d photos.$DOMAIN \
-  -d pic.$DOMAIN \
-  -d pop.$DOMAIN \
-  -d search.$DOMAIN \
-  -d secure.$DOMAIN \
-  -d smtp.$DOMAIN \
-  -d status.$DOMAIN \
-  -d store.$DOMAIN \
-  -d support.$DOMAIN \
-  -d videos.$DOMAIN \
-  -d vpn.$DOMAIN \
-  -d webmail.$DOMAIN \
-  -d wiki.$DOMAIN
+  -d www.$DOMAIN
+  
+#  -d $DOMAIN \
+#  -d www.$DOMAIN
+#  -d alpha.$DOMAIN \
+#  -d app.$DOMAIN \
+#  -d admin.$DOMAIN \
+#  -d api.$DOMAIN \
+#  -d beta.$DOMAIN \
+#  -d blog.$DOMAIN \
+#  -d dev.$DOMAIN \
+#  -d feed.$DOMAIN \
+#  -d files.$DOMAIN \
+#  -d forum.$DOMAIN \
+#  -d ftp.$DOMAIN \
+#  -d help.$DOMAIN \
+#  -d image.$DOMAIN \
+#  -d images.$DOMAIN \
+#  -d imap.$DOMAIN \
+#  -d img.$DOMAIN \
+#  -d info.$DOMAIN \
+#  -d lists.$DOMAIN \
+#  -d live.$DOMAIN \
+#  -d mail.$DOMAIN \
+#  -d media.$DOMAIN \
+#  -d mobile.$DOMAIN \
+#  -d mysql.$DOMAIN \
+#  -d news.$DOMAIN \
+#  -d photos.$DOMAIN \
+#  -d pic.$DOMAIN \
+#  -d pop.$DOMAIN \
+#  -d search.$DOMAIN \
+#  -d secure.$DOMAIN \
+#  -d smtp.$DOMAIN \
+#  -d status.$DOMAIN \
+#  -d store.$DOMAIN \
+#  -d support.$DOMAIN \
+#  -d videos.$DOMAIN \
+#  -d vpn.$DOMAIN \
+#  -d webmail.$DOMAIN \
+#  -d wiki.$DOMAIN
 
 
   #TODO Change the location of the SSL Cert  
