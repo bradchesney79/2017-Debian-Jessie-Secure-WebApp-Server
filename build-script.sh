@@ -66,15 +66,15 @@ printf "\n########## CONFIGURE NGINX AND PHP-FPM ###\n\n"
 
 printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n"
 
-  . /root/bin/scripts/01300-install-dev-tools.sh
+#. /root/bin/scripts/01300-install-dev-tools.sh
 
 printf "\n########## INSTALL AND CONFIGURE MAIL ###\n"
 
-. /root/bin/scripts/01400-install-and-configure-system-mail.sh
+#. /root/bin/scripts/01400-install-and-configure-system-mail.sh
 
 printf "\n########## INSTALL AND CONFIGURE SYSSTAT ###\n"
 
-. /root/bin/scripts/01600-install-and-configure-sysstat.sh
+#. /root/bin/scripts/01600-install-and-configure-sysstat.sh
 #sed -i "s/ENABLED=\"false\"/ENABLED=\"true\"/" /etc/default/sysstat
 
 printf "\n########## CLEAN UP ###\n"
@@ -96,7 +96,7 @@ printf "\n#                                                #"
 printf "\n#                                                #"
 printf "\n##################################################\n\n"
 
-. /root/bin/scripts/troubleshooting.sh
+#. /root/bin/scripts/troubleshooting.sh
 
 #FIXME Commenting these until front end is squared away-- or I make an expect script for them and configuration settings for it.
 
