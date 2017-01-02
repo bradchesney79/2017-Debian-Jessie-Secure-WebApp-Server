@@ -62,8 +62,9 @@ if [ "$SSLPROVIDER"='letsencrypt' ]
 
 # This command triggered a "set up a new account" GUI
 
+certbot register --email $USERID1001EMAIL
   
-certbot certonly $STAGING -w /var/www/https \
+certbot certonly --standalone $STAGING -w /var/www/https \
   -d $DOMAIN \
   -d www.$DOMAIN
   
