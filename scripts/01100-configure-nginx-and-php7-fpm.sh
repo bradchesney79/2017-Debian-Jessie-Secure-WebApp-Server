@@ -1,5 +1,91 @@
 printf "\n\n##### Beginning 01100-configure-nginx-and-php7-fpm.sh\n\n" >> /root/report/build-report.txt
 
+if [ "$SSLPROVIDER"='letsencrypt' ]
+  then
+    printf "\n## TEMPORARY NGINX HTTP SERVER FOR CERTBOT VERIFICATION ###\n"
+
+    cat <<EOF > /etc/nginx/sites-available/default
+    server {
+        listen      80 default_server;
+        server_name $DOMAIN $HOSTNAME.$DOMAIN;
+        root        $WEBROOT/http;
+    }
+    EOF
+    
+
+    
+    systemctl start nginx
+    
+    printf "\n## INVOKE CERTBOT FOR LETS ENCRYPT MULTIDOMAIN CERT ###\n"
+  
+    # multi-domain is not "wild card"
+
+    # non-interactive command only
+
+    certbot-auto certonly \
+    --agree-tos \
+    --non-interactive \
+    --text \
+    --rsa-key-size $KEYSIZE \
+    --email $USERID1001EMAIL \
+    --webroot-path $WEBROOThttp \
+    --domains "$DOMAIN, www.$DOMAIN"
+
+    systctl stop nginx
+fi
+
+#TODO Change the location of the SSL Cert in the nginx config
+
+# For other SSL providers
+
+#### My non-multi-domain key & csr commands
+
+##output to screen the command with variables expanded
+#printf "openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj \"/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN\"\n\n"
+
+##run the command
+#openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN"
+
+
+##donor code
+#openssl req -new -sha256 -key domain.key -subj "/" -reqexts SAN -config <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:yoursite.com,DNS:www.yoursite.com")) > domain.csr
+
+#reworked experimental code
+
+#printf "[SAN]\nsubjectAltName=DNS:yoursite.com,DNS:www.yoursite.com" >> /etc/ssl/openssl.cnf
+
+#openssl req -nodes -sha256 -newkey rsa:4096 -keyout domain.key -subj "/" -reqexts SAN -out domain.csr
+
+
+
+printf "\n## DEFAULT HTTP POOL ###\n"
+
+printf "\n## CONFIG PHP-FPM ###\n"
+
+mv /etc/php/7.0/fpm/pool.d/www.conf /etc/php/7.0/fpm/pool.d/www.conf.original
+cp /etc/php/7.0/fpm/pool.d/www.conf.original /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
+cp /etc/php/7.0/fpm/pool.d/www.conf.original /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
+
+printf "\n## DEFAULT HTTP POOL ###\n"
+
+sed -i "s/\[www\]/\[$DOMAIN\]/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
+sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN.sock|" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
+
+sed -i "s/user = www-data/user = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
+sed -i "s/group = www-data/group = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
+
+sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
+
+printf "\n## DEFAULT HTTPS POOL ###\n"
+
+sed -i "s/\[www\]/\[$DOMAIN-SSL\]/" /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
+sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN-SSL.sock|" /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
+
+sed -i "s/user = www-data/user = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
+sed -i "s/group = www-data/group = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
+
+sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
+
 printf "\n## CONFIGURING NGINX ###"
 
 echo "" > /etc/nginx/sites-available/default
@@ -54,116 +140,6 @@ EOF
 # sidestepping a missing variable issue
 # $ is both a native dynamic character in nginx.conf & bash
 sed -i 's/request_uri/$request_uri/g' /etc/nginx/sites-available/default
-
-if [ "$SSLPROVIDER"='letsencrypt' ]
-  then
-  printf "\n## INVOKE CERTBOT FOR LETS ENCRYPT MULTIDOMAIN CERT ###\n"
-  # multi-domain is not "wild card"
-
-# This command triggered a "set up a new account" GUI
-
-certbot register --email $USERID1001EMAIL
-  
-certbot certonly --standalone $STAGING -w /var/www/https \
-  -d $DOMAIN \
-  -d www.$DOMAIN
-  
-#  -d $DOMAIN \
-#  -d www.$DOMAIN
-#  -d alpha.$DOMAIN \
-#  -d app.$DOMAIN \
-#  -d admin.$DOMAIN \
-#  -d api.$DOMAIN \
-#  -d beta.$DOMAIN \
-#  -d blog.$DOMAIN \
-#  -d dev.$DOMAIN \
-#  -d feed.$DOMAIN \
-#  -d files.$DOMAIN \
-#  -d forum.$DOMAIN \
-#  -d ftp.$DOMAIN \
-#  -d help.$DOMAIN \
-#  -d image.$DOMAIN \
-#  -d images.$DOMAIN \
-#  -d imap.$DOMAIN \
-#  -d img.$DOMAIN \
-#  -d info.$DOMAIN \
-#  -d lists.$DOMAIN \
-#  -d live.$DOMAIN \
-#  -d mail.$DOMAIN \
-#  -d media.$DOMAIN \
-#  -d mobile.$DOMAIN \
-#  -d mysql.$DOMAIN \
-#  -d news.$DOMAIN \
-#  -d photos.$DOMAIN \
-#  -d pic.$DOMAIN \
-#  -d pop.$DOMAIN \
-#  -d search.$DOMAIN \
-#  -d secure.$DOMAIN \
-#  -d smtp.$DOMAIN \
-#  -d status.$DOMAIN \
-#  -d store.$DOMAIN \
-#  -d support.$DOMAIN \
-#  -d videos.$DOMAIN \
-#  -d vpn.$DOMAIN \
-#  -d webmail.$DOMAIN \
-#  -d wiki.$DOMAIN
-
-
-  #TODO Change the location of the SSL Cert  
-  #cp stock-location desired-location
-fi
-
-
-# For other SSL providers
-
-#### My non-multi-domain key & csr commands
-
-##output to screen the command with variables expanded
-#printf "openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj \"/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN\"\n\n"
-
-##run the command
-#openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN"
-
-
-##donor code
-#openssl req -new -sha256 -key domain.key -subj "/" -reqexts SAN -config <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:yoursite.com,DNS:www.yoursite.com")) > domain.csr
-
-#reworked experimental code
-
-#printf "[SAN]\nsubjectAltName=DNS:yoursite.com,DNS:www.yoursite.com" >> /etc/ssl/openssl.cnf
-
-#openssl req -nodes -sha256 -newkey rsa:4096 -keyout domain.key -subj "/" -reqexts SAN -out domain.csr
-
-
-
-
-printf "\n## DEFAULT HTTP POOL ###\n"
-
-printf "\n## CONFIG PHP-FPM ###\n"
-
-mv /etc/php/7.0/fpm/pool.d/www.conf /etc/php/7.0/fpm/pool.d/www.conf.original
-cp /etc/php/7.0/fpm/pool.d/www.conf.original /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
-cp /etc/php/7.0/fpm/pool.d/www.conf.original /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
-
-printf "\n## DEFAULT HTTP POOL ###\n"
-
-sed -i "s/\[www\]/\[$DOMAIN\]/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
-sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN.sock|" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
-
-sed -i "s/user = www-data/user = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
-sed -i "s/group = www-data/group = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
-
-sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
-
-printf "\n## DEFAULT HTTPS POOL ###\n"
-
-sed -i "s/\[www\]/\[$DOMAIN-SSL\]/" /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
-sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN-SSL.sock|" /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
-
-sed -i "s/user = www-data/user = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
-sed -i "s/group = www-data/group = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
-
-sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php/7.0/fpm/pool.d/${DOMAIN}-ssl.conf
 
 
 printf "\n## CONFIGURE PHP ###\n"
