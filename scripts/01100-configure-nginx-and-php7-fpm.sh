@@ -1,5 +1,9 @@
 printf "\n\n##### Beginning 01100-configure-nginx-and-php7-fpm.sh\n\n" >> /root/report/build-report.txt
 
+# sidestepping a missing variable issue
+# $ is both a native dynamic character in nginx.conf & bash
+DOLLARSIGN='$'
+
 if [ "$SSLPROVIDER"='letsencrypt' ]
   then
 
@@ -10,6 +14,7 @@ server {
 listen      80 default_server;
 server_name $DOMAIN $HOSTNAME.$DOMAIN;
 root        $WEBROOT;
+try_files   $uri $uri/ /index.html;
 }
 EOF
     
@@ -21,7 +26,7 @@ EOF
 
     # non-interactive command only
 
-    certbot certonly --agree-tos --non-interactive  --text --rsa-key-size $KEYSIZE --email $USERID1001EMAIL --webroot-path $WEBROOT --domains "$DOMAIN, www.$DOMAIN"
+    certbot certonly --agree-tos --non-interactive --text --rsa-key-size $KEYSIZE --email $USERID1001EMAIL --webroot --webroot-path $WEBROOT --domains "$DOMAIN, $HOSTNAME.$DOMAIN"
 
     systemctl stop nginx
 fi
@@ -60,28 +65,23 @@ printf "\n## CONFIGURING NGINX ###"
 
 echo "" > /etc/nginx/sites-available/default
 
+
 cat <<EOF > /etc/nginx/sites-available/default
 server {
   listen 80;
   server_name $DOMAIN;
-  return 301 https://$DOMAINrequest_uri;
+  return 301 https://${DOMAIN}${DOLLARSIGN}request_uri
 }
 server {
   listen 443 ssl;
   server_name $DOMAIN;
-  
-  # certbot will put a resource in the --webroot option path
-  location /.well-known/acme-challenge/ {
-        alias $WEBROOT/https/.wellknown/acme-challenge;
-        try_files $uri =404;
-    }
-  
+    
   # fairly standard nginx request pass off to php-fpm
   # php-fpm generates & returns the content
   # for nginx to send a response with
   location ~ [^/]\.php(/|$) {
     fastcgi_split_path_info ^(.+?\.php)(/.*)$;
-    if (!-f $document_root$fastcgi_script_name) {
+    if (!-f ${DOLLARSIGN}document_root${DOLLARSIGN}fastcgi_script_name) {
         return 404;
     }
 
@@ -95,7 +95,7 @@ server {
   
   # static contents regex match to directory stored in
   location ~ \.(gif|jpg|png)$ {
-     root $WEBROOT/https/images;
+     root $HTTPSWEBROOT/images;
   }
 
   ssl_protocols TLSv1.1 TLSv1.2;
@@ -106,10 +106,6 @@ server {
   root $WEBROOT/https;
 }
 EOF
-
-# sidestepping a missing variable issue
-# $ is both a native dynamic character in nginx.conf & bash
-sed -i 's/request_uri/$request_uri/g' /etc/nginx/sites-available/default
 
 
 printf "\n## CONFIGURE PHP ###\n"
