@@ -6,13 +6,12 @@ if [ "$SSLPROVIDER"='letsencrypt' ]
     printf "\n## TEMPORARY NGINX HTTP SERVER FOR CERTBOT VERIFICATION ###\n"
 
 cat <<EOF > /etc/nginx/sites-available/default
-    server {
-    listen      80 default_server;
-    server_name $DOMAIN $HOSTNAME.$DOMAIN;
-    root        $WEBROOT/http;
-    }
-EOF    
-
+server {
+listen      80 default_server;
+server_name $DOMAIN $HOSTNAME.$DOMAIN;
+root        $WEBROOT/http;
+}
+EOF
     
     systemctl start nginx
     
