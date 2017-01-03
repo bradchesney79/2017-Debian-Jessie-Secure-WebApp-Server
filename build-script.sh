@@ -70,11 +70,11 @@ printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n"
 
 printf "\n########## INSTALL AND CONFIGURE MAIL ###\n"
 
-#. /root/bin/scripts/01400-install-and-configure-system-mail.sh
+. /root/bin/scripts/01400-install-and-configure-system-mail.sh
 
 printf "\n########## INSTALL AND CONFIGURE SYSSTAT ###\n"
 
-#. /root/bin/scripts/01600-install-and-configure-sysstat.sh
+. /root/bin/scripts/01600-install-and-configure-sysstat.sh
 #sed -i "s/ENABLED=\"false\"/ENABLED=\"true\"/" /etc/default/sysstat
 
 printf "\n########## CLEAN UP ###\n"
