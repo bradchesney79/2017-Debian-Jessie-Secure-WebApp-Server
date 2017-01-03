@@ -2,16 +2,16 @@ printf "\n\n##### Beginning 01100-configure-nginx-and-php7-fpm.sh\n\n" >> /root/
 
 if [ "$SSLPROVIDER"='letsencrypt' ]
   then
+
     printf "\n## TEMPORARY NGINX HTTP SERVER FOR CERTBOT VERIFICATION ###\n"
 
-    cat <<EOF > /etc/nginx/sites-available/default
+cat <<EOF > /etc/nginx/sites-available/default
     server {
-        listen      80 default_server;
-        server_name $DOMAIN $HOSTNAME.$DOMAIN;
-        root        $WEBROOT/http;
+    listen      80 default_server;
+    server_name $DOMAIN $HOSTNAME.$DOMAIN;
+    root        $WEBROOT/http;
     }
-    EOF
-    
+EOF    
 
     
     systemctl start nginx
@@ -22,41 +22,12 @@ if [ "$SSLPROVIDER"='letsencrypt' ]
 
     # non-interactive command only
 
-    certbot-auto certonly \
-    --agree-tos \
-    --non-interactive \
-    --text \
-    --rsa-key-size $KEYSIZE \
-    --email $USERID1001EMAIL \
-    --webroot-path $WEBROOThttp \
-    --domains "$DOMAIN, www.$DOMAIN"
+    certbot-auto certonly --agree-tos --non-interactive  --text --rsa-key-size $KEYSIZE --email $USERID1001EMAIL --webroot-path $WEBROOThttp --domains "$DOMAIN, www.$DOMAIN"
 
     systctl stop nginx
 fi
 
 #TODO Change the location of the SSL Cert in the nginx config
-
-# For other SSL providers
-
-#### My non-multi-domain key & csr commands
-
-##output to screen the command with variables expanded
-#printf "openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj \"/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN\"\n\n"
-
-##run the command
-#openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN"
-
-
-##donor code
-#openssl req -new -sha256 -key domain.key -subj "/" -reqexts SAN -config <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:yoursite.com,DNS:www.yoursite.com")) > domain.csr
-
-#reworked experimental code
-
-#printf "[SAN]\nsubjectAltName=DNS:yoursite.com,DNS:www.yoursite.com" >> /etc/ssl/openssl.cnf
-
-#openssl req -nodes -sha256 -newkey rsa:4096 -keyout domain.key -subj "/" -reqexts SAN -out domain.csr
-
-
 
 printf "\n## DEFAULT HTTP POOL ###\n"
 
