@@ -106,7 +106,7 @@ printf "\n Add a person user. Best practices dictate using the root account less
 
 #usermod -a --groups $USER $USERID1001
 
-printf "\nSSL Certs come from a third-party, be sure to get the applicable files and put them in the appropriate directory.\n"
+printf "\nSSL Certs come from a third-party, be sure to back up the applicable files and link them in the appropriate directory.\n"
 
 printf "\nThinking inside my head that a few minutes of uptime is trivial at this point-- nobody is actually depending on the system being up or even using it at this exact moment-- a reboot might be a smart idea.\n"
 
