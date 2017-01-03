@@ -21,9 +21,9 @@ EOF
 
     # non-interactive command only
 
-    certbot-auto certonly --agree-tos --non-interactive  --text --rsa-key-size $KEYSIZE --email $USERID1001EMAIL --webroot-path $WEBROOThttp --domains "$DOMAIN, www.$DOMAIN"
+    certbot certonly --agree-tos --non-interactive  --text --rsa-key-size $KEYSIZE --email $USERID1001EMAIL --webroot-path $WEBROOThttp --domains "$DOMAIN, www.$DOMAIN"
 
-    systctl stop nginx
+    systemctl stop nginx
 fi
 
 #TODO Change the location of the SSL Cert in the nginx config
