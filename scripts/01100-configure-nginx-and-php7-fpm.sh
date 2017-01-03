@@ -94,7 +94,7 @@ server {
   }
 
   location / {
-    if ($scheme = http) {
+    if (${DOLLARSIGN}scheme = http) {
       return 301 https://${DOLLARSIGN}server_name${DOLLARSIGN}request_uri;
     }
   }
