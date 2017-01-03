@@ -9,7 +9,7 @@ cat <<EOF > /etc/nginx/sites-available/default
 server {
 listen      80 default_server;
 server_name $DOMAIN $HOSTNAME.$DOMAIN;
-root        $WEBROOT/http;
+root        $WEBROOT;
 }
 EOF
     
@@ -21,7 +21,7 @@ EOF
 
     # non-interactive command only
 
-    certbot certonly --agree-tos --non-interactive  --text --rsa-key-size $KEYSIZE --email $USERID1001EMAIL --webroot-path $WEBROOThttp --domains "$DOMAIN, www.$DOMAIN"
+    certbot certonly --agree-tos --non-interactive  --text --rsa-key-size $KEYSIZE --email $USERID1001EMAIL --webroot-path $WEBROOT --domains "$DOMAIN, www.$DOMAIN"
 
     systemctl stop nginx
 fi
