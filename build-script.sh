@@ -50,7 +50,7 @@ printf "\n########## INSTALL NGINX ###\n"
 
 printf "\n########## INSTALL MYSQL ###\n"
 
-. /root/bin/scripts/00800-install-and-configure-mysql.sh
+#. /root/bin/scripts/00800-install-and-configure-mysql.sh
 
 printf "\n########## CONFIGURE DEVELOPMENT INSTANCE PACKAGES ###\n"
 
