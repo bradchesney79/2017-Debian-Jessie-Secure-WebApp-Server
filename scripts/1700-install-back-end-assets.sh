@@ -209,6 +209,6 @@ cat <<EOF > $PROJECTROOT
 }
 EOF
 
-cd $PROJECTROOT
+mkdir 
 
-composer dump-autoload
+#TODO add composer dump-autoload to back end assets configuration
