@@ -10,16 +10,16 @@ printf "\n## CONFIGURE THE DEFAULT SITE\n"
 
 printf "\n## PREPARE DIRECTORY STRUCTURE FOR DEFAULT SITE\n"
 
-mkdir -p "$WEBROOT/fonts"
-mkdir -p "$WEBROOT/certs"
-mkdir -p "$WEBROOT/certs/$YEAR"
-mkdir -p "$WEBROOT/certs/$YEAR/$SSLPROVIDER"
+mkdir -p "$PROJECTROOT/fonts"
+mkdir -p "$PROJECTROOT/certs"
+mkdir -p "$PROJECTROOT/certs/$YEAR"
+mkdir -p "$PROJECTROOT/certs/$YEAR/$SSLPROVIDER"
 mkdir -p "$LOGDIR"
-mkdir -p "$WEBROOT/sockets"
-mkdir -p "$WEBROOT/tmp"
+mkdir -p "$PROJECTROOT/sockets"
+mkdir -p "$PROJECTROOT/tmp"
 
-chown -R $USER:$USER $WEBROOT
-chmod -R 774 $WEBROOT
+chown -R $USER:$USER $PROJECTROOT
+chmod -R 774 $PROJECTROOT
 
-chown -R www-data:www-data $WEBROOT/sockets
-find $WEBROOT -type d -exec chmod -R 775 {} \;
+chown -R www-data:www-data $PROJECTROOT/sockets
+find $PROJECTROOT -type d -exec chmod -R 775 {} \;

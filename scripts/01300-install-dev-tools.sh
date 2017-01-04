@@ -5,5 +5,5 @@ printf "\n## PLACE PHPINFO FILE IN THE WEBROOT ###"
 if [ "$DEV" = "true" ]
   then
     
-    printf "<?php phpinfo(); ?>" > $WEBROOT
+    printf "<?php phpinfo(); ?>" > $PROJECTROOT
   fi

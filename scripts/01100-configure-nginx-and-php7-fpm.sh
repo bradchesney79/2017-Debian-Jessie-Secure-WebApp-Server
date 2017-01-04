@@ -106,7 +106,7 @@ server {
     # Mitigate https://httpoxy.org/ vulnerabilities
     fastcgi_param HTTP_PROXY "";
 
-    fastcgi_pass unix:$WEBROOT/sockets/$DOMAIN.sock;
+    fastcgi_pass unix:$PROJECTROOT/sockets/$DOMAIN.sock;
     fastcgi_index index.php;
 
     if (!-f ${DOLLARSIGN}document_root${DOLLARSIGN}fastcgi_script_name) {
@@ -133,7 +133,7 @@ printf "\n## DEFAULT HTTPS POOL ###\n"
 sed -i "s/\[www\]/\[$DOMAIN\]/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
 
 #sed delimiters are not a fixed character -- pipe symbol used to avoid escaping path in substitution
-sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN.sock|" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
+sed -i "s|listen =.*|listen = $PROJECTROOT/sockets/$DOMAIN.sock|" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
 
 sed -i "s/user = www-data/user = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
 sed -i "s/group = www-data/group = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf

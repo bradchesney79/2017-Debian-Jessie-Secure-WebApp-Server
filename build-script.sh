@@ -85,7 +85,7 @@ apt-get -y autoremove
 
 printf "\n########## START THE WEBSERVER SERVICES ###\n"
 
-systemctl start php7-fpm
+systemctl start php7.0-fpm
 systemctl start nginx
 
 printf "\n##################################################"

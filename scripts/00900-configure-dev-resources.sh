@@ -8,4 +8,12 @@ if [ "$DEV" = "true" ]
     then
     printf "\n## INSTALLING XDEBUG ###\n"
     apt-get install -y php7.0-xdebug
+ 
+printf "\n## PUT INFO.PHP IN THE HTTPSWEBROOT ###\n"
+    
+cat <<EOF > $HTTPSWEBROOT
+<?php
+phpinfo();
+?>
+EOF
 fi
