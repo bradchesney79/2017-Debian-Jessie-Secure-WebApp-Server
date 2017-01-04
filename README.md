@@ -1,6 +1,6 @@
 # 2017-Debian-Jessie-Secure-WebApp-Server
 
-I am facing a really neat and exciting fundamental change to how I've done autoloading-- I thought I'd be working on this next month. However, my situation has
+I am facing a really neat and exciting fundamental change to how I've done autoloading-- I thought I'd be working on this next month. However, my situation has changed and I need to know the up to date now context of modern way of doing things well enough to teach it. So here we are.
 
 This is the 2017 version updated using the things I learned from the 2015 version
 
