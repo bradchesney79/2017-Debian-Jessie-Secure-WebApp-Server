@@ -41,24 +41,6 @@ EOF
     
     systemctl stop nginx
     
-cat <<EOF > /tmp/letsencrypt-brad-junk.txt
-
-server {
-  listen 80 default_server;
-  server_name kingchesney.com www.kingchesney.com;
-  resolver 8.8.8.8;
-  root /var/www/html;
-  index index.html;
-
-  location '/.well-known/acme-challenge' {
-    root /var/www/html;
-  }
-  access_log /var/www/logs/access-ssl.log;
-}
-
-certbot certonly --agree-tos --non-interactive --staging --text --allow-subset-of-names --rsa-key-size 4096 --email bradchesney79@gmail.com --webroot --webroot-path /var/www/html --domains "kingchesney.com, www.kingchesney.com"
-EOF
-
 fi
 
 printf "\n## CONFIGURING NGINX ###"
