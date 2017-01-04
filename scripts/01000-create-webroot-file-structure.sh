@@ -10,11 +10,6 @@ printf "\n## CONFIGURE THE DEFAULT SITE\n"
 
 printf "\n## PREPARE DIRECTORY STRUCTURE FOR DEFAULT SITE\n"
 
-
-rm -rf /var/www/html
-
-mkdir -p "$WEBROOT/http"
-mkdir -p "$WEBROOT/https"
 mkdir -p "$WEBROOT/fonts"
 mkdir -p "$WEBROOT/certs"
 mkdir -p "$WEBROOT/certs/$YEAR"

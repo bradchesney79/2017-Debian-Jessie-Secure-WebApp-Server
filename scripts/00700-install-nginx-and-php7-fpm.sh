@@ -28,11 +28,3 @@ if [ "$SSLPROVIDER"='lets-encrypt' ]
   printf "\n## INSTALLING CERTBOT ###\n"
   apt-get install -yt jessie-backports certbot python-certbot python-acme python-cryptography
 fi
-
-printf "\n## INSTALL XDEBUG IF DEV ENVIRONMENT ###\n"
-
-if [ "$DEV" = "true" ]
-    then
-    printf "\n## INSTALLING XDEBUG ###\n"
-    apt-get install -y php7.0-xdebug
-fi
