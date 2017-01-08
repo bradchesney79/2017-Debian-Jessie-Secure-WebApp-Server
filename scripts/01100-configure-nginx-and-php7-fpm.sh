@@ -99,16 +99,69 @@ server {
   location ~ \.(gif|jpg|png)$ {
      root $HTTPSWEBROOT/images;
   }
-  access_log $LOGDIR/access-ssl.log;
+  access_log $LOGDIR/access.log;
   error_log $LOGDIR/error.log $ERRORLOGLEVEL;
 }
 EOF
 
+cat <<EOF > /etc/nginx/sites-available/api
+server {
+  listen 80 default_server;
+  listen 443 ssl http2 default_server;
+  server_name api.$DOMAIN;
+  ssl_protocols TLSv1.1 TLSv1.2;
+  ssl_ciphers EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;
+  ssl_prefer_server_ciphers On;
+  ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/${DOMAIN}/chain.pem;
+  ssl_session_cache shared:SSL:128m;
+  add_header Strict-Transport-Security "max-age=31557600; includeSubDomains";
+  add_header X-Frame-Options "SAMEORIGIN" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header X-Xss-Protection "1";
+  add_header Content-Security-Policy "default-src 'self'; script-src 'self' *.google-analytics.com";
+  ssl_stapling on;
+  ssl_stapling_verify on;
+  resolver 8.8.8.8;
+  root $APIWEBROOT;
+  index index.html;
+
+  location '/.well-known/acme-challenge' {
+    root $APIWEBROOT;
+  }
+
+  location / {
+    if (${DOLLARSIGN}scheme = http) {
+      return 301 https://${DOLLARSIGN}server_name${DOLLARSIGN}request_uri;
+    }
+  }
+     
+  location ~ [^/]\.php(/|$) {
+    include fastcgi_params;
+    fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+
+    # Mitigate https://httpoxy.org/ vulnerabilities
+    fastcgi_param HTTP_PROXY "";
+
+    fastcgi_pass unix:$PROJECTROOT/sockets/api-$DOMAIN.sock;
+    fastcgi_index index.php;
+
+    if (!-f ${DOLLARSIGN}document_root${DOLLARSIGN}fastcgi_script_name) {
+      return 404;
+    }
+  }
+  # static contents regex match to directory stored in
+  access_log $LOGDIR/api-access.log;
+  error_log $LOGDIR/api-error.log $ERRORLOGLEVEL;
+}
+EOF
 
 printf "\n## CONFIG PHP-FPM ###\n"
 
 mv /etc/php/7.0/fpm/pool.d/www.conf /etc/php/7.0/fpm/pool.d/www.conf.original
 cp /etc/php/7.0/fpm/pool.d/www.conf.original /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
+
 
 printf "\n## DEFAULT HTTPS POOL ###\n"
 
@@ -122,7 +175,14 @@ sed -i "s/group = www-data/group = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.con
 
 sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
 
+printf "\n## API POOL ###\n"
 
+cp /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf /etc/php/7.0/fpm/pool.d/api-${DOMAIN}.conf
+
+sed -i "s/\[$DOMAIN\]/\[API-DOMAIN\]//" /etc/php/7.0/fpm/pool.d/api-${DOMAIN}.conf
+
+#sed delimiters are not a fixed character -- pipe symbol used to avoid escaping path in substitution
+sed -i "s|listen =.*|listen = $PROJECTROOT/sockets/api-$DOMAIN.sock|" /etc/php/7.0/fpm/pool.d/api-${DOMAIN}.conf
 
 
 printf "\n## CONFIGURE PHP ###\n"

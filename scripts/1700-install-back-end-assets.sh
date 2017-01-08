@@ -22,10 +22,10 @@ printf "\n## FIRST COMPOSER INSTALL\n\n"
 
 composer.phar install --no-ansi --no-dev --no-interaction --no-progress --no-scripts
 
-cat <<EOF > $PROJECTROOT
+cat <<EOF > $PROJECTROOT/composer.json
 {
-    "name": "viperks/api",
-    "description": "The viperks api dependencies",
+    "name": "$PROJECTNAME",
+    "description": "The $PROJECTNAME dependencies",
     "license": "Unlicense",
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -61,10 +61,6 @@ printf "\n## START SETTING UP SUPPORTING SYSTEM THINGS\n\n"
 
 cd $PROJECTROOT
 
-# Set up directories and reverse engineer the DB for the Propel ORM
-mkdir -p $PROJECTROOT/dal
-mkdir -p $PROJECTROOT/dal/config
-
 # Create databases for the app and sentinel
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "CREATE DATABASE $PROJECTDB;"
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "CREATE DATABASE $SENTINELDB;"
@@ -72,7 +68,13 @@ mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON $PROJECTD
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON $SENTINELDB.* TO '$USERID1001'@'$SENTINELDBHOST' IDENTIFIED BY '$USERID1001PASSWORD' WITH GRANT OPTION;"
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
 
-# Fill the databases with data goodness
+mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON $PROJECTDB.* TO '$DEFAULTSITEDBUSER'@'$PROJECTDBHOST' IDENTIFIED BY '$DEFAULTSITEDBPASSWORD';"
+mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON $SENTINELDB.* TO '$DEFAULTSITEDBUSER'@'$SENTINELDBHOST' IDENTIFIED BY '$DEFAULTSITEDBPASSWORD';"
+
+
+
+
+# Fill the database with data structure goodness
 
 mysql -u"$USERID1001" -p"$USERID1001PASSWORD" <<< "
 CREATE TABLE `$PROJECTDB.users` (
@@ -95,10 +97,10 @@ CREATE TABLE `$PROJECTDB.phones` (
   `userid` int(11) DEFAULT NULL COMMENT 'The id that ties the phone to a user',
   `phoneType` enum('landline','mobile','multi-ring','fax','tdd-tty','other') DEFAULT NULL COMMENT 'What type of device or endpoint is this number representing',
   `sms` char(1) DEFAULT NULL COMMENT 'Can this phone receive sms entries',
-  `title` char(80) DEFAULT NULL,
-  `areaCode` smallint(6) DEFAULT NULL COMMENT 'What the phone is to display to the user',
+  `title` char(80) DEFAULT NULL COMMENT 'What the phone is to display to the user',
+  `areaCode` smallint(6) DEFAULT NULL COMMENT 'The area code of the phone number',
   `prefix` smallint(6) DEFAULT NULL COMMENT 'The phone number prefix',
-  `number` smallint(6) DEFAULT NULL COMMENT 'the four numbers that make a phone number individual',
+  `number` smallint(6) DEFAULT NULL COMMENT 'The four numbers that make a phone number individual',
   `extention` char(80) DEFAULT NULL COMMENT 'Extension information about the phone number',
   `lastModified` int(10) unsigned DEFAULT NULL COMMENT 'This field is used to track the last change in the logs',
   PRIMARY KEY (`phonesid`)
@@ -116,7 +118,8 @@ $PROJECTROOT/vendor/propel/propel/bin/propel reverse "mysql:host=$PROJECTDBHOST;
 
 cd $PROJECTROOT/dal/config
 
-#conditionals go here to setup differently for which system they are on AWS, local, or docker
+# Set up directories and reverse engineer the DB for the Propel ORM
+mkdir -p $PROJECTROOT/dal/config
 
 cat <<EOF > $PROJECTROOT/dal/config/propel.json
 {
@@ -126,8 +129,8 @@ cat <<EOF > $PROJECTROOT/dal/config/propel.json
                 "default": {
                     "adapter": "mysql",
                     "dsn": "mysql:host=$PROJECTDBHOST;port=3306;dbname=$PROJECTDB",
-                    "user": "$USERID1001",
-                    "password": "$USERID1001PASSWORD",
+                    "user": "$DEFAULTSITEDBUSER",
+                    "password": "$DEFAULTSITEDBPASSWORD",
                     "settings": {
                         "charset": "utf8"
                     }
@@ -145,17 +148,10 @@ $PROJECTROOT/vendor/propel/propel/bin/propel model:build
 
 mv $PROJECTROOT/dal/config/generated-classes $PROJECTROOT/dal
 
-if [ "$DEV" = "true" ]
-    then
-    composer composer install --optimize-autoloader
-    else
-    composer.phar install --no-ansi --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
-fi
-
-cat <<EOF > $PROJECTROOT
+cat <<EOF > $PROJECTROOT/composer.json
 {
-    "name": "viperks/api",
-    "description": "The viperks api dependencies",
+    "name": "$PROJECTNAME",
+    "description": "The $PROJECTNAME dependencies",
     "license": "Unlicense",
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -191,24 +187,138 @@ cat <<EOF > $PROJECTROOT
     },
     "autoload": {
         "psr-0": {
-            "$PROJECTNAME": "app/src/",
-            "$PROJECTNAME\\Database\\Propel": "app/src/database/propel",
-            "$PROJECTNAME\\User": "app/src/user",
-            "$PROJECTNAME\\Utility\\DbObjectAccess": "app/src/utility/db-object-access",
-            "$PROJECTNAME\\Utility\\PostCleanup": "app/src/utility/post-cleanup",
-            "$PROJECTNAME\\Utility\\Reporting": "app/src/utility/reporting"
+            "$PROJECTNAME\\Src": "app/src/",
+            "$PROJECTNAME\\Src\\Database": "app/src/database/",
+            "$PROJECTNAME\\Src\\Utility": "app/src/utility/"
 
         },
         "classmap": ["$PROJECTROOT/dal/generated-classes/"]
     },
     "autoload-dev": {
         "psr-0": {
-            "$PROJECTNAME\\Tests": "app/tests/"
+            "$PROJECTNAME\\Test": "app/test/"
         }
     }
 }
 EOF
 
-mkdir 
 
-#TODO add composer dump-autoload to back end assets configuration
+mkdir -p $PROJECTROOT/app/src/database
+mkdir -p $PROJECTROOT/app/src/utility
+mkdir -p $PROJECTROOT/app/test
+
+cat <<EOF > $PROJECTROOT/app/src/database/initpropel.php
+<?php namespace App\Src\Database;
+
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Propel\Common\Config\ConfigurationManager;
+use Propel\Runtime\Connection\ConnectionManagerSingle;
+
+class Initpropel {
+    public $serviceContainer;
+
+    public function __construct()
+    {
+        $capsuleConfig = ['driver' => 'mysql',
+                'host' => get_cfg_var(PROJECTDBHOST),
+                'database' => '$SENTINELDB',
+                'username' => '$DEFAULTSITEDBUSER',
+                'password' => '$DEFAULTSITEDBPASSWORD',
+                'charset' => 'utf8',
+                'collation' => 'utf8_unicode_ci'
+        ];
+        
+        // Setup a new Eloquent Capsule instance
+        $capsule = new Capsule;
+        $capsule->addConnection($capsuleConfig);
+        $capsule->bootEloquent();
+
+        // Load the configuration file
+        $configManager = new ConfigurationManager('$PROJECTROOT/dal/config/propel.json');
+
+        // Set up the connection manager
+        $manager = new ConnectionManagerSingle();
+        $manager->setConfiguration($configManager->getConnectionParametersArray()['default']);
+        $manager->setName('default');
+
+        //*
+        // Add the connection manager to the service container
+        // the IDE does not see into $PROJECTROOT/html/dal/generated-classes
+        // this next lines are defined there and the proper use statement is supplied
+        $this->serviceContainer = "";
+        $this->serviceContainer = Propel::getServiceContainer();
+        $this->serviceContainer->setAdapterClass('default', 'mysql');
+        $this->serviceContainer->setConnectionManager('default', $manager);
+        $this->serviceContainer->setDefaultDatasource('default');
+
+    }
+
+
+    public function getPopulatedServiceContainer()
+    {
+        return $this->serviceContainer;
+    }
+
+EOF
+
+cat <<EOF > $PROJECTROOT/app/src/user.php
+// Include the composer autoload file
+require $PROJECTROOT/vendor/autoload.php
+
+use Propel\Common\Config\ConfigurationManager;
+use Propel\Runtime\Connection\ConnectionManagerSingle;
+use Propel\Runtime\Propel;
+
+//use Monolog\Logger;
+//use Monolog\Handler\StreamHandler;
+
+$email = trim(str_replace("\xc2\xa0", ' ', $_POST['email']));
+$password = trim(str_replace("\xc2\xa0", ' ', $_POST['password']));
+
+TODO: I STOPPED HERE
+EOF
+
+cat <<EOF > $PROJECTROOT/phpunit.xml
+<phpunit bootstrap="vendor/autoload.php"
+  colors="true"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  processIsolation="false"
+  stopOnFailure="false"
+  syntaxCheck="false"
+  
+  <testsuites>
+    <testsuite name="$PROJECTNAME Tests">
+      <directory>test</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>
+EOF
+
+cat <<EOF > $PROJECTROOT/app/tests/initpropelTest.php
+<?php
+
+require $PROJECTROOT/vendor/autoload.php
+
+use App\Src\Database;
+
+class PropelTest extends PHPUnit_Framework_TestCase {
+  public function testInitializationOfPropel()
+  {
+    $connectionReady = new Initpropel;
+    
+    $this->assertInstanceOf('Initpropel',$connectionReady);
+  }
+}
+EOF
+
+if [ "$DEV" = "true" ]
+    then
+    composer composer install --optimize-autoloader
+    else
+    composer.phar install --no-ansi --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
+fi
+
+cd $PROJECTROOT
+composer dump-autoload
