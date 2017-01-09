@@ -190,7 +190,7 @@ printf "\n## CONFIGURE PHP ###\n"
 cp /etc/php/7.0/fpm/php.ini /etc/php/7.0/fpm/php.ini.original
 
 
-sed -i "s/;*cgi.fix_pathinfo.*/cgi.fix_pathinfo = 0/" /etc/php7.0/fpm/php.ini
+sed -i "s/;*cgi.fix_pathinfo.*/cgi.fix_pathinfo = 0/" /etc/php/7.0/fpm/php.ini
 
 sed -i "s/;*short_open_tag.*/short_open_tag = Off/" /etc/php/7.0/fpm/php.ini
 
