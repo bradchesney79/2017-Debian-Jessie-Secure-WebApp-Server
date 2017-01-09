@@ -179,7 +179,7 @@ printf "\n## API POOL ###\n"
 
 cp /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf /etc/php/7.0/fpm/pool.d/api-${DOMAIN}.conf
 
-sed -i "s/\[$DOMAIN\]/\[API-DOMAIN\]//" /etc/php/7.0/fpm/pool.d/api-${DOMAIN}.conf
+sed -i "s/\[$DOMAIN\]/\[API-DOMAIN\]/" /etc/php/7.0/fpm/pool.d/api-${DOMAIN}.conf
 
 #sed delimiters are not a fixed character -- pipe symbol used to avoid escaping path in substitution
 sed -i "s|listen =.*|listen = $PROJECTROOT/sockets/api-$DOMAIN.sock|" /etc/php/7.0/fpm/pool.d/api-${DOMAIN}.conf

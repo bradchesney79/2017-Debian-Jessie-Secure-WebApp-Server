@@ -303,6 +303,33 @@ use App\Src\Utility;
 //use Monolog\Logger;
 //use Monolog\Handler\StreamHandler;
 
+  public function __construct(int $userid) {
+    // on instantiating a user object-- just populate all the data from users. Need most of it for many things.
+      if(isset($userid)) {
+          $basicUserDetailsQuery = new UserheadQuery();
+          $basicUserData = $basicUserDetailsQuery->create()->filterByUserid($userid)->find()->getData();
+
+/*
+
+          | userid         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+        | active         | char(1)          | YES  |     | NULL    |                |
+        | userType       | int(1)           | NO   |     | 0       |                |
+        | fname          | char(50)         | YES  |     | NULL    |                |
+        | nickname       | char(50)         | YES  |     | NULL    |                |
+        | lname          | char(50)         | YES  |     | NULL    |                |
+        | stateInFlux    | int(10) unsigned | YES  |     | NULL    |                |
+        | password       | char(255)        | YES  |     | NULL    |                |
+        | sessionStart   | int(10) unsigned | YES  |     | NULL    |                |
+        | sessionRenewal | int(10) unsigned | YES  |     | NULL    |                |
+        | myCredits      | decimal(10,2)    | YES  |     | NULL    |                |
+        | peerCredits    | decimal(10,2)    | YES  |     | NULL    |                |
+        | lastModified
+//*/
+
+      }
+  }
+
+
 $email = trim(str_replace("\xc2\xa0", ' ', $_POST['email']));
 $password = trim(str_replace("\xc2\xa0", ' ', $_POST['password']));
 
