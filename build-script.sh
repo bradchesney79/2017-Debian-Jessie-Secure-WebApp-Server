@@ -54,7 +54,7 @@ printf "\n########## INSTALL NGINX ###\n"
 
 printf "\n########## INSTALL MYSQL ###\n"
 
-#. /root/bin/scripts/00800-install-and-configure-mysql.sh
+. /root/bin/scripts/00800-install-and-configure-mysql.sh
 
 printf "\n########## CONFIGURE DEVELOPMENT INSTANCE PACKAGES ###\n"
 
@@ -70,15 +70,15 @@ printf "\n########## CONFIGURE NGINX AND PHP-FPM ###\n\n"
 
 printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n"
 
-#. /root/bin/scripts/01300-install-dev-tools.sh
+. /root/bin/scripts/01300-install-dev-tools.sh
 
 printf "\n########## INSTALL AND CONFIGURE MAIL ###\n"
 
-#. /root/bin/scripts/01400-install-and-configure-system-mail.sh
+. /root/bin/scripts/01400-install-and-configure-system-mail.sh
 
 printf "\n########## INSTALL AND CONFIGURE SYSSTAT ###\n"
 
-#. /root/bin/scripts/01600-install-and-configure-sysstat.sh
+. /root/bin/scripts/01600-install-and-configure-sysstat.sh
 #sed -i "s/ENABLED=\"false\"/ENABLED=\"true\"/" /etc/default/sysstat
 
 printf "\n########## CLEAN UP ###\n"

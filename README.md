@@ -48,8 +48,6 @@ TARGETEMAIL=<your email with the junk email service>
 
 TODO:
 
-finish configuring sentinel
-
 configure global webdev resources like composer, node, fonts to run tests & builds
 
 improve troubleshooting resources
@@ -57,8 +55,6 @@ improve troubleshooting resources
 remedy broken GUI SFTP -- works fine CLI
 
 update troubleshooting resources on github
-
-improve readability
 
 break into modular Ansible scripts
 
