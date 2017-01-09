@@ -22,6 +22,10 @@ printf "\n******/root/bin/setup.conf******\n" >> /root/report/build-report.txt
 
 printf "\n########## CONFIGURE THE HOSTNAME & HOSTS OVERRIDES ###\n"
 
+. /root/bin/scripts/00000-make-environment-variables-persist.sh
+
+printf "\n########## CONFIGURE THE HOSTNAME & HOSTS OVERRIDES ###\n"
+
 . /root/bin/scripts/00100-configure-hostname.sh
 
 printf "\n########## SET THE TIMEZONE & TIME ###\n\n"

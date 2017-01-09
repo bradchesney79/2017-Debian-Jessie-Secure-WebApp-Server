@@ -1,5 +1,28 @@
 printf "\n\n##### Beginning 01700-install-back-end-assets.sh\n\n" >> /root/report/build-report.txt
 
+printf "\n## CONVERT BASH VARIABLES TO PERSISTENT VARIABLES AVAILABLE TO PHP\n\n"
+
+printf "\nHOSTNAME=$HOSTNAME" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+
+printf "\nDOMAIN=$DOMAIN" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+
+printf "\nHOSTINGSERV=$HOSTINGSERV" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+
+printf "\nDEV=$DEV" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+
+printf "\nTARGETEMAIL=$TARGETEMAIL" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+
+printf "\nCOUNTRY=$COUNTRY" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nSTATE=$STATE" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nLOCALITY=$LOCALITY" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nORGANIZATION=$ORGANIZATION" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nORGANIZATIONALUNIT=$ORGANIZATIONALUNIT" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+
+printf "\nDEFAULTSITEDBUSER=$DEFAULTSITEDBUSER" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nDEFAULTSITEDBPASSWORD=$DEFAULTSITEDBPASSWORD" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nPROJECTDBHOST=$PROJECTDBHOST" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nSENTINELDBHOST=$SENTINELDBHOST" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+
 printf "\n## INSTALL PHP COMPOSER\n\n"
 
 EXPECTED_SIGNATURE=$(wget https://composer.github.io/installer.sig -O - -q)
@@ -103,7 +126,10 @@ CREATE TABLE `$PROJECTDB.phones` (
   `number` smallint(6) DEFAULT NULL COMMENT 'The four numbers that make a phone number individual',
   `extention` char(80) DEFAULT NULL COMMENT 'Extension information about the phone number',
   `lastModified` int(10) unsigned DEFAULT NULL COMMENT 'This field is used to track the last change in the logs',
-  PRIMARY KEY (`phonesid`)
+  PRIMARY KEY (`phonesid`),
+  CONSTRAINT `phones_userid`
+    FOREIGN KEY (`userid`)
+    REFERENCES `$PROJECTDB`.`user` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='the table with US format phone numbers';"
 
 
@@ -220,10 +246,10 @@ class Initpropel {
     public function __construct()
     {
         $capsuleConfig = ['driver' => 'mysql',
-                'host' => get_cfg_var(PROJECTDBHOST),
-                'database' => '$SENTINELDB',
-                'username' => '$DEFAULTSITEDBUSER',
-                'password' => '$DEFAULTSITEDBPASSWORD',
+                'host' => get_cfg_var('PROJECTDBHOST'),
+                'database' => get_cfg_var('SENTINELDB'),
+                'username' => get_cfg_var('DEFAULTSITEDBUSER'),
+                'password' => get_cfg_var('DEFAULTSITEDBPASSWORD'),
                 'charset' => 'utf8',
                 'collation' => 'utf8_unicode_ci'
         ];
@@ -262,12 +288,17 @@ class Initpropel {
 EOF
 
 cat <<EOF > $PROJECTROOT/app/src/user.php
+<?php namespace App/Src
+
 // Include the composer autoload file
 require $PROJECTROOT/vendor/autoload.php
 
 use Propel\Common\Config\ConfigurationManager;
 use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\Propel;
+
+use Firebase\JWT;
+use App\Src\Utility;
 
 //use Monolog\Logger;
 //use Monolog\Handler\StreamHandler;
