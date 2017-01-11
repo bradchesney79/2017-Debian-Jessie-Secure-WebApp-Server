@@ -100,7 +100,7 @@ CREATE TABLE ~$PROJECTDB.emails~ (
   PRIMARY KEY (~emailsid~),
   CONSTRAINT ~emails_userid~
     FOREIGN KEY (~userid~)
-    REFERENCES ~$PROJECTDB~.~user~ (~userid~)
+    REFERENCES ~$PROJECTDB~.~users~ (~userid~)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This is THE emails table';
 
 CREATE TABLE ~$PROJECTDB.phones~ (
@@ -117,7 +117,7 @@ CREATE TABLE ~$PROJECTDB.phones~ (
   PRIMARY KEY (~phonesid~),
   CONSTRAINT ~phones_userid~
     FOREIGN KEY (~userid~)
-    REFERENCES ~$PROJECTDB~.~user~ (~userid~)
+    REFERENCES ~$PROJECTDB~.~users~ (~userid~)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='the table with US format phone numbers';
 EOF
 
