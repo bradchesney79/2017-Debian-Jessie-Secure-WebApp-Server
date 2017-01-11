@@ -74,8 +74,7 @@ mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
 
 mkdir -p /root/sql
 
-cat <<EOF > /root/sql/schema.sql
-CREATE TABLE `$PROJECTDB.users` (
+printf "CREATE TABLE `$PROJECTDB.users` (
   `userid` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'This is the be all and end all id, this is what identifies our user in our system.',
   `active` char(1) DEFAULT NULL,
   `fname` char(50) DEFAULT NULL COMMENT 'This is the user''s first name, birth certificate/legal name stuff',
@@ -104,7 +103,6 @@ CREATE TABLE `$PROJECTDB.phones` (
   CONSTRAINT `phones_userid`
     FOREIGN KEY (`userid`)
     REFERENCES `$PROJECTDB`.`user` (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='the table with US format phone numbers';
-EOF
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='the table with US format phone numbers';" > /root/sql/schema.sql
 
 mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/schema.sql
