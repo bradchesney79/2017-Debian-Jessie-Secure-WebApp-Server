@@ -75,6 +75,8 @@ mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
 mkdir -p /root/sql
 
 cat <<EOF > /root/sql/schema.sql
+USE $PROJECTDB;
+
 CREATE TABLE ~$PROJECTDB.users~ (
   ~userid~ int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'This is the be all and end all id, this is what identifies our user in our system.',
   ~active~ char(1) DEFAULT NULL,
