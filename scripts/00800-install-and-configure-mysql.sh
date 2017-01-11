@@ -114,7 +114,7 @@ CREATE TABLE emails (
 
 CREATE TABLE phones (
   phonesid int unsigned NOT NULL AUTO_INCREMENT,
-  userid int DEFAULT NULL COMMENT 'The id that ties the phone to a user',
+  userid int unsigned DEFAULT NULL COMMENT 'The id that ties the phone to a user',
   phoneType enum('landline','mobile','multi-ring','fax','tdd-tty','other') DEFAULT NULL COMMENT 'What type of device or endpoint is this number representing',
   sms char(1) DEFAULT NULL COMMENT 'Can this phone receive sms entries? y, n, or NULL=n',
   title char(80) DEFAULT NULL COMMENT 'What the phone is to display to the user',
