@@ -11,7 +11,7 @@ if [ "$DEV" = "true" ]
  
 printf "\n## PUT INFO.PHP IN THE HTTPSWEBROOT ###\n"
     
-cat <<EOF > $HTTPSWEBROOT
+cat <<EOF > $HTTPSWEBROOT/info.php
 <?php
 phpinfo();
 ?>
