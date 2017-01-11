@@ -34,6 +34,10 @@ mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "CREATE USER 'backup'@'localhost' 
 
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT SELECT, SHOW VIEW, RELOAD, REPLICATION CLIENT, EVENT, TRIGGER ON *.* TO 'backup'@'localhost';"
 
+printf "\n## MAKE PRIVILEGES CHANGES LIVE ONCE ###\n"
+
+mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
+
 printf "\n## START SETTING UP SUPPORTING SYSTEM THINGS\n\n"
 
 cd $PROJECTROOT
@@ -47,8 +51,6 @@ mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON $SENTINEL
 
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON $PROJECTDB.* TO '$DEFAULTSITEDBUSER'@'$PROJECTDBHOST' IDENTIFIED BY '$DEFAULTSITEDBPASSWORD';"
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON $SENTINELDB.* TO '$DEFAULTSITEDBUSER'@'$SENTINELDBHOST' IDENTIFIED BY '$DEFAULTSITEDBPASSWORD';"
-
-mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
 
 printf "\n## OUTPUT THE COMMANDS ###\n"
 printf "\n\n
@@ -64,12 +66,15 @@ mysql -u\"$DBROOTUSER\" -p\"$DBROOTPASSWORD\" <<< \"GRANT ALL PRIVILEGES ON $SEN
 mysql -u\"$DBROOTUSER\" -p\"$DBROOTPASSWORD\" <<< \"FLUSH PRIVILEGES;\"
 \n\n"
 
+printf "\n## MAKE PRIVILEGES CHANGES LIVE TWICE ###\n"
+
+mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
+
 # Fill the database with data structure goodness
 
 mkdir -p /root/sql
 
 cat <<EOF > /root/sql/schema.sql
-
 CREATE TABLE `$PROJECTDB.users` (
   `userid` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'This is the be all and end all id, this is what identifies our user in our system.',
   `active` char(1) DEFAULT NULL,
@@ -103,7 +108,3 @@ CREATE TABLE `$PROJECTDB.phones` (
 EOF
 
 mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/schema.sql
-
-printf "\n## MAKE PRIVILEGES CHANGES LIVE ###\n"
-
-mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
