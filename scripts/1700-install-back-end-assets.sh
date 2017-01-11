@@ -89,17 +89,20 @@ mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "CREATE DATABASE $PROJECTDB;"
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "CREATE DATABASE $SENTINELDB;"
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON $PROJECTDB.* TO '$USERID1001'@'$PROJECTDBHOST' IDENTIFIED BY '$USERID1001PASSWORD' WITH GRANT OPTION;"
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON $SENTINELDB.* TO '$USERID1001'@'$SENTINELDBHOST' IDENTIFIED BY '$USERID1001PASSWORD' WITH GRANT OPTION;"
-mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
+
 
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON $PROJECTDB.* TO '$DEFAULTSITEDBUSER'@'$PROJECTDBHOST' IDENTIFIED BY '$DEFAULTSITEDBPASSWORD';"
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON $SENTINELDB.* TO '$DEFAULTSITEDBUSER'@'$SENTINELDBHOST' IDENTIFIED BY '$DEFAULTSITEDBPASSWORD';"
 
-
+mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
 
 
 # Fill the database with data structure goodness
 
-mysql -u"$USERID1001" -p"$USERID1001PASSWORD" <<< "
+mkdir -p /root/sql
+
+cat <<EOF > /root/sql/schema.sql
+
 CREATE TABLE `$PROJECTDB.users` (
   `userid` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'This is the be all and end all id, this is what identifies our user in our system.',
   `active` char(1) DEFAULT NULL,
@@ -114,7 +117,6 @@ CREATE TABLE `$PROJECTDB.users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This table is what it is all about.';"
 
 
-mysql -u"$USERID1001" -p"$USERID1001PASSWORD" <<< "
 CREATE TABLE `$PROJECTDB.phones` (
   `phonesid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `userid` int(11) DEFAULT NULL COMMENT 'The id that ties the phone to a user',
@@ -131,11 +133,13 @@ CREATE TABLE `$PROJECTDB.phones` (
     FOREIGN KEY (`userid`)
     REFERENCES `$PROJECTDB`.`user` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='the table with US format phone numbers';"
+EOF
 
+mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/schema.sql
 
 # Run the sentinel SQL scripts
 
-mysql mysql -u"$USERID1001" -p"$USERID1001PASSWORD" "$SENTINELDB" < $PROJECTROOT/vendor/cartalyst/sentinel/schema/mysql-5.6+.sql
+mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" "$SENTINELDB" < $PROJECTROOT/vendor/cartalyst/sentinel/schema/mysql-5.6+.sql
 
 cd $PROJECTROOT/dal
 $PROJECTROOT/vendor/propel/propel/bin/propel reverse "mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$USERID1001;password=$USERID1001PASSWORD" --output-dir=$PROJECTROOT/dal/config
