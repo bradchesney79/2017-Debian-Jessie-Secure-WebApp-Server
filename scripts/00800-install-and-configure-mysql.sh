@@ -77,47 +77,109 @@ mkdir -p /root/sql
 cat <<EOF > /root/sql/schema.sql
 USE $PROJECTDB;
 
-CREATE TABLE ~$PROJECTDB.users~ (
-  ~userid~ int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'This is the be all and end all id, this is what identifies our user in our system.',
+
+SET foreign_key_checks = 0;
+
+
+
+CREATE TABLE users (
+  userid int unsigned NOT NULL AUTO_INCREMENT COMMENT 'This is the be all and end all id, this is what identifies our user in our system.',
+  active char(1) DEFAULT NULL COMMENT 'Is this person active or "deleted"? y, n, or NULL=n',
+  fname char(50) DEFAULT NULL COMMENT 'This is the user''s first name, birth certificate/legal name stuff',
+  nickname char(50) DEFAULT NULL COMMENT 'This is the nickname that a user would prefer to use in place of a first name-- which our app will respect',
+  lname char(50) DEFAULT NULL COMMENT 'The last name of the user',
+  password char(255) DEFAULT NULL COMMENT '--NOT USED-- This field stores the password hash particulars / salted hash',
+  sessionStart int unsigned DEFAULT NULL COMMENT 'When the user initially ''logged in'' and had a successful authentication as a timestamp',
+  sessionRenewal int unsigned DEFAULT NULL COMMENT 'This is an activity that extends the active sesion as a timestamp',
+  lastModified int unsigned DEFAULT NULL COMMENT 'This field stores the last change for searching in the logs',
+  PRIMARY KEY (userid)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This table is what it is all about.';
+
+CREATE TABLE emails (
+  emailsid int unsigned NOT NULL AUTO_INCREMENT,
+  userid int unsigned DEFAULT NULL COMMENT 'The foreign key id',
+  title char(80) DEFAULT NULL COMMENT 'What the email is to display',
+  account char(70) DEFAULT NULL COMMENT 'The part of the account before the @ sign',
+  host char(255) DEFAULT NULL COMMENT 'The fqdn, hostname, or IP of the email server',
+  lastModified int unsigned DEFAULT NULL COMMENT 'This field is used to track the last change in the logs',
+  PRIMARY KEY (emailsid),
+  KEY emails_account_idx (account),
+  KEY emails_host_idx (host),
+  CONSTRAINT emails_userid
+    FOREIGN KEY (userid)
+    REFERENCES users (userid)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This is THE emails table';
+
+CREATE TABLE phones (
+  phonesid int unsigned NOT NULL AUTO_INCREMENT,
+  userid int DEFAULT NULL COMMENT 'The id that ties the phone to a user',
+  phoneType enum('landline','mobile','multi-ring','fax','tdd-tty','other') DEFAULT NULL COMMENT 'What type of device or endpoint is this number representing',
+  sms char(1) DEFAULT NULL COMMENT 'Can this phone receive sms entries? y, n, or NULL=n',
+  title char(80) DEFAULT NULL COMMENT 'What the phone is to display to the user',
+  areaCode smallint DEFAULT NULL COMMENT 'The area code of the phone number',
+  prefix smallint DEFAULT NULL COMMENT 'The phone number prefix',
+  number smallint DEFAULT NULL COMMENT 'The four numbers that make a phone number individual',
+  extention char(80) DEFAULT NULL COMMENT 'Extension information about the phone number',
+  lastModified int unsigned DEFAULT NULL COMMENT 'This field is used to track the last change in the logs',
+  PRIMARY KEY (phonesid),
+  CONSTRAINT phones_userid
+    FOREIGN KEY (userid)
+    REFERENCES users (userid)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='the table with US format phone numbers';
+
+SET foreign_key_checks = 1;
+EOF
+
+cat <<EOF > /root/sql/schema.sql.bak
+USE $PROJECTDB;
+
+CREATE TABLE ~users~ (
+  ~userid~ int unsigned NOT NULL AUTO_INCREMENT COMMENT 'This is the be all and end all id, this is what identifies our user in our system.',
   ~active~ char(1) DEFAULT NULL,
   ~fname~ char(50) DEFAULT NULL COMMENT 'This is the user''s first name, birth certificate/legal name stuff',
   ~nickname~ char(50) DEFAULT NULL COMMENT 'This is the nickname that a user would prefer to use in place of a first name-- which our app will respect',
   ~lname~ char(50) DEFAULT NULL COMMENT 'The last name of the user',
-  ~password~ char(255) DEFAULT NULL COMMENT 'This field stores the password hash particulars / salted hash',
-  ~sessionStart~ int(10) unsigned DEFAULT NULL COMMENT 'When the user initially ''logged in'' and had a successful authentication as a timestamp',
-  ~sessionRenewal~ int(10) unsigned DEFAULT NULL COMMENT 'This is an activity that extends the active sesion as a timestamp',
-  ~lastModified~ int(10) unsigned DEFAULT NULL COMMENT 'This field stores the last change for searching in the logs',
+  ~password~ char(255) DEFAULT NULL COMMENT '--NOT USED-- This field stores the password hash particulars / salted hash',
+  ~sessionStart~ int unsigned DEFAULT NULL COMMENT 'When the user initially ''logged in'' and had a successful authentication as a timestamp',
+  ~sessionRenewal~ int unsigned DEFAULT NULL COMMENT 'This is an activity that extends the active sesion as a timestamp',
+  ~lastModified~ int unsigned DEFAULT NULL COMMENT 'This field stores the last change for searching in the logs',
   PRIMARY KEY (~userid~)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This table is what it is all about.';
 
-CREATE TABLE ~$PROJECTDB.emails~ (
-  ~emailsid~ int(10) unsigned NOT NULL AUTO_INCREMENT,
-  ~userid~ int(10) unsigned DEFAULT NULL COMMENT 'The foreign key id',
+CREATE TABLE ~emails~ (
+  ~emailsid~ int unsigned NOT NULL AUTO_INCREMENT,
+  ~userid~ int unsigned DEFAULT NULL COMMENT 'The foreign key id',
   ~title~ char(80) DEFAULT NULL COMMENT 'What the email is to display',
   ~account~ char(70) DEFAULT NULL COMMENT 'The part of the account before the @ sign',
   ~host~ char(255) DEFAULT NULL COMMENT 'The fqdn, hostname, or IP of the email server',
-  ~lastModified~ int(10) unsigned DEFAULT NULL COMMENT 'This field is used to track the last change in the logs',
+  ~lastModified~ int unsigned DEFAULT NULL COMMENT 'This field is used to track the last change in the logs',
   PRIMARY KEY (~emailsid~),
+  KEY ~emails_account_idx~ (~account~),
+  KEY ~emails_host_idx~ (~host~),
   CONSTRAINT ~emails_userid~
     FOREIGN KEY (~userid~)
-    REFERENCES ~$PROJECTDB~.~users~ (~userid~)
+    REFERENCES ~users~ (~userid~)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This is THE emails table';
 
-CREATE TABLE ~$PROJECTDB.phones~ (
-  ~phonesid~ int(10) unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE ~phones~ (
+  ~phonesid~ int unsigned NOT NULL AUTO_INCREMENT,
   ~userid~ int(11) DEFAULT NULL COMMENT 'The id that ties the phone to a user',
   ~phoneType~ enum('landline','mobile','multi-ring','fax','tdd-tty','other') DEFAULT NULL COMMENT 'What type of device or endpoint is this number representing',
   ~sms~ char(1) DEFAULT NULL COMMENT 'Can this phone receive sms entries',
   ~title~ char(80) DEFAULT NULL COMMENT 'What the phone is to display to the user',
-  ~areaCode~ smallint(6) DEFAULT NULL COMMENT 'The area code of the phone number',
-  ~prefix~ smallint(6) DEFAULT NULL COMMENT 'The phone number prefix',
-  ~number~ smallint(6) DEFAULT NULL COMMENT 'The four numbers that make a phone number individual',
+  ~areaCode~ smallint DEFAULT NULL COMMENT 'The area code of the phone number',
+  ~prefix~ smallint DEFAULT NULL COMMENT 'The phone number prefix',
+  ~number~ smallint DEFAULT NULL COMMENT 'The four numbers that make a phone number individual',
   ~extention~ char(80) DEFAULT NULL COMMENT 'Extension information about the phone number',
-  ~lastModified~ int(10) unsigned DEFAULT NULL COMMENT 'This field is used to track the last change in the logs',
+  ~lastModified~ int unsigned DEFAULT NULL COMMENT 'This field is used to track the last change in the logs',
   PRIMARY KEY (~phonesid~),
   CONSTRAINT ~phones_userid~
     FOREIGN KEY (~userid~)
-    REFERENCES ~$PROJECTDB~.~users~ (~userid~)
+    REFERENCES ~users~ (~userid~)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='the table with US format phone numbers';
 EOF
 
