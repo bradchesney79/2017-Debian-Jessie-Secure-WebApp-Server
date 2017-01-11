@@ -86,7 +86,7 @@ CREATE TABLE `$PROJECTDB.users` (
   `sessionRenewal` int(10) unsigned DEFAULT NULL COMMENT 'This is an activity that extends the active sesion as a timestamp',
   `lastModified` int(10) unsigned DEFAULT NULL COMMENT 'This field stores the last change for searching in the logs',
   PRIMARY KEY (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This table is what it is all about.';"
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This table is what it is all about.';
 
 
 CREATE TABLE `$PROJECTDB.phones` (
@@ -104,7 +104,7 @@ CREATE TABLE `$PROJECTDB.phones` (
   CONSTRAINT `phones_userid`
     FOREIGN KEY (`userid`)
     REFERENCES `$PROJECTDB`.`user` (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='the table with US format phone numbers';"
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='the table with US format phone numbers';
 EOF
 
 mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/schema.sql
