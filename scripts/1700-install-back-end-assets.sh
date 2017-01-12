@@ -85,7 +85,7 @@ EOF
 mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" "$SENTINELDB" < $PROJECTROOT/vendor/cartalyst/sentinel/schema/mysql-5.6+.sql
 
 cd $PROJECTROOT/dal
-$PROJECTROOT/vendor/propel/propel/bin/propel reverse "mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$USERID1001;password=$USERID1001PASSWORD" --output-dir=$PROJECTROOT/dal/config
+$PROJECTROOT/vendor/propel/propel/bin/propel reverse "mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$DEFAULTSITEDBUSER;password=$DEFAULTSITEDBPASSWORD" --output-dir=$PROJECTROOT/dal/config
 
 #Configure the DSN and settings for the model classes generation
 
@@ -161,24 +161,24 @@ cat <<EOF > $PROJECTROOT/composer.json
     "autoload": {
         "psr-0": {
             "$PROJECTNAME\\Src": "app/src/",
-            "$PROJECTNAME\\Src\\Database": "app/src/database/",
-            "$PROJECTNAME\\Src\\Utility": "app/src/utility/"
+            "$PROJECTNAME\\Src\\Database": "app/src/Database/",
+            "$PROJECTNAME\\Src\\Utility": "app/src/Utility/"
 
         },
         "classmap": ["$PROJECTROOT/dal/generated-classes/"]
     },
     "autoload-dev": {
         "psr-0": {
-            "$PROJECTNAME\\Test": "app/test/"
+            "$PROJECTNAME\\Test": "app/Test/"
         }
     }
 }
 EOF
 
 
-mkdir -p $PROJECTROOT/app/src/database
-mkdir -p $PROJECTROOT/app/src/utility
-mkdir -p $PROJECTROOT/app/test
+mkdir -p $PROJECTROOT/app/src/Database
+mkdir -p $PROJECTROOT/app/src/Utility
+mkdir -p $PROJECTROOT/app/Test
 
 cat <<EOF > $PROJECTROOT/app/src/database/initpropel.php
 <?php namespace App\Src\Database;
@@ -245,33 +245,88 @@ use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\Propel;
 
 use Firebase\JWT;
-use App\Src\Utility;
+use app\src\Utility;
 
 //use Monolog\Logger;
 //use Monolog\Handler\StreamHandler;
 
-  public function __construct(int $userid) {
+class User {
+
+  public userid;
+  public active;
+  public fname;
+  public lname;
+  public password;
+  public sessionStart;
+  public sessionRenewal;
+  public emails; //object list
+  public phones; //object list
+
+  public function __construct(int $userid = null, string $email = null) {
     // on instantiating a user object-- just populate all the data from users. Need most of it for many things.
-      if(isset($userid)) {
+      if(isset($userid) {
           $basicUserDetailsQuery = new UserheadQuery();
           $basicUserData = $basicUserDetailsQuery->create()->filterByUserid($userid)->find()->getData();
-
+      }
+      elseif(isset($email) && !isset($userid) {
+      
+      }
+      else {
+        // We got nothing to give to the clothing industry or there's been a mistake....
+      }
 /*
 
-          | userid         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
-        | active         | char(1)          | YES  |     | NULL    |                |
-        | userType       | int(1)           | NO   |     | 0       |                |
-        | fname          | char(50)         | YES  |     | NULL    |                |
-        | nickname       | char(50)         | YES  |     | NULL    |                |
-        | lname          | char(50)         | YES  |     | NULL    |                |
-        | stateInFlux    | int(10) unsigned | YES  |     | NULL    |                |
-        | password       | char(255)        | YES  |     | NULL    |                |
-        | sessionStart   | int(10) unsigned | YES  |     | NULL    |                |
-        | sessionRenewal | int(10) unsigned | YES  |     | NULL    |                |
-        | myCredits      | decimal(10,2)    | YES  |     | NULL    |                |
-        | peerCredits    | decimal(10,2)    | YES  |     | NULL    |                |
-        | lastModified
+mysql> describe users;
++----------------+------------------+------+-----+---------+----------------+
+| Field          | Type             | Null | Key | Default | Extra          |
++----------------+------------------+------+-----+---------+----------------+
+| userid         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| active         | char(1)          | YES  |     | NULL    |                |
+| fname          | char(50)         | YES  |     | NULL    |                |
+| nickname       | char(50)         | YES  |     | NULL    |                |
+| lname          | char(50)         | YES  |     | NULL    |                |
+| password       | char(255)        | YES  |     | NULL    |                |
+| sessionStart   | int(10) unsigned | YES  |     | NULL    |                |
+| sessionRenewal | int(10) unsigned | YES  |     | NULL    |                |
+| lastModified   | int(10) unsigned | YES  |     | NULL    |                |
++----------------+------------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+mysql> describe emails;
++--------------+------------------+------+-----+---------+----------------+
+| Field        | Type             | Null | Key | Default | Extra          |
++--------------+------------------+------+-----+---------+----------------+
+| emailsid     | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| userid       | int(10) unsigned | YES  | MUL | NULL    |                |
+| title        | char(80)         | YES  |     | NULL    |                |
+| account      | char(70)         | YES  | MUL | NULL    |                |
+| host         | char(255)        | YES  | MUL | NULL    |                |
+| lastModified | int(10) unsigned | YES  |     | NULL    |                |
++--------------+------------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> describe phones;
++--------------+----------------------------------------------------------------+------+-----+---------+----------------+
+| Field        | Type                                                           | Null | Key | Default | Extra          |
++--------------+----------------------------------------------------------------+------+-----+---------+----------------+
+| phonesid     | int(10) unsigned                                               | NO   | PRI | NULL    | auto_increment |
+| userid       | int(10) unsigned                                               | YES  | MUL | NULL    |                |
+| phoneType    | enum('landline','mobile','multi-ring','fax','tdd-tty','other') | YES  |     | NULL    |                |
+| sms          | char(1)                                                        | YES  |     | NULL    |                |
+| title        | char(80)                                                       | YES  |     | NULL    |                |
+| areaCode     | smallint(6)                                                    | YES  |     | NULL    |                |
+| prefix       | smallint(6)                                                    | YES  |     | NULL    |                |
+| number       | smallint(6)                                                    | YES  |     | NULL    |                |
+| extention    | char(80)                                                       | YES  |     | NULL    |                |
+| lastModified | int(10) unsigned                                               | YES  |     | NULL    |                |
++--------------+----------------------------------------------------------------+------+-----+---------+----------------+
+10 rows in set (0.00 sec)
+
+
+
 //*/
+
+    
 
       }
   }
@@ -280,6 +335,7 @@ use App\Src\Utility;
 $email = trim(str_replace("\xc2\xa0", ' ', $_POST['email']));
 $password = trim(str_replace("\xc2\xa0", ' ', $_POST['password']));
 
+}
 TODO: I STOPPED HERE
 EOF
 

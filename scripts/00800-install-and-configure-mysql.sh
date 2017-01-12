@@ -77,10 +77,7 @@ mkdir -p /root/sql
 cat <<EOF > /root/sql/schema.sql
 USE $PROJECTDB;
 
-
 SET foreign_key_checks = 0;
-
-
 
 CREATE TABLE users (
   userid int unsigned NOT NULL AUTO_INCREMENT COMMENT 'This is the be all and end all id, this is what identifies our user in our system.',
@@ -132,58 +129,29 @@ CREATE TABLE phones (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='the table with US format phone numbers';
 
 SET foreign_key_checks = 1;
+
+
 EOF
-
-cat <<EOF > /root/sql/schema.sql.bak
-USE $PROJECTDB;
-
-CREATE TABLE ~users~ (
-  ~userid~ int unsigned NOT NULL AUTO_INCREMENT COMMENT 'This is the be all and end all id, this is what identifies our user in our system.',
-  ~active~ char(1) DEFAULT NULL,
-  ~fname~ char(50) DEFAULT NULL COMMENT 'This is the user''s first name, birth certificate/legal name stuff',
-  ~nickname~ char(50) DEFAULT NULL COMMENT 'This is the nickname that a user would prefer to use in place of a first name-- which our app will respect',
-  ~lname~ char(50) DEFAULT NULL COMMENT 'The last name of the user',
-  ~password~ char(255) DEFAULT NULL COMMENT '--NOT USED-- This field stores the password hash particulars / salted hash',
-  ~sessionStart~ int unsigned DEFAULT NULL COMMENT 'When the user initially ''logged in'' and had a successful authentication as a timestamp',
-  ~sessionRenewal~ int unsigned DEFAULT NULL COMMENT 'This is an activity that extends the active sesion as a timestamp',
-  ~lastModified~ int unsigned DEFAULT NULL COMMENT 'This field stores the last change for searching in the logs',
-  PRIMARY KEY (~userid~)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This table is what it is all about.';
-
-CREATE TABLE ~emails~ (
-  ~emailsid~ int unsigned NOT NULL AUTO_INCREMENT,
-  ~userid~ int unsigned DEFAULT NULL COMMENT 'The foreign key id',
-  ~title~ char(80) DEFAULT NULL COMMENT 'What the email is to display',
-  ~account~ char(70) DEFAULT NULL COMMENT 'The part of the account before the @ sign',
-  ~host~ char(255) DEFAULT NULL COMMENT 'The fqdn, hostname, or IP of the email server',
-  ~lastModified~ int unsigned DEFAULT NULL COMMENT 'This field is used to track the last change in the logs',
-  PRIMARY KEY (~emailsid~),
-  KEY ~emails_account_idx~ (~account~),
-  KEY ~emails_host_idx~ (~host~),
-  CONSTRAINT ~emails_userid~
-    FOREIGN KEY (~userid~)
-    REFERENCES ~users~ (~userid~)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This is THE emails table';
-
-CREATE TABLE ~phones~ (
-  ~phonesid~ int unsigned NOT NULL AUTO_INCREMENT,
-  ~userid~ int(11) DEFAULT NULL COMMENT 'The id that ties the phone to a user',
-  ~phoneType~ enum('landline','mobile','multi-ring','fax','tdd-tty','other') DEFAULT NULL COMMENT 'What type of device or endpoint is this number representing',
-  ~sms~ char(1) DEFAULT NULL COMMENT 'Can this phone receive sms entries',
-  ~title~ char(80) DEFAULT NULL COMMENT 'What the phone is to display to the user',
-  ~areaCode~ smallint DEFAULT NULL COMMENT 'The area code of the phone number',
-  ~prefix~ smallint DEFAULT NULL COMMENT 'The phone number prefix',
-  ~number~ smallint DEFAULT NULL COMMENT 'The four numbers that make a phone number individual',
-  ~extention~ char(80) DEFAULT NULL COMMENT 'Extension information about the phone number',
-  ~lastModified~ int unsigned DEFAULT NULL COMMENT 'This field is used to track the last change in the logs',
-  PRIMARY KEY (~phonesid~),
-  CONSTRAINT ~phones_userid~
-    FOREIGN KEY (~userid~)
-    REFERENCES ~users~ (~userid~)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='the table with US format phone numbers';
-EOF
-
-# backtics bash trouble fixer-- at the expense of no tilde in $PROJECTDB name
-sed -i 's|~|`|g' /root/sql/schema.sql
 
 mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/schema.sql
+
+cat <<EOF > /root/sql/testdata.sql
+USE $PROJECTDB;
+
+SET foreign_key_checks = 0;
+
+INSERT INTO users (userid, active, fname, nickname, lname, password, sessionsStart, sessionRenewal, lastModified) VALUES (NULL, 'y', 'Brad', 'CAB', 'Chesney', NULL, UNIX_TIMESTAMP(NOW()), UNIX_TIMESTAMP(NOW()), UNIX_TIMESTAMP(NOW()));
+
+INSERT INTO emails (emailsid, userid, title, account, host, lastModified) VALUES (NULL, 1, 'My gMail', 'bradchesney79', 'gmail.com', UNIX_TIMESTAMP(NOW())),(NULL, 1, 'Made Up gMail', 'brianchesney81', 'gmail.com', UNIX_TIMESTAMP(NOW()));
+
+
+INSERT INTO phones (phonesid, userid, phoneType, sms, title, areaCode, prefix, number, extention,
+
+SET foreign_key_checks = 1;
+
+
+EOF
+
+mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/testData.sql
+
+
