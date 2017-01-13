@@ -145,13 +145,12 @@ INSERT INTO users (userid, active, fname, nickname, lname, password, sessionsSta
 INSERT INTO emails (emailsid, userid, title, account, host, lastModified) VALUES (NULL, 1, 'My gMail', 'bradchesney79', 'gmail.com', UNIX_TIMESTAMP(NOW())),(NULL, 1, 'Made Up gMail', 'brianchesney81', 'gmail.com', UNIX_TIMESTAMP(NOW()));
 
 
-INSERT INTO phones (phonesid, userid, phoneType, sms, title, areaCode, prefix, number, extention, lastModified) VALUES (NULL, 1, 'mobile', 'y', 'Primary Mobile', 440, 954, 0151, NULL,  UNIX_TIMESTAMP(NOW())),(NULL, 1, 'landline', 'n', 'Fake Landline', 123, 456, 7890, NULL,  UNIX_TIMESTAMP(NOW()))
+INSERT INTO phones (phonesid, userid, phoneType, sms, title, areaCode, prefix, number, extention, lastModified) VALUES (NULL, 1, 'mobile', 'y', 'Primary Mobile', 440, 954, 0151, NULL,  UNIX_TIMESTAMP(NOW())),(NULL, 1, 'landline', 'n', 'Fake Landline', 123, 456, 7890, NULL,  UNIX_TIMESTAMP(NOW()));
 
 SET foreign_key_checks = 1;
 
-
 EOF
 
-mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/testData.sql
+mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/testdata.sql
 
 
