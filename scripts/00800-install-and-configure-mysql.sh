@@ -140,7 +140,7 @@ USE $PROJECTDB;
 
 SET foreign_key_checks = 0;
 
-INSERT INTO users (userid, active, fname, nickname, lname, password, sessionsStart, sessionRenewal, lastModified) VALUES (NULL, 'y', 'Brad', 'CAB', 'Chesney', NULL, UNIX_TIMESTAMP(NOW()), UNIX_TIMESTAMP(NOW()), UNIX_TIMESTAMP(NOW()));
+INSERT INTO users (userid, active, fname, nickname, lname, password, sessionStart, sessionRenewal, lastModified) VALUES (NULL, 'y', 'Brad', 'CAB', 'Chesney', NULL, UNIX_TIMESTAMP(NOW()), UNIX_TIMESTAMP(NOW()), UNIX_TIMESTAMP(NOW()));
 
 INSERT INTO emails (emailsid, userid, title, account, host, lastModified) VALUES (NULL, 1, 'My gMail', 'bradchesney79', 'gmail.com', UNIX_TIMESTAMP(NOW())),(NULL, 1, 'Made Up gMail', 'brianchesney81', 'gmail.com', UNIX_TIMESTAMP(NOW()));
 
