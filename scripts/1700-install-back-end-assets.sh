@@ -234,6 +234,62 @@ class Initpropel {
 
 EOF
 
+if [ "$DEV" = "true" ]
+    then
+
+# build user object based on DB data related to the user
+
+printf "
+Once logged in to mysql client...
+
+mysql> describe users;
++----------------+------------------+------+-----+---------+----------------+
+| Field          | Type             | Null | Key | Default | Extra          |
++----------------+------------------+------+-----+---------+----------------+
+| userid         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| active         | char(1)          | YES  |     | NULL    |                |
+| fname          | char(50)         | YES  |     | NULL    |                |
+| nickname       | char(50)         | YES  |     | NULL    |                |
+| lname          | char(50)         | YES  |     | NULL    |                |
+| password       | char(255)        | YES  |     | NULL    |                |
+| sessionStart   | int(10) unsigned | YES  |     | NULL    |                |
+| sessionRenewal | int(10) unsigned | YES  |     | NULL    |                |
+| lastModified   | int(10) unsigned | YES  |     | NULL    |                |
++----------------+------------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+mysql> describe emails;
++--------------+----------------------------------------------------------------------+------+-----+---------+----------------+
+| Field        | Type                                                                 | Null | Key | Default | Extra          |
++--------------+----------------------------------------------------------------------+------+-----+---------+----------------+
+| emailsid     | int(10) unsigned                                                     | NO   | PRI | NULL    | auto_increment |
+| userid       | int(10) unsigned                                                     | YES  | MUL | NULL    |                |
+| title        | char(80)                                                             | YES  |     | NULL    |                |
+| account      | char(70)                                                             | YES  | MUL | NULL    |                |
+| host         | char(255)                                                            | YES  | MUL | NULL    |                |
+| level        | enum('all','marketing','information','notifications','legal','none') | YES  |     | NULL    |                |
+| lastModified | int(10) unsigned                                                     | YES  |     | NULL    |                |
++--------------+----------------------------------------------------------------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> describe phones;
++--------------+----------------------------------------------------------------+------+-----+---------+----------------+
+| Field        | Type                                                           | Null | Key | Default | Extra          |
++--------------+----------------------------------------------------------------+------+-----+---------+----------------+
+| phonesid     | int(10) unsigned                                               | NO   | PRI | NULL    | auto_increment |
+| userid       | int(10) unsigned                                               | YES  | MUL | NULL    |                |
+| phoneType    | enum('landline','mobile','multi-ring','fax','tdd-tty','other') | YES  |     | NULL    |                |
+| sms          | char(1)                                                        | YES  |     | NULL    |                |
+| title        | char(80)                                                       | YES  |     | NULL    |                |
+| areaCode     | smallint(6)                                                    | YES  |     | NULL    |                |
+| prefix       | smallint(6)                                                    | YES  |     | NULL    |                |
+| number       | smallint(6)                                                    | YES  |     | NULL    |                |
+| extention    | char(80)                                                       | YES  |     | NULL    |                |
+| lastModified | int(10) unsigned                                               | YES  |     | NULL    |                |
++--------------+----------------------------------------------------------------+------+-----+---------+----------------+
+10 rows in set (0.00 sec)"
+fi
+
 cat <<EOF > $PROJECTROOT/app/src/user.php
 <?php namespace App/Src
 
@@ -281,55 +337,6 @@ class User {
       }
 }
 EOF      
-      /*
-
-mysql> describe users;
-+----------------+------------------+------+-----+---------+----------------+
-| Field          | Type             | Null | Key | Default | Extra          |
-+----------------+------------------+------+-----+---------+----------------+
-| userid         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
-| active         | char(1)          | YES  |     | NULL    |                |
-| fname          | char(50)         | YES  |     | NULL    |                |
-| nickname       | char(50)         | YES  |     | NULL    |                |
-| lname          | char(50)         | YES  |     | NULL    |                |
-| password       | char(255)        | YES  |     | NULL    |                |
-| sessionStart   | int(10) unsigned | YES  |     | NULL    |                |
-| sessionRenewal | int(10) unsigned | YES  |     | NULL    |                |
-| lastModified   | int(10) unsigned | YES  |     | NULL    |                |
-+----------------+------------------+------+-----+---------+----------------+
-9 rows in set (0.00 sec)
-
-mysql> describe emails;
-+--------------+------------------+------+-----+---------+----------------+
-| Field        | Type             | Null | Key | Default | Extra          |
-+--------------+------------------+------+-----+---------+----------------+
-| emailsid     | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
-| userid       | int(10) unsigned | YES  | MUL | NULL    |                |
-| title        | char(80)         | YES  |     | NULL    |                |
-| account      | char(70)         | YES  | MUL | NULL    |                |
-| host         | char(255)        | YES  | MUL | NULL    |                |
-| level        
-| lastModified | int(10) unsigned | YES  |     | NULL    |                |
-+--------------+------------------+------+-----+---------+----------------+
-6 rows in set (0.00 sec)
-
-mysql> describe phones;
-+--------------+----------------------------------------------------------------+------+-----+---------+----------------+
-| Field        | Type                                                           | Null | Key | Default | Extra          |
-+--------------+----------------------------------------------------------------+------+-----+---------+----------------+
-| phonesid     | int(10) unsigned                                               | NO   | PRI | NULL    | auto_increment |
-| userid       | int(10) unsigned                                               | YES  | MUL | NULL    |                |
-| phoneType    | enum('landline','mobile','multi-ring','fax','tdd-tty','other') | YES  |     | NULL    |                |
-| sms          | char(1)                                                        | YES  |     | NULL    |                |
-| title        | char(80)                                                       | YES  |     | NULL    |                |
-| areaCode     | smallint(6)                                                    | YES  |     | NULL    |                |
-| prefix       | smallint(6)                                                    | YES  |     | NULL    |                |
-| number       | smallint(6)                                                    | YES  |     | NULL    |                |
-| extention    | char(80)                                                       | YES  |     | NULL    |                |
-| lastModified | int(10) unsigned                                               | YES  |     | NULL    |                |
-+--------------+----------------------------------------------------------------+------+-----+---------+----------------+
-10 rows in set (0.00 sec)
-//*/
 
 cat <<EOF > "$APIWEBROOT/user/logout"
 EOF
