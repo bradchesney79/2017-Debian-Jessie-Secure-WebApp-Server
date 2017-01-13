@@ -70,6 +70,7 @@ printf "\n## MAKE PRIVILEGES CHANGES LIVE TWICE ###\n"
 
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
 
+
 # Fill the database with data structure goodness
 
 mkdir -p /root/sql
@@ -135,6 +136,9 @@ EOF
 
 mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/schema.sql
 
+if [ "$DEV" = "true" ]
+    then
+
 cat <<EOF > /root/sql/testdata.sql
 USE $PROJECTDB;
 
@@ -153,4 +157,4 @@ EOF
 
 mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/testdata.sql
 
-
+fi
