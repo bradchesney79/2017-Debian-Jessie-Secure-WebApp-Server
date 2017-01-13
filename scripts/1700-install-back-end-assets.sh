@@ -274,7 +274,14 @@ class User {
       else {
         // We got nothing to give to the clothing industry or there's been a mistake....
       }
-/*
+
+
+    
+
+      }
+}
+EOF      
+      /*
 
 mysql> describe users;
 +----------------+------------------+------+-----+---------+----------------+
@@ -301,6 +308,7 @@ mysql> describe emails;
 | title        | char(80)         | YES  |     | NULL    |                |
 | account      | char(70)         | YES  | MUL | NULL    |                |
 | host         | char(255)        | YES  | MUL | NULL    |                |
+| level        
 | lastModified | int(10) unsigned | YES  |     | NULL    |                |
 +--------------+------------------+------+-----+---------+----------------+
 6 rows in set (0.00 sec)
@@ -321,23 +329,35 @@ mysql> describe phones;
 | lastModified | int(10) unsigned                                               | YES  |     | NULL    |                |
 +--------------+----------------------------------------------------------------+------+-----+---------+----------------+
 10 rows in set (0.00 sec)
-
-
-
 //*/
 
-    
+cat <<EOF > "$APIWEBROOT/user/logout"
+EOF
+cat <<EOF > "$APIWEBROOT/user/register"
 
-      }
-  }
 
+EOF
+cat <<EOF > "$APIWEBROOT/user/activate"
+EOF
+cat <<EOF > "$APIWEBROOT/user/login"
 
 $email = trim(str_replace("\xc2\xa0", ' ', $_POST['email']));
 $password = trim(str_replace("\xc2\xa0", ' ', $_POST['password']));
 
 }
-TODO: I STOPPED HERE
+
 EOF
+
+cat <<EOF > "$APIWEBROOT/user/read"
+EOF
+
+cat <<EOF > "$APIWEBROOT/user/modify"
+EOF
+
+cat <<EOF > "$APIWEBROOT/user/remove"
+EOF  
+
+#TODO: I STOPPED HERE
 
 cat <<EOF > $PROJECTROOT/phpunit.xml
 <phpunit bootstrap="vendor/autoload.php"

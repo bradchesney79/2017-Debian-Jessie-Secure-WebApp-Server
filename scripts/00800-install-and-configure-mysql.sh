@@ -99,6 +99,7 @@ CREATE TABLE emails (
   title char(80) DEFAULT NULL COMMENT 'What the email is to display',
   account char(70) DEFAULT NULL COMMENT 'The part of the account before the @ sign',
   host char(255) DEFAULT NULL COMMENT 'The fqdn, hostname, or IP of the email server',
+  level enum('all','marketing','information','notifications','legal','none') DEFAULT NULL COMMENT 'Each use level excludes any broader scopes higher up',
   lastModified int unsigned DEFAULT NULL COMMENT 'This field is used to track the last change in the logs',
   PRIMARY KEY (emailsid),
   KEY emails_account_idx (account),
