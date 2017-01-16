@@ -73,6 +73,8 @@ mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"
 
 # Fill the database with data structure goodness
 
+printf "\n## CREATE A BASIC SCHEMA ###\n"
+
 mkdir -p /root/sql
 
 cat <<EOF > /root/sql/schema.sql
@@ -139,6 +141,8 @@ mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/schema.sql
 
 if [ "$DEV" = "true" ]
     then
+
+printf "\n## INSERT DUMMY DATA INTO DB TO TEST WITH ###\n"    
 
 cat <<EOF > /root/sql/testdata.sql
 USE $PROJECTDB;

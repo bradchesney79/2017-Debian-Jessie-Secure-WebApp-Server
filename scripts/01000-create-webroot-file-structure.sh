@@ -13,6 +13,7 @@ printf "\n## PREPARE DIRECTORY STRUCTURE FOR DEFAULT SITE\n"
 mkdir -p "$LOGDIR"
 mkdir -p "$PROJECTROOT/sockets"
 mkdir -p "$PROJECTROOT/tmp"
+mkdir -p "$PROJECTROOT/api/1"
 
 chown -R $USER:$USER $PROJECTROOT
 chmod -R 774 $PROJECTROOT
