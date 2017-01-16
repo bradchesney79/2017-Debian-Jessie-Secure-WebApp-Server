@@ -563,14 +563,8 @@ apt-get -y update
 
 printf "\n## UPGRADE THE SYSTEM\n\n"
 
-printf "upgrade\n"
 apt-get -y upgrade
-printf "dist-upgrade\n"
 apt-get -y dist-upgrade
-
-
-#apt-get -y dist-upgrade
-#apt-get -y upgrade
 
 printf "\n## INSTALL THE FIRST BATCHES OF PACKAGES ###\n"
 
@@ -578,7 +572,7 @@ printf "\n## INSTALL THE FIRST BATCHES OF PACKAGES ###\n"
 # Full list of intended packages
 #apt-get -y install sudo tcl perl python3 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git curl imagemagick
 
-apt-get -y install sudo perl python3 ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban curl
+apt-get -y install sudo perl python3 ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban curl expect
 
 printf "\n## CLEAN UP ###\n"
 
