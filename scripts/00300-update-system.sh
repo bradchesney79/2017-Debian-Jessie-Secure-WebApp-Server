@@ -563,6 +563,10 @@ apt-get -y update
 
 printf "\n## UPGRADE THE SYSTEM\n\n"
 
+printf "ca-certs\n"
+apt-get -qy upgrade ca-certificates
+printf "ca-certs done\n"
+
 apt-get -y dist-upgrade
 apt-get -y upgrade
 
