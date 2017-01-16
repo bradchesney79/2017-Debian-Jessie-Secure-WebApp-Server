@@ -559,7 +559,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 printf "\n## UPDATE THE SYSTEM ###\n"
 
-apt-get -qy update ca-certificates
+
 apt-get -y update
 
 printf "\n## DISABLING THE APT_LISTCHANGES_FRONTEND ###\n"
@@ -573,6 +573,7 @@ printf "\n## DISABLING THE APT_LISTCHANGES_FRONTEND ###\n"
 
 printf "\n## UPGRADE THE SYSTEM\n\n"
 
+apt-get -qy upgrade ca-certificates
 apt-get -y dist-upgrade
 apt-get -y upgrade
 
