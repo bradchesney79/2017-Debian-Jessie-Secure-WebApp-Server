@@ -563,9 +563,20 @@ apt-get -y update
 
 printf "\n## UPGRADE THE SYSTEM\n\n"
 
+printf "ca-certs\n"
+${EXPECT} <<EOF
+set timeout 120
+log_file -a /tmp/update-system.log
+spawn apt-get -y dist-upgrade
+expect {
+  timeout { send_user "\nUpdate didn't finish in time\n"; exit 1 }
+  eof { send_user "\nUpdate failed\n"; exit 1 }
+  "Stupid ca-certificates info that breaks noninteractive scripts"}
+send "q"
+EOF
+printf "ca-certs done\n"
 
-
-apt-get -y dist-upgrade
+#apt-get -y dist-upgrade
 apt-get -y upgrade
 
 printf "\n## INSTALL THE FIRST BATCHES OF PACKAGES ###\n"
