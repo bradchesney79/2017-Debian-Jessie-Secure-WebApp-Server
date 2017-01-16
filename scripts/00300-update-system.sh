@@ -554,8 +554,12 @@ AQkQjHGNO1By4fUUmwCbBYr2+bBEn/L2BOcnw9Z/QFWuhRMAoKVgCFm5fadQ3Afi
 #gpg --export -a 5072e1f5 > pubkey_mysql.asc
 #sudo apt-key add pubkey_mysql.asc
 
+printf "\n## SET DEBIAN_FRONTEND=noninteractive ###\n"
+export DEBIAN_FRONTEND=noninteractive
+
 printf "\n## UPDATE THE SYSTEM ###\n"
 
+apt-get -qy update ca-certificates
 apt-get -y update
 
 printf "\n## DISABLING THE APT_LISTCHANGES_FRONTEND ###\n"
@@ -565,7 +569,7 @@ printf "\n## DISABLING THE APT_LISTCHANGES_FRONTEND ###\n"
 #cp /etc/apt/listchanges.conf /etc/apt/listchanges.conf.bak
 #sed -i "s/frontend.*/frontend=none/g" /etc/apt/listchanges.conf
 
-apt-get remove apt-listchanges
+#apt-get remove apt-listchanges
 
 printf "\n## UPGRADE THE SYSTEM\n\n"
 
@@ -590,4 +594,4 @@ printf "\n## RE-ENABLING THE APT_LISTCHANGES_FRONTEND ###\n"
 
 #mv /etc/apt/listchanges.conf.bak /etc/apt/listchanges.conf
 
-apt-get -y install apt-listchanges
+#apt-get -y install apt-listchanges

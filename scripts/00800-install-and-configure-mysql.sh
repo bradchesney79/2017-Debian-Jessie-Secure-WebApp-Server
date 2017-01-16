@@ -2,8 +2,6 @@ printf "\n\n##### Beginning 00800-install-and-configure-mysql.sh\n\n" >> /root/r
 
 printf "\n## CONFIGRING MYSQL DEBCONF ###\n"
 
-export DEBIAN_FRONTEND="noninteractive"
-
 apt-get install -y debconf debconf-utils
 
 debconf-set-selections <<<  "mysql-server mysql-server/root_password select $DBROOTPASSWORD" 
