@@ -561,12 +561,10 @@ printf "\n## UPDATE THE SYSTEM ###\n"
 
 apt-get -y update
 
-
-
 printf "\n## UPGRADE THE SYSTEM\n\n"
 
 printf "ca-certs\n"
-apt-get -qqy --ignore-hold dist-upgrade
+apt-get -y --ignore-hold dist-upgrade
 printf "ca-certs done\n"
 
 #apt-get -y dist-upgrade
