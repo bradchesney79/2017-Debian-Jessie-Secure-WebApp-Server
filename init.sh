@@ -2,7 +2,7 @@
 
 ####### INIT SCRIPT ####
 
-apt-get upgrade && apt-get -y dist-upgrade
+apt-get update && apt-get dist-upgrade
 
 mkdir -p /root/report
 
