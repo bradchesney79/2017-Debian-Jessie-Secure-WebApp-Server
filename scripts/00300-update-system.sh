@@ -559,21 +559,10 @@ export DEBIAN_FRONTEND=noninteractive
 
 printf "\n## UPDATE THE SYSTEM ###\n"
 
-
 apt-get -y update
-
-printf "\n## DISABLING THE APT_LISTCHANGES_FRONTEND ###\n"
-
-# ca-certificates update breaks non-interactive script with notification
-
-#cp /etc/apt/listchanges.conf /etc/apt/listchanges.conf.bak
-#sed -i "s/frontend.*/frontend=none/g" /etc/apt/listchanges.conf
-
-#apt-get remove apt-listchanges
 
 printf "\n## UPGRADE THE SYSTEM\n\n"
 
-apt-get -qy upgrade ca-certificates
 apt-get -y dist-upgrade
 apt-get -y upgrade
 
@@ -590,9 +579,3 @@ printf "\n## CLEAN UP ###\n"
 printf "\nFirst autoremove of packages\n\n"
 
 apt-get -y autoremove
-
-printf "\n## RE-ENABLING THE APT_LISTCHANGES_FRONTEND ###\n"
-
-#mv /etc/apt/listchanges.conf.bak /etc/apt/listchanges.conf
-
-#apt-get -y install apt-listchanges
