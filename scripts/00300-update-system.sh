@@ -565,13 +565,14 @@ printf "\n## UPGRADE THE SYSTEM\n\n"
 
 printf "ca-certs\n"
 ${EXPECT} <<EOF
+exp_internal 1
 set timeout 120
 log_file -a /tmp/update-system.log
 spawn apt-get -y dist-upgrade
 expect {
   timeout { send_user "\nUpdate didn't finish in time\n"; exit 1 }
   eof { send_user "\nUpdate failed\n"; exit 1 }
-  "(q to quit)"}
+  "*q to quit"}
 send "q"
 EOF
 printf "ca-certs done\n"
