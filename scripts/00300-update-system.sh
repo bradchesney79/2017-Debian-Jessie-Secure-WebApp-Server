@@ -563,25 +563,12 @@ apt-get -y update
 
 printf "\n## UPGRADE THE SYSTEM\n\n"
 
-${EXPECT} <<EOF
-set send_slow {1 .1}
-proc send {ignore arg} {
-        sleep .1
-        exp_send -s -- $arg
-}
-set timeout -1
-spawn $env(SHELL)
-match_max 100000
-expect -exact "root@debian:~# "
-send -- "apt-get upgrade\r" 
-expect -exact "(q to quit)"
-send -- "q"
-EOF
+apt-get -qqy install ca-certificates
 
-#printf "\nupgrade\n"
-#apt-get -y upgrade
-#printf "\ndist-upgrade\n"
-#apt-get -y dist-upgrade
+printf "\nupgrade\n"
+apt-get -y upgrade
+printf "\ndist-upgrade\n"
+apt-get -y dist-upgrade
 
 printf "\n## INSTALL THE FIRST BATCHES OF PACKAGES ###\n"
 

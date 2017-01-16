@@ -18,7 +18,7 @@ wget https://github.com/bradchesney79/2017-Debian-Jessie-Secure-WebApp-Server/ar
 
 printf "\n\n## Unzipping the compressed git repo\n\n" >> /root/report/build-report.txt
 
-apt-get update && apt-get -y install unzip expect
+apt-get update && apt-get -y install unzip
 
 unzip /root/bin/master.zip
 
