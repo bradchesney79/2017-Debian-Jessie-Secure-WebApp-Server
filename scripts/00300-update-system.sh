@@ -563,9 +563,11 @@ apt-get -y update
 
 printf "\n## UPGRADE THE SYSTEM\n\n"
 
-printf "ca-certs\n"
-apt-get -y --ignore-hold dist-upgrade
-printf "ca-certs done\n"
+printf "upgrade\n"
+apt-get -y upgrade
+printf "dist-upgrade\n"
+apt-get -y dist-upgrade
+
 
 #apt-get -y dist-upgrade
 #apt-get -y upgrade
