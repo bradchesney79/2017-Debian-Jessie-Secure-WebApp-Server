@@ -2,8 +2,6 @@
 
 ####### INIT SCRIPT ####
 
-apt-get update && apt-get dist-upgrade
-
 mkdir -p /root/report
 
 date +%s >> /root/report/build-report.txt
@@ -20,7 +18,7 @@ wget https://github.com/bradchesney79/2017-Debian-Jessie-Secure-WebApp-Server/ar
 
 printf "\n\n## Unzipping the compressed git repo\n\n" >> /root/report/build-report.txt
 
-apt-get -y install unzip
+apt-get update && apt-get -y install unzip expect
 
 unzip /root/bin/master.zip
 
