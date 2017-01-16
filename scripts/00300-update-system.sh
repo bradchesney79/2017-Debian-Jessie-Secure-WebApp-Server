@@ -554,6 +554,11 @@ AQkQjHGNO1By4fUUmwCbBYr2+bBEn/L2BOcnw9Z/QFWuhRMAoKVgCFm5fadQ3Afi
 #gpg --export -a 5072e1f5 > pubkey_mysql.asc
 #sudo apt-key add pubkey_mysql.asc
 
+printf "\n## DISABLING THE APT_LISTCHANGES_FRONTEND ###\n"
+
+cp /etc/apt/listchanges.conf /etc/apt/listchanges.conf.bak
+sed -i "s/frontend.*/frontend=none/g" /etc/apt/listchanges.conf
+
 printf "\n## UPDATE THE SYSTEM ###\n"
 
 apt-get -y update
@@ -577,3 +582,7 @@ printf "\n## CLEAN UP ###\n"
 printf "\nFirst autoremove of packages\n\n"
 
 apt-get -y autoremove
+
+printf "\n## RE-ENABLING THE APT_LISTCHANGES_FRONTEND ###\n"
+
+mv /etc/apt/listchanges.conf.bak /etc/apt/listchanges.conf
