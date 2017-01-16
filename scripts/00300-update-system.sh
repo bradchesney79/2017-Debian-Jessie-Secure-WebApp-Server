@@ -565,20 +565,8 @@ apt-get -y update
 
 printf "\n## UPGRADE THE SYSTEM\n\n"
 
-apt-get -y install expect
-
 printf "ca-certs\n"
-${EXPECT} <<EOF
-exp_internal 1
-set timeout 120
-log_file -a /tmp/update-system.log
-spawn apt-get -y dist-upgrade && apt-get -y upgrade
-expect {
-  timeout { send_user "\nUpdate didn't finish in time\n"; exit 1 }
-  eof { send_user "\nUpdate failed\n"; exit 1 }
-  "*q to quit"}
-send "q"
-EOF
+apt-get -qqy --allow-downgrades --allow-remove-essential --allow-change-held-packages --with-new-pkgs dist-upgrade
 printf "ca-certs done\n"
 
 #apt-get -y dist-upgrade
