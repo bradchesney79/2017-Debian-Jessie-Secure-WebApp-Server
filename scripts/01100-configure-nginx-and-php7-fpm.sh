@@ -37,7 +37,7 @@ EOF
 
     # non-interactive command only
 
-    certbot certonly --agree-tos --non-interactive $STAGING --text --allow-subset-of-names --rsa-key-size $KEYSIZE --email $USERID1001EMAIL --webroot --webroot-path $HTTPSWEBROOT --domains "$DOMAIN, $HOSTNAME.$DOMAIN, admin.$DOMAIN"
+    certbot certonly --agree-tos --non-interactive $STAGING --text --allow-subset-of-names --rsa-key-size $KEYSIZE --email $USERID1001EMAIL --webroot --webroot-path $HTTPSWEBROOT --domains "$DOMAIN, $HOSTNAME.$DOMAIN, api.$DOMAIN, admin.$DOMAIN"
     
     systemctl stop nginx
     

@@ -159,16 +159,15 @@ cat <<EOF > $PROJECTROOT/composer.json
         "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "$PROJECTNAME\\Src": "app/src/",
-            "$PROJECTNAME\\Src\\Database": "app/src/Database/",
-            "$PROJECTNAME\\Src\\Utility": "app/src/Utility/"
+
 
         },
         "classmap": ["$PROJECTROOT/dal/generated-classes/"]
     },
     "autoload-dev": {
-        "psr-0": {
+        "psr-4": {
             "$PROJECTNAME\\Test": "app/Test/"
         }
     }
@@ -325,7 +324,7 @@ class User {
           $basicUserData = $basicUserDetailsQuery->create()->filterByUserid($userid)->find()->getData();
       }
       elseif(isset($email) && !isset($userid) {
-      
+        // Use email to 
       }
       else {
         // We got nothing to give to the clothing industry or there's been a mistake....
@@ -334,34 +333,67 @@ class User {
 
     
 
-      }
+  }
+  
+  private function getUserIdFromEmail(string $account, string $host) {
+  
+  }
+  
 }
 EOF      
 
 cat <<EOF > "$APIWEBROOT/user/logout"
+<?php
+
+?>
 EOF
+
 cat <<EOF > "$APIWEBROOT/user/register"
+<?php
+require $PROJECTROOT/vendor/autoload.php;
 
+$credentials = [
+    'email'    => $clean['email'],
+    'password' => $clean['password']
+];
 
+$user = Sentinel::register($credentials);
+
+?>
 EOF
+
 cat <<EOF > "$APIWEBROOT/user/activate"
+<?php
+
+?>
 EOF
+
 cat <<EOF > "$APIWEBROOT/user/login"
+<?php
 
 $email = trim(str_replace("\xc2\xa0", ' ', $_POST['email']));
 $password = trim(str_replace("\xc2\xa0", ' ', $_POST['password']));
 
 }
-
+?>
 EOF
 
 cat <<EOF > "$APIWEBROOT/user/read"
+<?php
+
+?>
 EOF
 
 cat <<EOF > "$APIWEBROOT/user/modify"
+<?php
+
+?>
 EOF
 
 cat <<EOF > "$APIWEBROOT/user/remove"
+<?php
+
+?>
 EOF  
 
 #TODO: I STOPPED HERE

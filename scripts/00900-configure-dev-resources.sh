@@ -16,4 +16,12 @@ cat <<EOF > $HTTPSWEBROOT/info.php
 phpinfo();
 ?>
 EOF
+
+printf "\n## PUT INFO.PHP IN THE APIWEBROOT ###\n"
+    
+cat <<EOF > $APIWEBROOT/info.php
+<?php
+phpinfo();
+?>
+EOF
 fi

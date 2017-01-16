@@ -10,10 +10,6 @@ printf "\n## CONFIGURE THE DEFAULT SITE\n"
 
 printf "\n## PREPARE DIRECTORY STRUCTURE FOR DEFAULT SITE\n"
 
-mkdir -p "$PROJECTROOT/fonts"
-mkdir -p "$PROJECTROOT/certs"
-mkdir -p "$PROJECTROOT/certs/$YEAR"
-mkdir -p "$PROJECTROOT/certs/$YEAR/$SSLPROVIDER"
 mkdir -p "$LOGDIR"
 mkdir -p "$PROJECTROOT/sockets"
 mkdir -p "$PROJECTROOT/tmp"
@@ -30,3 +26,4 @@ printf "\n## A PLACEHOLDER FAVICON \n"
 # It prevents unnecessary automatic 404 errors from polluting the logs.
 
 printf 'AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAACwsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/sLCw/7CwsP+wsLD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==' | python -m base64 -d > /var/www/html/favicon.ico
+
