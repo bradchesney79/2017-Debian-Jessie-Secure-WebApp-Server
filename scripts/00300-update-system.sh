@@ -571,7 +571,7 @@ spawn apt-get -y dist-upgrade
 expect {
   timeout { send_user "\nUpdate didn't finish in time\n"; exit 1 }
   eof { send_user "\nUpdate failed\n"; exit 1 }
-  "Stupid ca-certificates info that breaks noninteractive scripts"}
+  "(q to quit)"}
 send "q"
 EOF
 printf "ca-certs done\n"
