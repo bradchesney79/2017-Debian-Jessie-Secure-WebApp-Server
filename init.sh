@@ -2,6 +2,8 @@
 
 ####### INIT SCRIPT ####
 
+apt-get upgrade && apt-get -y dist-upgrade
+
 mkdir -p /root/report
 
 date +%s >> /root/report/build-report.txt
