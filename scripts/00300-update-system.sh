@@ -566,7 +566,7 @@ apt-get -y update
 printf "\n## UPGRADE THE SYSTEM\n\n"
 
 printf "ca-certs\n"
-apt-get -qqy --allow-downgrades --allow-remove-essential --allow-change-held-packages --with-new-pkgs dist-upgrade
+apt-get -qqy --force-yes --ignore-hold dist-upgrade
 printf "ca-certs done\n"
 
 #apt-get -y dist-upgrade
