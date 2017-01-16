@@ -9,7 +9,7 @@ passwd -l $USER
 
 printf "\n## INSTALLING NGINX ###\n"
  
-apt-get install -y nginx nginx-common
+apt-get install -y nginx
 
 systemctl stop nginx
 

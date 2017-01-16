@@ -556,6 +556,8 @@ AQkQjHGNO1By4fUUmwCbBYr2+bBEn/L2BOcnw9Z/QFWuhRMAoKVgCFm5fadQ3Afi
 
 printf "\n## DISABLING THE APT_LISTCHANGES_FRONTEND ###\n"
 
+# ca-certificates update breaks non-interactive script with notification
+
 cp /etc/apt/listchanges.conf /etc/apt/listchanges.conf.bak
 sed -i "s/frontend.*/frontend=none/g" /etc/apt/listchanges.conf
 
