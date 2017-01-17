@@ -567,8 +567,8 @@ printf "\nca-certificates\n"
 export PAGER=text
 #apt-get purge apt-listchanges
 
-printf "\nupgrade\n"
-apt-get -y upgrade
+#printf "\nupgrade\n"
+#apt-get -y upgrade
 printf "\ndist-upgrade\n"
 apt-get -y dist-upgrade
 
