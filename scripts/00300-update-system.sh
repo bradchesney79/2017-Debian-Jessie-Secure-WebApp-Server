@@ -564,7 +564,7 @@ frontend=pager
 [apt]
 frontend=pager
 email_address=root
-confirm=1"
+confirm=1
 EOF
 
 #export PAGER=none
