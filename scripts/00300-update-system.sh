@@ -557,6 +557,22 @@ AQkQjHGNO1By4fUUmwCbBYr2+bBEn/L2BOcnw9Z/QFWuhRMAoKVgCFm5fadQ3Afi
 printf "\n## SET DEBIAN_FRONTEND=noninteractive ###\n"
 export DEBIAN_FRONTEND=noninteractive
 
+cat <<EOF > /etc/apt/listchanges.conf
+[cmdline]
+frontend=pager
+
+[apt]
+frontend=pager
+email_address=root
+confirm=1"
+EOF
+
+#export PAGER=none
+#export PAGER=text
+#apt-get purge apt-listchanges
+
+
+
 printf "\n## UPDATE THE SYSTEM ###\n"
 
 apt-get update
@@ -564,8 +580,7 @@ apt-get update
 printf "\n## UPGRADE THE SYSTEM\n\n"
 
 printf "\nca-certificates\n"
-export PAGER=text
-#apt-get purge apt-listchanges
+
 
 #printf "\nupgrade\n"
 #apt-get -y upgrade
