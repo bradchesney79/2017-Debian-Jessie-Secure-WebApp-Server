@@ -559,12 +559,13 @@ export DEBIAN_FRONTEND=noninteractive
 
 printf "\n## UPDATE THE SYSTEM ###\n"
 
-apt-get -y update
+apt-get update
 
 printf "\n## UPGRADE THE SYSTEM\n\n"
 
 printf "\nca-certificates\n"
-apt-get -qqy install ca-certificates
+export PAGER=text
+#apt-get purge apt-listchanges
 
 printf "\nupgrade\n"
 apt-get -y upgrade

@@ -2,4 +2,4 @@ printf "\n\n##### Beginning 01600-install-and-configure-sysstat.sh\n\n" >> /root
 
 printf "\n## INSTALL AND CONFIGURE SYSTAT\n\n"
 
-apt-get install sysstat
+apt-get -y install sysstat
