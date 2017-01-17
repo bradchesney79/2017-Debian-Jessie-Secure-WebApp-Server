@@ -559,10 +559,10 @@ export DEBIAN_FRONTEND=noninteractive
 
 cat <<EOF > /etc/apt/listchanges.conf
 [cmdline]
-frontend=pager
+frontend=none
 
 [apt]
-frontend=pager
+frontend=none
 email_address=root
 confirm=1
 EOF
