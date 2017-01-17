@@ -581,6 +581,7 @@ printf "\n## UPGRADE THE SYSTEM\n\n"
 
 printf "\nca-certificates\n"
 
+apt-get install -y ca-certificates
 
 #printf "\nupgrade\n"
 #apt-get -y upgrade

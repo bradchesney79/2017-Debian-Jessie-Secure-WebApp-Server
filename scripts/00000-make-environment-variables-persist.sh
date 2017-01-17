@@ -34,11 +34,11 @@ printf "\nDEV=$DEV" >> /etc/environment
 
 printf "\nTARGETEMAIL=$TARGETEMAIL" >> /etc/environment
 
-printf "\nCOUNTRY=$COUNTRY" >> /etc/environment
-printf "\nSTATE=$STATE" >> /etc/environment
-printf "\nLOCALITY=$LOCALITY" >> /etc/environment
-printf "\nORGANIZATION=$ORGANIZATION" >> /etc/environment
-printf "\nORGANIZATIONALUNIT=$ORGANIZATIONALUNIT" >> /etc/environment
+#printf "\nCOUNTRY=$COUNTRY" >> /etc/environment
+#printf "\nSTATE=$STATE" >> /etc/environment
+#printf "\nLOCALITY=$LOCALITY" >> /etc/environment
+#printf "\nORGANIZATION=$ORGANIZATION" >> /etc/environment
+#printf "\nORGANIZATIONALUNIT=$ORGANIZATIONALUNIT" >> /etc/environment
 
 printf "\nDEFAULTSITEDBUSER=$DEFAULTSITEDBUSER" >> /etc/environment
 printf "\nDEFAULTSITEDBPASSWORD=$DEFAULTSITEDBPASSWORD" >> /etc/environment
