@@ -77,7 +77,7 @@ cat <<EOF > /etc/nginx/sites-available/default
 server { 
   listen 80; 
   listen 443 ssl http2;
-  server name $DOMAIN;
+  server_name $DOMAIN;
   return 301 https://$HOSTNAME.$DOMAIN${DOLLARSIGN}request_uri;
 }
 
@@ -189,6 +189,8 @@ server {
   error_log $LOGDIR/error-api.log warn;
 }
 EOF
+
+ln -s /etc/nginx/sites-available/api /etc/nginx/sites-enabled/api
 
 printf "\n## CONFIG PHP-FPM ###\n"
 
