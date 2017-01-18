@@ -119,8 +119,7 @@ server {
     
     # Mitigate https://httpoxy.org/ vulnerabilities
     fastcgi_param HTTP_PROXY "";
-    #fastcgi_param SCRIPT_FILENAME $HTTPSWEBROOT/${DOLLARSIGN}fastcgi_script_name;
-    #fastcgi_param SCRIPT_FILENAME ${DOLLARSIGN}document_root${DOLLARSIGN}fastcgi_script_name;
+    fastcgi_param SCRIPT_FILENAME ${DOLLARSIGN}document_root${DOLLARSIGN}fastcgi_script_name;
     
     fastcgi_pass unix:/var/run/$DOMAIN.sock;
     fastcgi_index index.php;
@@ -174,8 +173,7 @@ server {
     
     # Mitigate https://httpoxy.org/ vulnerabilities
     fastcgi_param HTTP_PROXY "";
-    #fastcgi_param SCRIPT_FILENAME $APIWEBROOT/${DOLLARSIGN}fastcgi_script_name;
-    #fastcgi_param SCRIPT_FILENAME ${DOLLARSIGN}document_root${DOLLARSIGN}fastcgi_script_name;
+    fastcgi_param SCRIPT_FILENAME ${DOLLARSIGN}document_root${DOLLARSIGN}fastcgi_script_name;
     
     fastcgi_pass unix:/var/run/api.$DOMAIN.sock;
     fastcgi_index index.php;
