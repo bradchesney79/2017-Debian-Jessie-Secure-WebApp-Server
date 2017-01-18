@@ -1,11 +1,10 @@
 printf "\n\n##### Beginning 00700-install-nginx-and-php7-fpm.sh\n\n" >> /root/report/build-report.txt
 
-printf "\n## CREATE THE LIMITED PRIVILEGE USER FOR ADMINISTERING THE WEBSITE ###\n"
-useradd -d $PROJECTROOT -p $PASSWORD -c "Default Web Site User" $USER
+printf "\n## CREATE THE LIMITED PRIVILEGE USERS FOR ADMINISTERING THE WEBSITE ###\n"
 
-printf "\n## LOCK THE NOT USER ACCOUNT ###\n"
-passwd -l $USER
+adduser --system --no-create-home nginx
 
+useradd --system --no-create-home $USER
 
 printf "\n## INSTALLING NGINX ###\n"
  

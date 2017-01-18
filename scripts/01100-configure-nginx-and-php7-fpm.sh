@@ -45,20 +45,52 @@ fi
 
 printf "\n## CONFIGURING NGINX ###"
 
-echo "" > /etc/nginx/sites-available/default
+cat <<"EOF" > /etc/nginx/fastcgi_params
+fastcgi_param  QUERY_STRING       $query_string;
+fastcgi_param  REQUEST_METHOD     $request_method;
+fastcgi_param  CONTENT_TYPE       $content_type;
+fastcgi_param  CONTENT_LENGTH     $content_length;
 
+fastcgi_param  SCRIPT_NAME        $document_root$fastcgi_script_name;
+fastcgi_param  REQUEST_URI        $request_uri;
+fastcgi_param  DOCUMENT_URI       $document_uri;
+fastcgi_param  DOCUMENT_ROOT      $document_root;
+fastcgi_param  SERVER_PROTOCOL    $server_protocol;
+fastcgi_param  REQUEST_SCHEME     $scheme;
+fastcgi_param  HTTPS              $https if_not_empty;
+
+fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;
+fastcgi_param  SERVER_SOFTWARE    nginx/$nginx_version;
+
+fastcgi_param  REMOTE_ADDR        $remote_addr;
+fastcgi_param  REMOTE_PORT        $remote_port;
+fastcgi_param  SERVER_ADDR        $server_addr;
+fastcgi_param  SERVER_PORT        $server_port;
+fastcgi_param  SERVER_NAME        $server_name;
+
+# PHP only, required if PHP was built with --enable-force-cgi-redirect
+fastcgi_param  REDIRECT_STATUS    200;
+EOF
 
 cat <<EOF > /etc/nginx/sites-available/default
-server {
+
+server { 
+  listen 80; 
+  listen 443 ssl http2;
+  server name $DOMAIN;
+  return 301 https://$HOSTNAME.$DOMAIN${DOLLARSIGN}request_uri;
+}
+
+server { 
   listen 80 default_server;
   listen 443 ssl http2 default_server;
-  server_name $DOMAIN $HOSTNAME.$DOMAIN;
+  server_name www.$DOMAIN;
   ssl_protocols TLSv1.1 TLSv1.2;
   ssl_ciphers EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;
   ssl_prefer_server_ciphers On;
-  ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
-  ssl_trusted_certificate /etc/letsencrypt/live/${DOMAIN}/chain.pem;
+  ssl_certificate /etc/letsencrypt/live/$DOMAIN/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/$DOMAIN/privkey.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/$DOMAIN/chain.pem;
   ssl_session_cache shared:SSL:128m;
   add_header Strict-Transport-Security "max-age=31557600; includeSubDomains";
   add_header X-Frame-Options "SAMEORIGIN" always;
@@ -70,51 +102,50 @@ server {
   resolver 8.8.8.8;
   root $HTTPSWEBROOT;
   index index.html;
-
+  
   location '/.well-known/acme-challenge' {
     root $HTTPSWEBROOT;
   }
-
+  
   location / {
     if (${DOLLARSIGN}scheme = http) {
-      return 301 https://${DOLLARSIGN}server_name${DOLLARSIGN}request_uri;
+      return 301 https://www.$DOMAIN${DOLLARSIGN}request_uri;
     }
-  }
+  }  
      
-  location ~ [^/]\.php(/|$) {
-    include fastcgi_params;
-    fastcgi_split_path_info ^(.+?\.php)(/.*)$;
-
+  location ~ \.php${DOLLARSIGN} {
+    include fastcgi_params; 
+    fastcgi_split_path_info ^(.+?\.php)(/.*)${DOLLARSIGN};
+    
     # Mitigate https://httpoxy.org/ vulnerabilities
     fastcgi_param HTTP_PROXY "";
-
-    fastcgi_pass unix:$PROJECTROOT/sockets/$DOMAIN.sock;
+    #fastcgi_param SCRIPT_FILENAME $HTTPSWEBROOT/${DOLLARSIGN}fastcgi_script_name;
+    #fastcgi_param SCRIPT_FILENAME ${DOLLARSIGN}document_root${DOLLARSIGN}fastcgi_script_name;
+    
+    fastcgi_pass unix:/var/run/$DOMAIN.sock;
     fastcgi_index index.php;
-
+    
     if (!-f ${DOLLARSIGN}document_root${DOLLARSIGN}fastcgi_script_name) {
       return 404;
     }
-  }
-  # static contents regex match to directory stored in
-  location ~ \.(gif|jpg|png)$ {
-     root $HTTPSWEBROOT/images;
-  }
+  }  
+  
   access_log $LOGDIR/access.log;
-  error_log $LOGDIR/error.log $ERRORLOGLEVEL;
+  error_log $LOGDIR/error.log warn;
 }
 EOF
 
 cat <<EOF > /etc/nginx/sites-available/api
-server {
-  listen 80 default_server;
-  listen 443 ssl http2 default_server;
+server { 
+  listen 80;
+  listen 443 ssl http2;
   server_name api.$DOMAIN;
   ssl_protocols TLSv1.1 TLSv1.2;
   ssl_ciphers EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;
   ssl_prefer_server_ciphers On;
-  ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
-  ssl_trusted_certificate /etc/letsencrypt/live/${DOMAIN}/chain.pem;
+  ssl_certificate /etc/letsencrypt/live/$DOMAIN/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/$DOMAIN/privkey.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/$DOMAIN/chain.pem;
   ssl_session_cache shared:SSL:128m;
   add_header Strict-Transport-Security "max-age=31557600; includeSubDomains";
   add_header X-Frame-Options "SAMEORIGIN" always;
@@ -130,30 +161,32 @@ server {
   location '/.well-known/acme-challenge' {
     root $APIWEBROOT;
   }
-
+  
   location / {
     if (${DOLLARSIGN}scheme = http) {
-      return 301 https://${DOLLARSIGN}server_name${DOLLARSIGN}request_uri;
+      return 301 https://api.$DOMAIN${DOLLARSIGN}request_uri;
     }
-  }
-     
-  location ~ [^/]\.php(/|$) {
-    include fastcgi_params;
-    fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+  }  
 
+    location ~ \.php${DOLLARSIGN} {
+    include fastcgi_params; 
+    fastcgi_split_path_info ^(.+?\.php)(/.*)${DOLLARSIGN};
+    
     # Mitigate https://httpoxy.org/ vulnerabilities
     fastcgi_param HTTP_PROXY "";
-
-    fastcgi_pass unix:$PROJECTROOT/sockets/api-$DOMAIN.sock;
+    #fastcgi_param SCRIPT_FILENAME $APIWEBROOT/${DOLLARSIGN}fastcgi_script_name;
+    #fastcgi_param SCRIPT_FILENAME ${DOLLARSIGN}document_root${DOLLARSIGN}fastcgi_script_name;
+    
+    fastcgi_pass unix:/var/run/api.$DOMAIN.sock;
     fastcgi_index index.php;
-
+    
     if (!-f ${DOLLARSIGN}document_root${DOLLARSIGN}fastcgi_script_name) {
       return 404;
     }
-  }
-  # static contents regex match to directory stored in
-  access_log $LOGDIR/api-access.log;
-  error_log $LOGDIR/api-error.log $ERRORLOGLEVEL;
+  }  
+  
+  access_log $LOGDIR/access-api.log;
+  error_log $LOGDIR/error-api.log warn;
 }
 EOF
 
@@ -168,12 +201,13 @@ printf "\n## DEFAULT HTTPS POOL ###\n"
 sed -i "s/\[www\]/\[$DOMAIN\]/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
 
 #sed delimiters are not a fixed character -- pipe symbol used to avoid escaping path in substitution
-sed -i "s|listen =.*|listen = $PROJECTROOT/sockets/$DOMAIN.sock|" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
+sed -i "s|listen =.*|listen = /var/run/$DOMAIN.sock|" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
 
 sed -i "s/user = www-data/user = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
 sed -i "s/group = www-data/group = $USER/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
 
 sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf
+
 
 printf "\n## API POOL ###\n"
 
@@ -182,7 +216,7 @@ cp /etc/php/7.0/fpm/pool.d/${DOMAIN}.conf /etc/php/7.0/fpm/pool.d/api-${DOMAIN}.
 sed -i "s/\[$DOMAIN\]/\[API-DOMAIN\]/" /etc/php/7.0/fpm/pool.d/api-${DOMAIN}.conf
 
 #sed delimiters are not a fixed character -- pipe symbol used to avoid escaping path in substitution
-sed -i "s|listen =.*|listen = $PROJECTROOT/sockets/api-$DOMAIN.sock|" /etc/php/7.0/fpm/pool.d/api-${DOMAIN}.conf
+sed -i "s|listen =.*|listen = /var/run/api.$DOMAIN.sock|" /etc/php/7.0/fpm/pool.d/api-${DOMAIN}.conf
 
 
 printf "\n## CONFIGURE PHP ###\n"
