@@ -43,6 +43,8 @@ fi
 
 printf "\n## FIRST COMPOSER INSTALL\n\n"
 
+cd /var/www
+
 composer.phar install --no-ansi --no-dev --no-interaction --no-progress --no-scripts
 
 cat <<EOF > $PROJECTROOT/composer.json
@@ -84,17 +86,19 @@ EOF
 
 mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" "$SENTINELDB" < $PROJECTROOT/vendor/cartalyst/sentinel/schema/mysql-5.6+.sql
 
-cd $PROJECTROOT/dal
-$PROJECTROOT/vendor/propel/propel/bin/propel reverse "mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$DEFAULTSITEDBUSER;password=$DEFAULTSITEDBPASSWORD" --output-dir=$PROJECTROOT/dal/config
+# Set up directories and reverse engineer the DB for the Propel ORM
+mkdir -p $PROJECTROOT/$PROJECTNAME/src/dal/config
+
+cd $PROJECTROOT/$PROJECTNAME/src/dal
+$PROJECTROOT/vendor/propel/propel/bin/propel reverse "mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$DEFAULTSITEDBUSER;password=$DEFAULTSITEDBPASSWORD" --output-dir=$PROJEDTROOT/$PROJECTNAME/src/dal/config
 
 #Configure the DSN and settings for the model classes generation
 
-cd $PROJECTROOT/dal/config
+cd $PROJECTROOT/$PROJECTNAME/src/dal/config
 
-# Set up directories and reverse engineer the DB for the Propel ORM
-mkdir -p $PROJECTROOT/dal/config
 
-cat <<EOF > $PROJECTROOT/dal/config/propel.json
+
+cat <<EOF > $PROJECTROOT/$PROJECTNAME/src/dal/config/propel.json
 {
     "propel": {
         "database": {
@@ -119,7 +123,7 @@ EOF
 #Build the model classes and put them in a more convenient place
 $PROJECTROOT/vendor/propel/propel/bin/propel model:build
 
-mv $PROJECTROOT/dal/config/generated-classes $PROJECTROOT/dal
+mv $PROJECTROOT/$PROJECTNAME/src/dal/config/generated-classes $PROJECTROOT/$PROJECTNAME/src/dal
 
 cat <<EOF > $PROJECTROOT/composer.json
 {
@@ -160,27 +164,27 @@ cat <<EOF > $PROJECTROOT/composer.json
     },
     "autoload": {
         "psr-4": {
-            "$PROJECTNAME\\Src": "app/src/",
+            "$PROJECTNAME\\Src": "$PROJECTROOT/$PROJECTNAME/src",
 
 
         },
-        "classmap": ["$PROJECTROOT/dal/generated-classes/"]
+        "classmap": ["$PROJECTROOT/$PROJECTNAME/src/dal/generated-classes/"]
     },
     "autoload-dev": {
         "psr-4": {
-            "$PROJECTNAME\\Test": "app/Test/"
+            "$PROJECTNAME\\Test": "$PROJECTROOT/$PROJECTNAME/tests"
         }
     }
 }
 EOF
 
 
-mkdir -p $PROJECTROOT/app/src/Database
-mkdir -p $PROJECTROOT/app/src/Utility
-mkdir -p $PROJECTROOT/app/Test
+mkdir -p $PROJECTROOT/$PROJECTNAME/src/Database
+mkdir -p $PROJECTROOT/$PROJECTNAME/src/Utility
+mkdir -p $PROJECTROOT/$PROJECTNAME/tests
 
-cat <<EOF > $PROJECTROOT/app/src/database/initpropel.php
-<?php namespace App\Src\Database;
+cat <<EOF > $PROJECTROOT/$PROJECTNAME/src/database/initpropel.php
+<?php namespace $PROJECTNAME\Database;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Propel\Common\Config\ConfigurationManager;
@@ -206,7 +210,7 @@ class Initpropel {
         $capsule->bootEloquent();
 
         // Load the configuration file
-        $configManager = new ConfigurationManager('$PROJECTROOT/dal/config/propel.json');
+        $configManager = new ConfigurationManager('$PROJEDTROOT/$PROJECTNAME/src/dal/config/propel.json');
 
         // Set up the connection manager
         $manager = new ConnectionManagerSingle();
@@ -215,7 +219,7 @@ class Initpropel {
 
         //*
         // Add the connection manager to the service container
-        // the IDE does not see into $PROJECTROOT/html/dal/generated-classes
+        // the IDE does not see into $PROJECTROOT/html/$PROJECTNAME/src/dal/generated-classes
         // this next lines are defined there and the proper use statement is supplied
         $this->serviceContainer = "";
         $this->serviceContainer = Propel::getServiceContainer();
@@ -289,8 +293,8 @@ mysql> describe phones;
 10 rows in set (0.00 sec)"
 fi
 
-cat <<EOF > $PROJECTROOT/app/src/user.php
-<?php namespace App/Src
+cat <<EOF > $PROJECTROOT/$PROJECTNAME/src/user.php
+<?php namespace $PROJECTNAME/Src
 
 // Include the composer autoload file
 require $PROJECTROOT/vendor/autoload.php
@@ -342,13 +346,13 @@ class User {
 }
 EOF      
 
-cat <<EOF > "$APIWEBROOT/user/logout"
+cat <<EOF > "$APIWEBROOT/1/user/logout"
 <?php
 
 ?>
 EOF
 
-cat <<EOF > "$APIWEBROOT/user/register"
+cat <<EOF > "$APIWEBROOT/1/user/register"
 <?php
 require $PROJECTROOT/vendor/autoload.php;
 
@@ -362,13 +366,13 @@ $user = Sentinel::register($credentials);
 ?>
 EOF
 
-cat <<EOF > "$APIWEBROOT/user/activate"
+cat <<EOF > "$APIWEBROOT/1/user/activate"
 <?php
 
 ?>
 EOF
 
-cat <<EOF > "$APIWEBROOT/user/login"
+cat <<EOF > "$APIWEBROOT/1/user/login"
 <?php
 
 $email = trim(str_replace("\xc2\xa0", ' ', $_POST['email']));
@@ -378,19 +382,19 @@ $password = trim(str_replace("\xc2\xa0", ' ', $_POST['password']));
 ?>
 EOF
 
-cat <<EOF > "$APIWEBROOT/user/read"
+cat <<EOF > "$APIWEBROOT/1/user/read"
 <?php
 
 ?>
 EOF
 
-cat <<EOF > "$APIWEBROOT/user/modify"
+cat <<EOF > "$APIWEBROOT/1/user/modify"
 <?php
 
 ?>
 EOF
 
-cat <<EOF > "$APIWEBROOT/user/remove"
+cat <<EOF > "$APIWEBROOT/1/user/remove"
 <?php
 
 ?>
@@ -416,7 +420,7 @@ cat <<EOF > $PROJECTROOT/phpunit.xml
 </phpunit>
 EOF
 
-cat <<EOF > $PROJECTROOT/app/tests/initpropelTest.php
+cat <<EOF > $PROJECTROOT/$PROJECTNAME/tests/initpropelTest.php
 <?php
 
 require $PROJECTROOT/vendor/autoload.php

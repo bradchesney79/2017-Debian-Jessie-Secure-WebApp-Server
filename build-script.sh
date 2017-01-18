@@ -81,6 +81,10 @@ printf "\n########## INSTALL AND CONFIGURE SYSSTAT ###\n"
 . /root/bin/scripts/01600-install-and-configure-sysstat.sh
 #sed -i "s/ENABLED=\"false\"/ENABLED=\"true\"/" /etc/default/sysstat
 
+printf "\n########## INSTALL AND CONFIGURE SYSSTAT ###\n"
+
+. /root/bin/scripts/01700-install-back-end-assets.sh
+
 printf "\n########## CLEAN UP ###\n"
 
 printf "\nLast autoremove of packages\n\n"
