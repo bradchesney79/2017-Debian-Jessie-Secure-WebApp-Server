@@ -45,8 +45,6 @@ printf "\n## FIRST COMPOSER INSTALL\n\n"
 
 cd /var/www
 
-composer.phar install --no-ansi --no-dev --no-interaction --no-progress --no-scripts
-
 cat <<EOF > $PROJECTROOT/composer.json
 {
     "name": "$PROJECTNAME",
@@ -55,286 +53,62 @@ cat <<EOF > $PROJECTROOT/composer.json
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "cartalyst/sentinel": ">=2.0 <3.0",
-        "ext-gd": "*",
-        "ext-mcrypt": "*",
-        "ezyang/htmlpurifier": ">=4.7 <5.0",
-        "firebase/php-jwt": ">=4.0 <5.0",
-        "funct/funct": ">=1.1 <2.0",
-        "google/apiclient": ">=1.1 <2.0",
-        "guzzlehttp/guzzle": ">=6.0 <7.0",
-        "illuminate/database": ">=5.2 <6.0",
-        "illuminate/events": ">=5.2 <6.0",
-        "illuminate/pagination": ">=5.3 <6.0",
-        "league/csv": ">=8.0 <9.0",
-        "mailgun/mailgun-php": ">=2.1 <3.0",
-        "monolog/monolog": ">=1.0 <2.0",
-        "mpdf/mpdf": ">=6.0 <7.0",
-        "nategood/httpful": ">=0.2 <1.0",
-        "paragonie/random_compat": ">=2.0 <3.0",
-        "phpmailer/phpmailer": ">=5.2 <6.0",
-        "phpoffice/phpexcel": ">=1.8 <2.0",
-        "propel/propel": "~2.0@dev",
-        "psr/log": ">=1.0 <2.0",
-        "swiftmailer/swiftmailer": ">=5.4 <6.0",
-        "symfony/intl": ">=3.1 <4.0"
-    }
-}
-EOF
-
-# Run the sentinel SQL scripts
-
-mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" "$SENTINELDB" < $PROJECTROOT/vendor/cartalyst/sentinel/schema/mysql-5.6+.sql
-
-# Set up directories and reverse engineer the DB for the Propel ORM
-mkdir -p $PROJECTROOT/$PROJECTNAME/src/dal/config
-
-cd $PROJECTROOT/$PROJECTNAME/src/dal
-$PROJECTROOT/vendor/propel/propel/bin/propel reverse "mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$DEFAULTSITEDBUSER;password=$DEFAULTSITEDBPASSWORD" --output-dir=$PROJEDTROOT/$PROJECTNAME/src/dal/config
-
-#Configure the DSN and settings for the model classes generation
-
-cd $PROJECTROOT/$PROJECTNAME/src/dal/config
-
-
-
-cat <<EOF > $PROJECTROOT/$PROJECTNAME/src/dal/config/propel.json
-{
-    "propel": {
-        "database": {
-            "connections": {
-                "default": {
-                    "adapter": "mysql",
-                    "dsn": "mysql:host=$PROJECTDBHOST;port=3306;dbname=$PROJECTDB",
-                    "user": "$DEFAULTSITEDBUSER",
-                    "password": "$DEFAULTSITEDBPASSWORD",
-                    "settings": {
-                        "charset": "utf8"
-                    }
-                }
-            }
-        }
-    }
-}
-EOF
-
-
-
-#Build the model classes and put them in a more convenient place
-$PROJECTROOT/vendor/propel/propel/bin/propel model:build
-
-mv $PROJECTROOT/$PROJECTNAME/src/dal/config/generated-classes $PROJECTROOT/$PROJECTNAME/src/dal
-
-cat <<EOF > $PROJECTROOT/composer.json
-{
-    "name": "$PROJECTNAME",
-    "description": "The $PROJECTNAME dependencies",
-    "license": "Unlicense",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require": {
-        "cartalyst/sentinel": ">=2.0 <3.0",
-        "ext-gd": "*",
-        "ext-mcrypt": "*",
-        "ezyang/htmlpurifier": ">=4.7 <5.0",
-        "firebase/php-jwt": ">=4.0 <5.0",
-        "funct/funct": ">=1.1 <2.0",
-        "google/apiclient": ">=1.1 <2.0",
-        "guzzlehttp/guzzle": ">=6.0 <7.0",
-        "illuminate/database": ">=5.2 <6.0",
-        "illuminate/events": ">=5.2 <6.0",
-        "illuminate/pagination": ">=5.3 <6.0",
-        "league/csv": ">=8.0 <9.0",
-        "mailgun/mailgun-php": ">=2.1 <3.0",
-        "monolog/monolog": ">=1.0 <2.0",
-        "mpdf/mpdf": ">=6.0 <7.0",
-        "nategood/httpful": ">=0.2 <1.0",
-        "paragonie/random_compat": ">=2.0 <3.0",
-        "phpmailer/phpmailer": ">=5.2 <6.0",
-        "phpoffice/phpexcel": ">=1.8 <2.0",
-        "propel/propel": "~2.0@dev",
-        "psr/log": ">=1.0 <2.0",
-        "swiftmailer/swiftmailer": ">=5.4 <6.0",
-        "symfony/intl": ">=3.1 <4.0"
-    },
-    "require-dev": {
-        "phpmd/phpmd": "*",
-        "phpunit/phpunit": ">=5.0 <6.0",
-        "squizlabs/php_codesniffer": "*"
+        "monolog/monolog": "^1.22"
     },
     "autoload": {
         "psr-4": {
-            "$PROJECTNAME\\Src": "$PROJECTROOT/$PROJECTNAME/src",
-
-
-        },
-        "classmap": ["$PROJECTROOT/$PROJECTNAME/src/dal/generated-classes/"]
+            "KingChesney\\": "KingChesney/src"
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "$PROJECTNAME\\Test": "$PROJECTROOT/$PROJECTNAME/tests"
+            "KingChesney\\Test": "KingChesney/tests"
         }
     }
 }
 EOF
 
+printf "\n## GENERATE FOUNDATION APP CODE\n\n"
 
 mkdir -p $PROJECTROOT/$PROJECTNAME/src/Database
 mkdir -p $PROJECTROOT/$PROJECTNAME/src/Utility
 mkdir -p $PROJECTROOT/$PROJECTNAME/tests
 
-cat <<EOF > $PROJECTROOT/$PROJECTNAME/src/database/initpropel.php
-<?php namespace $PROJECTNAME\Database;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Propel\Common\Config\ConfigurationManager;
-use Propel\Runtime\Connection\ConnectionManagerSingle;
+printf "\n## GENERATING EXAMPLE OBJECT CODE\n\n"
 
-class Initpropel {
-    public $serviceContainer;
-
-    public function __construct()
-    {
-        $capsuleConfig = ['driver' => 'mysql',
-                'host' => get_cfg_var('PROJECTDBHOST'),
-                'database' => get_cfg_var('SENTINELDB'),
-                'username' => get_cfg_var('DEFAULTSITEDBUSER'),
-                'password' => get_cfg_var('DEFAULTSITEDBPASSWORD'),
-                'charset' => 'utf8',
-                'collation' => 'utf8_unicode_ci'
-        ];
-        
-        // Setup a new Eloquent Capsule instance
-        $capsule = new Capsule;
-        $capsule->addConnection($capsuleConfig);
-        $capsule->bootEloquent();
-
-        // Load the configuration file
-        $configManager = new ConfigurationManager('$PROJEDTROOT/$PROJECTNAME/src/dal/config/propel.json');
-
-        // Set up the connection manager
-        $manager = new ConnectionManagerSingle();
-        $manager->setConfiguration($configManager->getConnectionParametersArray()['default']);
-        $manager->setName('default');
-
-        //*
-        // Add the connection manager to the service container
-        // the IDE does not see into $PROJECTROOT/html/$PROJECTNAME/src/dal/generated-classes
-        // this next lines are defined there and the proper use statement is supplied
-        $this->serviceContainer = "";
-        $this->serviceContainer = Propel::getServiceContainer();
-        $this->serviceContainer->setAdapterClass('default', 'mysql');
-        $this->serviceContainer->setConnectionManager('default', $manager);
-        $this->serviceContainer->setDefaultDatasource('default');
-
-    }
-
-
-    public function getPopulatedServiceContainer()
-    {
-        return $this->serviceContainer;
-    }
-
-EOF
-
-if [ "$DEV" = "true" ]
-    then
-
-# build user object based on DB data related to the user
-
-printf "
-Once logged in to mysql client...
-
-mysql> describe users;
-+----------------+------------------+------+-----+---------+----------------+
-| Field          | Type             | Null | Key | Default | Extra          |
-+----------------+------------------+------+-----+---------+----------------+
-| userid         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
-| active         | char(1)          | YES  |     | NULL    |                |
-| fname          | char(50)         | YES  |     | NULL    |                |
-| nickname       | char(50)         | YES  |     | NULL    |                |
-| lname          | char(50)         | YES  |     | NULL    |                |
-| password       | char(255)        | YES  |     | NULL    |                |
-| sessionStart   | int(10) unsigned | YES  |     | NULL    |                |
-| sessionRenewal | int(10) unsigned | YES  |     | NULL    |                |
-| lastModified   | int(10) unsigned | YES  |     | NULL    |                |
-+----------------+------------------+------+-----+---------+----------------+
-9 rows in set (0.00 sec)
-
-mysql> describe emails;
-+--------------+----------------------------------------------------------------------+------+-----+---------+----------------+
-| Field        | Type                                                                 | Null | Key | Default | Extra          |
-+--------------+----------------------------------------------------------------------+------+-----+---------+----------------+
-| emailsid     | int(10) unsigned                                                     | NO   | PRI | NULL    | auto_increment |
-| userid       | int(10) unsigned                                                     | YES  | MUL | NULL    |                |
-| title        | char(80)                                                             | YES  |     | NULL    |                |
-| account      | char(70)                                                             | YES  | MUL | NULL    |                |
-| host         | char(255)                                                            | YES  | MUL | NULL    |                |
-| level        | enum('all','marketing','information','notifications','legal','none') | YES  |     | NULL    |                |
-| lastModified | int(10) unsigned                                                     | YES  |     | NULL    |                |
-+--------------+----------------------------------------------------------------------+------+-----+---------+----------------+
-7 rows in set (0.00 sec)
-
-mysql> describe phones;
-+--------------+----------------------------------------------------------------+------+-----+---------+----------------+
-| Field        | Type                                                           | Null | Key | Default | Extra          |
-+--------------+----------------------------------------------------------------+------+-----+---------+----------------+
-| phonesid     | int(10) unsigned                                               | NO   | PRI | NULL    | auto_increment |
-| userid       | int(10) unsigned                                               | YES  | MUL | NULL    |                |
-| phoneType    | enum('landline','mobile','multi-ring','fax','tdd-tty','other') | YES  |     | NULL    |                |
-| sms          | char(1)                                                        | YES  |     | NULL    |                |
-| title        | char(80)                                                       | YES  |     | NULL    |                |
-| areaCode     | smallint(6)                                                    | YES  |     | NULL    |                |
-| prefix       | smallint(6)                                                    | YES  |     | NULL    |                |
-| number       | smallint(6)                                                    | YES  |     | NULL    |                |
-| extention    | char(80)                                                       | YES  |     | NULL    |                |
-| lastModified | int(10) unsigned                                               | YES  |     | NULL    |                |
-+--------------+----------------------------------------------------------------+------+-----+---------+----------------+
-10 rows in set (0.00 sec)"
-fi
-
-cat <<EOF > $PROJECTROOT/$PROJECTNAME/src/user.php
-<?php namespace $PROJECTNAME/Src
+cat <<EOF > $PROJECTROOT/$PROJECTNAME/src/User.php
+<?php namespace $PROJECTNAME/User
 
 // Include the composer autoload file
 require $PROJECTROOT/vendor/autoload.php
 
-use Propel\Common\Config\ConfigurationManager;
-use Propel\Runtime\Connection\ConnectionManagerSingle;
-use Propel\Runtime\Propel;
+use $PROJECTNAME\User;
+use $PROJECTNAME\Utility;
 
-use Firebase\JWT;
-use app\src\Utility;
-
-//use Monolog\Logger;
-//use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class User {
 
-  public userid;
-  public active;
-  public fname;
-  public lname;
-  public password;
-  public sessionStart;
-  public sessionRenewal;
-  public emails; //object list
-  public phones; //object list
+  public $userid;
+  public $active;
+  public $fname;
+  public $lname;
+  public $password;
+  public $sessionStart;
+  public $sessionRenewal;
+  public $emails; //object list
+  public $phones; //object list
 
   public function __construct(int $userid = null, string $email = null) {
-    // on instantiating a user object-- just populate all the data from users. Need most of it for many things.
-      if(isset($userid) {
-          $basicUserDetailsQuery = new UserheadQuery();
-          $basicUserData = $basicUserDetailsQuery->create()->filterByUserid($userid)->find()->getData();
-      }
-      elseif(isset($email) && !isset($userid) {
-        // Use email to 
-      }
-      else {
-        // We got nothing to give to the clothing industry or there's been a mistake....
-      }
+    $this->userid = 1;
+    $this->fname = 'Bob'
+  }
 
-
+  public function getDetails() {
+  
+    return $this->userid
     
 
   }
@@ -400,7 +174,7 @@ cat <<EOF > "$APIWEBROOT/1/user/remove"
 ?>
 EOF  
 
-#TODO: I STOPPED HERE
+printf "\n## SETUP PHPUNIT CONFIG\n\n"
 
 cat <<EOF > $PROJECTROOT/phpunit.xml
 <phpunit bootstrap="vendor/autoload.php"
@@ -414,28 +188,36 @@ cat <<EOF > $PROJECTROOT/phpunit.xml
   
   <testsuites>
     <testsuite name="$PROJECTNAME Tests">
-      <directory>test</directory>
+      <directory>$PROJECTNAME/tests</directory>
     </testsuite>
   </testsuites>
 </phpunit>
 EOF
 
-cat <<EOF > $PROJECTROOT/$PROJECTNAME/tests/initpropelTest.php
+printf "\n## WRITE EXAMPLE TEST CODE\n\n"
+
+cat <<EOF > $PROJECTROOT/$PROJECTNAME/tests/userTest.php
 <?php
 
 require $PROJECTROOT/vendor/autoload.php
 
-use App\Src\Database;
+use $PROJECTNAME/User;
 
 class PropelTest extends PHPUnit_Framework_TestCase {
   public function testInitializationOfPropel()
   {
-    $connectionReady = new Initpropel;
+    $user = new User;
     
-    $this->assertInstanceOf('Initpropel',$connectionReady);
+    $this->assertInstanceOf('User',$user);
   }
 }
 EOF
+
+printf "\n## CLEAN UP\n\n"
+
+rm -rf $PROJECTROOT/vendor $PROJECTROOT/composer.lock
+
+printf "\n## HERE WE GO, COMPOSER INSTALL\n\n"
 
 if [ "$DEV" = "true" ]
     then

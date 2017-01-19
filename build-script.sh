@@ -81,7 +81,7 @@ printf "\n########## INSTALL AND CONFIGURE SYSSTAT ###\n"
 . /root/bin/scripts/01600-install-and-configure-sysstat.sh
 #sed -i "s/ENABLED=\"false\"/ENABLED=\"true\"/" /etc/default/sysstat
 
-printf "\n########## INSTALL AND CONFIGURE SYSSTAT ###\n"
+printf "\n########## INSTALL AND CONFIGURE BACK END ASSETS ###\n"
 
 . /root/bin/scripts/01700-install-back-end-assets.sh
 
