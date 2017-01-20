@@ -73,12 +73,12 @@ cat <<EOF > $PROJECTROOT/composer.json
     },
     "autoload": {
         "psr-4": {
-            "KingChesney\\": "KingChesney/src/"
+            "KingChesney\\\\": "KingChesney/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "KingChesney\\Test\\": "KingChesney/tests/"
+            "KingChesney\\\\Test\\\\": "KingChesney/tests/"
         }
     }
 }
