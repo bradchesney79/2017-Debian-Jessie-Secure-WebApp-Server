@@ -34,11 +34,12 @@ then
     php composer-setup.php --quiet --install-dir=/bin --filename=composer
     RESULT=$?
     rm composer-setup.php
-    exit $RESULT
+    #exit $RESULT
+    printf "\n Download & Install $RESULT\n"
 else
     >&2 echo 'ERROR: Invalid installer signature'
     rm composer-setup.php
-    exit 1
+    printf "\n Sorry buckaroo, composer done failed\n"
 fi
 
 printf "\n## FIRST COMPOSER INSTALL\n\n"
