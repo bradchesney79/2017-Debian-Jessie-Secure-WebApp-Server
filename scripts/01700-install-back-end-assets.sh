@@ -103,29 +103,29 @@ use Monolog\Handler\StreamHandler;
 
 class User {
 
-  public $userid;
-  public $active;
-  public $fname;
-  public $lname;
-  public $password;
-  public $sessionStart;
-  public $sessionRenewal;
-  public $emails; //object list
-  public $phones; //object list
+  public ${DOLLARSIGN}userid;
+  public ${DOLLARSIGN}active;
+  public ${DOLLARSIGN}fname;
+  public ${DOLLARSIGN}lname;
+  public ${DOLLARSIGN}password;
+  public ${DOLLARSIGN}sessionStart;
+  public ${DOLLARSIGN}sessionRenewal;
+  public ${DOLLARSIGN}emails; //object list
+  public ${DOLLARSIGN}phones; //object list
 
-  public function __construct(int $userid = null, string $email = null) {
-    $this->userid = 1;
-    $this->fname = 'Bob'
+  public function __construct(int ${DOLLARSIGN}userid = null, string ${DOLLARSIGN}email = null) {
+    ${DOLLARSIGN}this->userid = 1;
+    ${DOLLARSIGN}this->fname = 'Bob'
   }
 
   public function getDetails() {
   
-    return $this->userid
+    return ${DOLLARSIGN}this->userid
     
 
   }
   
-  private function getUserIdFromEmail(string $account, string $host) {
+  private function getUserIdFromEmail(string ${DOLLARSIGN}account, string ${DOLLARSIGN}host) {
   
   }
   
@@ -142,12 +142,12 @@ cat <<EOF > "$APIWEBROOT/1/user/register"
 <?php
 require $PROJECTROOT/vendor/autoload.php;
 
-$credentials = [
-    'email'    => $clean['email'],
-    'password' => $clean['password']
+${DOLLARSIGN}credentials = [
+    'email'    => ${DOLLARSIGN}clean['email'],
+    'password' => ${DOLLARSIGN}clean['password']
 ];
 
-$user = Sentinel::register($credentials);
+${DOLLARSIGN}user = Sentinel::register(${DOLLARSIGN}credentials);
 
 ?>
 EOF
@@ -161,8 +161,8 @@ EOF
 cat <<EOF > "$APIWEBROOT/1/user/login"
 <?php
 
-$email = trim(str_replace("\xc2\xa0", ' ', $_POST['email']));
-$password = trim(str_replace("\xc2\xa0", ' ', $_POST['password']));
+${DOLLARSIGN}email = trim(str_replace("\xc2\xa0", ' ', ${DOLLARSIGN}_POST['email']));
+${DOLLARSIGN}password = trim(str_replace("\xc2\xa0", ' ', ${DOLLARSIGN}_POST['password']));
 
 }
 ?>
@@ -216,11 +216,11 @@ require $PROJECTROOT/vendor/autoload.php
 use $PROJECTNAME/User;
 
 class PropelTest extends PHPUnit_Framework_TestCase {
-  public function testInitializationOfPropel()
+  public function testDemoUser()
   {
-    $user = new User;
+        ${DOLLARSIGN}user = new User;
     
-    $this->assertInstanceOf('User',$user);
+    ${DOLLARSIGN}this->assertInstanceOf('User',${DOLLARSIGN}user);
   }
 }
 EOF
