@@ -42,9 +42,24 @@ else
     printf "\n Sorry buckaroo, composer done failed\n"
 fi
 
+
+
+
+printf "\n## GENERATE FOUNDATION APP CODE\n\n"
+
+mkdir -p $PROJECTROOT/$PROJECTNAME/src/Database
+mkdir -p $PROJECTROOT/$PROJECTNAME/src/Utility
+mkdir -p $PROJECTROOT/$PROJECTNAME/tests
+
+
+mkdir -p $APIWEBROOT/1/user
+
+
 printf "\n## FIRST COMPOSER INSTALL\n\n"
 
 cd /var/www
+
+
 
 cat <<EOF > $PROJECTROOT/composer.json
 {
@@ -69,11 +84,7 @@ cat <<EOF > $PROJECTROOT/composer.json
 }
 EOF
 
-printf "\n## GENERATE FOUNDATION APP CODE\n\n"
 
-mkdir -p $PROJECTROOT/$PROJECTNAME/src/Database
-mkdir -p $PROJECTROOT/$PROJECTNAME/src/Utility
-mkdir -p $PROJECTROOT/$PROJECTNAME/tests
 
 
 printf "\n## GENERATING EXAMPLE OBJECT CODE\n\n"
