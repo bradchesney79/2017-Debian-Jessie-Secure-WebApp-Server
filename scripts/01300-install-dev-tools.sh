@@ -4,6 +4,7 @@ printf "\n## PLACE PHPINFO FILE IN THE WEBROOT ###"
 
 if [ "$DEV" = "true" ]
   then
+    apt-get -y install phpunit
     
     printf '<?php phpinfo(); ?>' > $HTTPSWEBROOT/info.php
   fi
