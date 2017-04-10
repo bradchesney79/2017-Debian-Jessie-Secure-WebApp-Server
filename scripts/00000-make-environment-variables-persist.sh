@@ -42,3 +42,12 @@ printf "\nTARGETEMAIL=$TARGETEMAIL" >> /etc/environment
 
 printf "\nDEFAULTSITEDBUSER=$DEFAULTSITEDBUSER" >> /etc/environment
 printf "\nDEFAULTSITEDBPASSWORD=$DEFAULTSITEDBPASSWORD" >> /etc/environment
+
+
+##### PUSH ENVIRONMENT VARIABLES INTO PHP ENVIRONMENT
+
+environment_host=AWS >> /etc/php/7.1/fpm/???external php.ini file???/php.ini
+
+#rando-script-whatever.php
+
+#get_cfg_var('environment_type') // returns 'dev'

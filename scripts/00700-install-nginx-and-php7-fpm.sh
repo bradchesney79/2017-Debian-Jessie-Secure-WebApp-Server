@@ -18,7 +18,7 @@ printf "\n## INSTALLING PHP7 ###\n"
 # Full list of intended packages
 #apt-get install -y php7.0-fpm php7.0-common php7.0-curl php7.0-gd php7.0-imagick php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-xml php7.0-intl php7.0-xmlrpc php7.0-zip php-pear
 
-apt-get install -y php7.0-fpm php7.0-common
+apt-get install -y php7.0-fpm php7.0-common php7.0-xml
 
 systemctl stop php7.0-fpm
 
