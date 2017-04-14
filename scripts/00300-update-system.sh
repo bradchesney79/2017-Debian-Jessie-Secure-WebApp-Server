@@ -16,6 +16,10 @@ deb http://packages.dotdeb.org jessie all
 deb http://repo.mysql.com/apt/debian/ jessie mysql-5.7
 EOF
 
+apt-get -qy install apt-transport-https lsb-release ca-certificates
+wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
+
 cd /root
 
 printf "\n## INSTALL THE DOTDEB GPG KEY ###\n"

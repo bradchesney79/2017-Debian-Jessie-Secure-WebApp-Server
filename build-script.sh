@@ -122,7 +122,5 @@ printf "\nSet up Reverse DNS while you wait if applicable-- gets rid of those pe
 
 date +%s >> /root/report/build-report.txt
 
-popd
-
 #TODO remove this --exits the ssh connection
 #exit 0
