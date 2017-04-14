@@ -1,3 +1,4 @@
+#@IgnoreInspection BashAddShebang
 
 
 ##### CONVERT BASH VARIABLES TO ENVIRONMENT VARIABLES

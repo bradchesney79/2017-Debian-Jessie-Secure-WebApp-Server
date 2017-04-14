@@ -2,26 +2,26 @@ printf "\n\n##### Beginning 01700-install-back-end-assets.sh\n\n" >> /root/repor
 
 printf "\n## CONVERT BASH VARIABLES TO PERSISTENT VARIABLES AVAILABLE TO PHP\n\n"
 
-printf "\nHOSTNAME=$HOSTNAME" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nHOSTNAME=$HOSTNAME" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
 
-printf "\nDOMAIN=$DOMAIN" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nDOMAIN=$DOMAIN" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
 
-printf "\nHOSTINGSERV=$HOSTINGSERV" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nHOSTINGSERV=$HOSTINGSERV" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
 
-printf "\nDEV=$DEV" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nDEV=$DEV" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
 
-printf "\nTARGETEMAIL=$TARGETEMAIL" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nTARGETEMAIL=$TARGETEMAIL" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
 
-printf "\nCOUNTRY=$COUNTRY" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
-printf "\nSTATE=$STATE" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
-printf "\nLOCALITY=$LOCALITY" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
-printf "\nORGANIZATION=$ORGANIZATION" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
-printf "\nORGANIZATIONALUNIT=$ORGANIZATIONALUNIT" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nCOUNTRY=$COUNTRY" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nSTATE=$STATE" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nLOCALITY=$LOCALITY" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nORGANIZATION=$ORGANIZATION" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nORGANIZATIONALUNIT=$ORGANIZATIONALUNIT" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
 
-printf "\nDEFAULTSITEDBUSER=$DEFAULTSITEDBUSER" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
-printf "\nDEFAULTSITEDBPASSWORD=$DEFAULTSITEDBPASSWORD" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
-printf "\nPROJECTDBHOST=$PROJECTDBHOST" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
-printf "\nSENTINELDBHOST=$SENTINELDBHOST" >> /etc/php/7.0/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nDEFAULTSITEDBUSER=$DEFAULTSITEDBUSER" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nDEFAULTSITEDBPASSWORD=$DEFAULTSITEDBPASSWORD" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nPROJECTDBHOST=$PROJECTDBHOST" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
+printf "\nSENTINELDBHOST=$SENTINELDBHOST" >> /etc/php/7.1/fpm/conf.d/50-user-supplied-vars.ini
 
 printf "\n## INSTALL PHP COMPOSER\n\n"
 
