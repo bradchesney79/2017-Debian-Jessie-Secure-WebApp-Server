@@ -1,10 +1,11 @@
+#@IgnoreInspection BashAddShebang
 printf "\n\n##### Beginning 00700-install-nginx-and-php7-fpm.sh\n\n" >> /root/report/build-report.txt
 
 printf "\n## CREATE THE LIMITED PRIVILEGE USERS FOR ADMINISTERING THE WEBSITE ###\n"
 
 adduser --system --no-create-home nginx
 
-useradd --system --no-create-home $USER
+useradd --system --no-create-home ${USER}
 
 printf "\n## INSTALLING NGINX ###\n"
  
@@ -16,11 +17,11 @@ printf "\n## INSTALLING PHP7 ###\n"
 
 #TODO Set this back to more full install
 # Full list of intended packages
-#apt-get install -y php7.0-fpm php7.0-common php7.0-curl php7.0-gd php7.0-imagick php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-xml php7.0-intl php7.0-xmlrpc php7.0-zip php-pear
+#apt-get install -y php7.1-fpm php7.1-common php7.1-curl php7.1-gd php7.1-imagick php7.1-json php7.1-mbstring php7.1-mcrypt php7.1-mysql php7.1-xml php7.1-intl php7.1-xmlrpc php7.1-zip php-pear
 
-apt-get install -y php7.0-fpm php7.0-common php7.0-xml
+apt-get install -y php7.1-fpm php7.1-common php7.1-xml
 
-systemctl stop php7.0-fpm
+systemctl stop php7.1-fpm
 
 if [ "$SSLPROVIDER"='lets-encrypt' ]
   then
