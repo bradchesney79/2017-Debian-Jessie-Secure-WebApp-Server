@@ -135,7 +135,7 @@ server {
 }
 EOF
 
-cat <<EOF > /etc/nginx/sites-available/api
+cat <<EOF > /etc/nginx/sites-available/open-api
 server { 
   listen 80;
   listen 443 ssl http2;
@@ -159,7 +159,7 @@ server {
   index index.html;
 
   location '/.well-known/acme-challenge' {
-    root $APIWEBROOT;
+    root $APIWEBROOT/o;
   }
   
   location / {
@@ -184,12 +184,68 @@ server {
     }
   }  
   
-  access_log $LOGDIR/access-api.log;
-  error_log $LOGDIR/error-api.log warn;
+  access_log $LOGDIR/access-open-api.log;
+  error_log $LOGDIR/error-open-api.log warn;
 }
 EOF
 
-ln -s /etc/nginx/sites-available/api /etc/nginx/sites-enabled/api
+ln -s /etc/nginx/sites-available/open-api /etc/nginx/sites-enabled/open-api
+
+cat <<EOF > /etc/nginx/sites-available/private-api
+server {
+  listen 80;
+  listen 443 ssl http2;
+  server_name api.$DOMAIN;
+  ssl_protocols TLSv1.1 TLSv1.2;
+  ssl_ciphers EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;
+  ssl_prefer_server_ciphers On;
+  ssl_certificate /etc/letsencrypt/live/$DOMAIN/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/$DOMAIN/privkey.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/$DOMAIN/chain.pem;
+  ssl_session_cache shared:SSL:128m;
+  add_header Strict-Transport-Security "max-age=31557600; includeSubDomains";
+  add_header X-Frame-Options "SAMEORIGIN" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header X-Xss-Protection "1";
+  add_header Content-Security-Policy "default-src 'self'; script-src 'self' *.google-analytics.com";
+  ssl_stapling on;
+  ssl_stapling_verify on;
+  resolver 8.8.8.8;
+  root $APIWEBROOT/p;
+  index index.html;
+
+  location '/.well-known/acme-challenge' {
+    root $APIWEBROOT;
+  }
+
+  location / {
+    if (${DOLLARSIGN}scheme = http) {
+      return 301 https://api.$DOMAIN${DOLLARSIGN}request_uri;
+    }
+  }
+
+    location ~ \.php${DOLLARSIGN} {
+    include fastcgi_params;
+    fastcgi_split_path_info ^(.+?\.php)(/.*)${DOLLARSIGN};
+
+    # Mitigate https://httpoxy.org/ vulnerabilities
+    fastcgi_param HTTP_PROXY "";
+    fastcgi_param SCRIPT_FILENAME ${DOLLARSIGN}document_root${DOLLARSIGN}fastcgi_script_name;
+
+    fastcgi_pass unix:/var/run/api.$DOMAIN.sock;
+    fastcgi_index index.php;
+
+    if (!-f ${DOLLARSIGN}document_root${DOLLARSIGN}fastcgi_script_name) {
+      return 404;
+    }
+  }
+
+  access_log $LOGDIR/access-private-api.log;
+  error_log $LOGDIR/error-private-api.log warn;
+}
+EOF
+
+ln -s /etc/nginx/sites-available/private-api /etc/nginx/sites-enabled/private-api
 
 printf "\n## CONFIG PHP-FPM ###\n"
 
