@@ -12,6 +12,7 @@ chmod 700 /tmp/node/install.js
 /tmp/node/install.sh
 
 # Load nvm
+# ToDo: Fix this, this isn't right-- this should be under the webuser
 /root/.nvm/nvm.sh
 
 # Install nodejs (I install more than I need to prevent warning messages: iojs & argon)

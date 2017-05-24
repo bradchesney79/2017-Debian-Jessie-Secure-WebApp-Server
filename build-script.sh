@@ -89,6 +89,10 @@ printf "\n########## INSTALL NODEJS VIA NVM ###\n"
 
 . /root/bin/scripts/01900-install-nodejs.sh
 
+printf "\n########## INSTALL NODEJS VIA NVM ###\n"
+
+. /root/bin/scripts/01900-install-front-end-tools.sh
+
 printf "\n########## CLEAN UP ###\n"
 
 printf "\nLast autoremove of packages\n\n"
