@@ -85,6 +85,10 @@ printf "\n########## INSTALL AND CONFIGURE BACK END ASSETS ###\n"
 
 . /root/bin/scripts/01700-install-back-end-assets.sh
 
+printf "\n########## INSTALL NODEJS VIA NVM ###\n"
+
+. /root/bin/scripts/01900-install-nodejs.sh
+
 printf "\n########## CLEAN UP ###\n"
 
 printf "\nLast autoremove of packages\n\n"

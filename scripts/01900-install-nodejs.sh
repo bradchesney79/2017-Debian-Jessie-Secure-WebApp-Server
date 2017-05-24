@@ -3,7 +3,13 @@ printf "\n\n##### Beginning 01900-install-nodejs.sh\n\n" >> /root/report/build-r
 
 # Install nvm -- this gives me the willies
 #ToDo: Rig up some kind of checksum checking logic here
-curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh
+mkdir /tmp/node
+
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh > /tmp/node/install.js
+
+chmod 700 /tmp/node/install.js
+
+/tmp/node/install.sh
 
 # Install nodejs (I install more than I need to prevent warning messages: iojs & argon)
 nvm install iojs
