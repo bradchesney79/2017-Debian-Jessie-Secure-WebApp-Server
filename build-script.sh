@@ -91,7 +91,7 @@ printf "\n########## INSTALL NODEJS VIA NVM ###\n"
 
 printf "\n########## INSTALL NODEJS VIA NVM ###\n"
 
-. /root/bin/scripts/01900-install-front-end-tools.sh
+. /root/bin/scripts/02100-install-front-end-tools.sh
 
 printf "\n########## CLEAN UP ###\n"
 

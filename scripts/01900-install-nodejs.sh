@@ -3,16 +3,17 @@ printf "\n\n##### Beginning 01900-install-nodejs.sh\n\n" >> /root/report/build-r
 
 # Install nvm -- this gives me the willies
 # ToDo: Rig up some kind of checksum checking logic here
-mkdir /tmp/node
+mkdir /root/tmp/node
 
-curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh > /tmp/node/install.js
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh > /root/tmp/node/install.js
 
-chmod 700 /tmp/node/install.js
+chmod 700 /root/tmp/node/install.js
 
-/tmp/node/install.sh
+/root/tmp/node/install.js
 
 # Load nvm
 # ToDo: Fix this, this isn't right-- this should be under the webuser
+chmod 700 /root/.nvm/nvm.sh
 /root/.nvm/nvm.sh
 
 # Install nodejs (I install more than I need to prevent warning messages: iojs & argon)
@@ -30,5 +31,3 @@ nvm use v6.10.3
 
 
 npm install -g npm
-
-
