@@ -61,7 +61,10 @@ printf "\n## CREATE A BASIC SCHEMA ###\n"
 
 mkdir -p /root/sql
 
-cat <<EOF > /root/sql/schema.sql
+if [ "$DEMO" = "true" ]
+  then
+
+  cat <<EOF > /root/sql/schema.sql
 USE $PROJECTDB;
 
 SET foreign_key_checks = 0;
@@ -118,17 +121,13 @@ CREATE TABLE phones (
 
 SET foreign_key_checks = 1;
 
-
 EOF
 
-mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/schema.sql
+  mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/schema.sql
 
-if [ "$DEV" = "true" ]
-    then
+  printf "\n## INSERT DUMMY DATA INTO DB TO TEST WITH ###\n"    
 
-printf "\n## INSERT DUMMY DATA INTO DB TO TEST WITH ###\n"    
-
-cat <<EOF > /root/sql/testdata.sql
+  cat <<EOF > /root/sql/testdata.sql
 USE $PROJECTDB;
 
 SET foreign_key_checks = 0;
@@ -144,6 +143,6 @@ SET foreign_key_checks = 1;
 
 EOF
 
-mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/testdata.sql
+  mysql -u"$DEFAULTSITEDBUSER" -p"$DEFAULTSITEDBPASSWORD" < /root/sql/testdata.sql
 
 fi
