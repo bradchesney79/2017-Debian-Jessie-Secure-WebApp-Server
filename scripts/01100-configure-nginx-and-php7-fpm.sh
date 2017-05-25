@@ -73,6 +73,44 @@ fastcgi_param  SERVER_NAME        $server_name;
 fastcgi_param  REDIRECT_STATUS    200;
 EOF
 
+
+user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+cat <<"EOF" > /etc/nginx/fastcgi_params
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*
+}
+EOF
+
+mkdir -p /etc/nginx/sites-available
+mkdir -p /etc/nginx/sites-enabled
+
 cat <<EOF > /etc/nginx/sites-available/default
 
 server { 
@@ -134,6 +172,8 @@ server {
   error_log $LOGDIR/error.log warn;
 }
 EOF
+
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 cat <<EOF > /etc/nginx/sites-available/open-api
 server { 
