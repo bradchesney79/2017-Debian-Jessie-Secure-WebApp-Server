@@ -148,8 +148,8 @@ server {
   ssl_trusted_certificate /etc/letsencrypt/live/$DOMAIN/chain.pem;
   ssl_session_cache shared:SSL:128m;
   add_header Strict-Transport-Security "max-age=31557600; includeSubDomains";
-  add_header X-Frame-Options "SAMEORIGIN" always;
-  add_header X-Content-Type-Options "nosniff" always;
+  add_header X-Frame-Options "SAMEORIGIN";
+  add_header X-Content-Type-Options "nosniff";
   add_header X-Xss-Protection "1";
   add_header Content-Security-Policy "default-src 'self'; script-src 'self' *.google-analytics.com";
   ssl_stapling on;

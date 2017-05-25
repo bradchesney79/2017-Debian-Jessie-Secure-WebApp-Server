@@ -123,6 +123,8 @@ EOF
 
 printf "\n## GENERATE ORM DB ACCESS CODE\n\n"
 
+# ToDo: just have them generated where you want them to be
+
 #Build the model classes and put them in a more convenient place
 $PROJECTROOT/vendor/propel/propel/bin/propel model:build
 
@@ -242,7 +244,7 @@ class InitPropel {
 }
 EOF
 
-if [ "$DEV" = "true" ]
+if [ "$DEMO" = "true" ]
     then
 
 # build user object based on DB data related to the user
@@ -313,9 +315,6 @@ use Propel\Runtime\Propel;
 use Firebase\JWT;
 use app\src\Utility;
 
-//use Monolog\Logger;
-//use Monolog\Handler\StreamHandler;
-
 class User {
 
   public userid;
@@ -330,24 +329,58 @@ class User {
 
   public function __construct(int $userid = null, string $email = null) {
     // on instantiating a user object-- just populate all the data from users. Need most of it for many things.
-      if(isset($userid) {
-          $basicUserDetailsQuery = new UserheadQuery();
-          $basicUserData = $basicUserDetailsQuery->create()->filterByUserid($userid)->find()->getData();
+      if(isset($userid)) {
+        setUserFromUserId($userid);
       }
-      elseif(isset($email) && !isset($userid) {
-        // Use email to
+      elseif(isset($email)) {
+        // Use email to suss out a userid
+        // check for doublequotes --> Exception
+        // check for more than one @ sign --> Exception
+        // 
+        // split the email address
+        setUserFromUserId(
+          getUserIdFromEmail($account,$host);
+        );
       }
       else {
-        // We got nothing to give to the clothing industry or there's been a mistake....
+        // We got nothing to give to the clothing industry or there's been a mistake.... --> Exception
       }
 
-
-
-
+      return $this;
+  }
+  
+  private function setUserFromUserId(int $userid) {
+    $basicUserDetailsQuery = new UserQuery();
+    $userData = $basicUserDetailsQuery->create()->filterByUserid($userid)->find()->getData();
+    // populate this.{{properties}}
   }
 
   private function getUserIdFromEmail(string $account, string $host) {
-
+    $basicEmailDetailsQuery = new EmailsQuery();
+    $emailData = $basicEmailsDetailsQuery->create()->filterByAccount($account)->filterByHost($host)find()->getData();
+    
+    // isolate the userid
+    
+    return $userid
+    
+  }
+  
+  private function setEmailsFromUserId(int $userid) {
+  
+  }
+  
+  private function setPhonesFromUserId(int $userid) {
+  
+  }
+  
+  private function setDeepUserObject() {
+    setEmailsFromUserId($this.userid);
+    setPhonesFromUserId($this.userid);
+  }
+  
+  function getDeepUserObject() {
+    setDeepUserObject();
+    return $this
   }
 
 }
