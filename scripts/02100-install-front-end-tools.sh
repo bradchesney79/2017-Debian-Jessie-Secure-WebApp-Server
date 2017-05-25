@@ -23,7 +23,8 @@ cat <<EOF > $PROJECTROOT/package.json
     "typescript": "^2.3.3"
   },
   "devDependencies": {
-    "webpack": "^2.6.0"
+    "webpack": "^2.6.0",
+    "jasmine": "^2.6.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
