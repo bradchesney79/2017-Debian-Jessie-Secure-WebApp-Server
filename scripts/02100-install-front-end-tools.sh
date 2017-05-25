@@ -36,12 +36,12 @@ EOF
 cd $PROJECTROOT
 
 if [ "$DEV" = "true" ]
-
-npm install
+  then
+    npm install
 
 else
 
-npm install --production
+  npm install --production
 
 fi
 
