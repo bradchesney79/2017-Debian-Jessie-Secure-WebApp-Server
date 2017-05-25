@@ -11,13 +11,18 @@ deb http://security.debian.org/ jessie/updates main contrib non-free
 
 deb http://http.debian.net/debian jessie-backports main contrib non-free
 
-deb http://repo.mysql.com/apt/debian/ jessie mysql-5.7
-
 deb https://packages.sury.org/php/ jessie main
+
+deb http://nginx.org/packages/debian/ jessie nginx
+
+deb http://repo.mysql.com/apt/debian/ jessie mysql-5.7
 EOF
 
 apt-get -qy install apt-transport-https lsb-release ca-certificates
 #FIXME You know better than to shove something unconfirmed in... bah
+
+curl -s https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+
 wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 #echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 
