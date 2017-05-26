@@ -56,13 +56,13 @@ printf "\n########## INSTALL MYSQL ###\n"
 
 . /root/bin/scripts/00800-install-and-configure-mysql.sh
 
-printf "\n########## CONFIGURE DEVELOPMENT INSTANCE PACKAGES ###\n"
-
-. /root/bin/scripts/00900-configure-dev-resources.sh
-
 printf "\n########## CREATE WEBROOT FILE STRUCTURE ###\n"
 
-. /root/bin/scripts/01000-create-webroot-file-structure.sh
+. /root/bin/scripts/00900-create-webroot-file-structure.sh
+
+printf "\n########## CONFIGURE DEVELOPMENT INSTANCE PACKAGES ###\n"
+
+. /root/bin/scripts/01000-configure-dev-resources.sh
 
 printf "\n########## CONFIGURE NGINX AND PHP-FPM ###\n\n"
 
@@ -83,7 +83,7 @@ printf "\n########## INSTALL AND CONFIGURE SYSSTAT ###\n"
 
 printf "\n########## INSTALL AND CONFIGURE BACK END ASSETS ###\n"
 
-#. /root/bin/scripts/01700-install-back-end-assets.sh
+. /root/bin/scripts/01700-install-back-end-assets.sh
 
 printf "\n########## INSTALL NODEJS VIA NVM ###\n"
 
