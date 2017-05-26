@@ -15,6 +15,11 @@ apt-get install -y nginx nginx-common
 
 systemctl stop nginx
 
+# Since we are installing a non-Debian oriented packages
+# The Debian Way (tm) directories are missing
+mkdir -p /etc/nginx/sites-available
+mkdir -p /etc/nginx/sites-enabled
+
 printf "\n## INSTALLING PHP7 ###\n"
 
 if [ "$DEMO" = "true" ]
