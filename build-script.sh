@@ -83,15 +83,15 @@ printf "\n########## INSTALL AND CONFIGURE SYSSTAT ###\n"
 
 printf "\n########## INSTALL AND CONFIGURE BACK END ASSETS ###\n"
 
-. /root/bin/scripts/01700-install-back-end-assets.sh
+#. /root/bin/scripts/01700-install-back-end-assets.sh
 
 printf "\n########## INSTALL NODEJS VIA NVM ###\n"
 
-. /root/bin/scripts/01900-install-nodejs.sh
+#. /root/bin/scripts/01900-install-nodejs.sh
 
 printf "\n########## INSTALL NODEJS VIA NVM ###\n"
 
-. /root/bin/scripts/02100-install-front-end-tools.sh
+#. /root/bin/scripts/02100-install-front-end-tools.sh
 
 printf "\n########## CLEAN UP ###\n"
 
