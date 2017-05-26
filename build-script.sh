@@ -87,11 +87,11 @@ printf "\n########## INSTALL AND CONFIGURE BACK END ASSETS ###\n"
 
 printf "\n########## INSTALL NODEJS VIA NVM ###\n"
 
-#. /root/bin/scripts/01900-install-nodejs.sh
+. /root/bin/scripts/01900-install-nodejs.sh
 
 printf "\n########## INSTALL NODEJS VIA NVM ###\n"
 
-#. /root/bin/scripts/02100-install-front-end-tools.sh
+. /root/bin/scripts/02100-install-front-end-tools.sh
 
 printf "\n########## CLEAN UP ###\n"
 
