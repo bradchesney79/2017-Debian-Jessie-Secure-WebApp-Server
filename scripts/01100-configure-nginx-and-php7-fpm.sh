@@ -29,6 +29,12 @@ server {
   access_log $LOGDIR/access-ssl.log;
 }
 EOF
+  
+    # ToDo: remove this
+    
+    cp /etc/nginx/sites-available/default etc/nginx/backups/default.cert.bak
+    
+    
     
     systemctl start nginx
     
@@ -94,7 +100,9 @@ EOF
 
 cp /etc/nginx/fastcgi_params /etc/nginx/fastcgi.conf
 
+# ToDo: remove this
 
+cp /etc/nginx/fastcgi_params /etc/nginx/backups/fastcgi.conf.bak
 
 cat <<EOF > /etc/nginx/sites-available/default
 
@@ -158,6 +166,10 @@ server {
 }
 EOF
 
+# ToDo: remove this
+
+cp /etc/nginx/sites-available/default /etc/nginx/backups/default.ssl.bak
+
 ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 cat <<EOF > /etc/nginx/sites-available/open-api
@@ -214,6 +226,10 @@ server {
 }
 EOF
 
+# ToDo: remove this
+
+cp /etc/nginx/sites-available/open-api /etc/nginx/backups/open-api.bak
+
 ln -s /etc/nginx/sites-available/open-api /etc/nginx/sites-enabled/open-api
 
 cat <<EOF > /etc/nginx/sites-available/private-api
@@ -269,6 +285,10 @@ server {
   error_log $LOGDIR/error-private-api.log warn;
 }
 EOF
+
+# ToDo: remove this
+
+cp /etc/nginx/sites-available/private-api /etc/nginx/backups/private-api.bak
 
 ln -s /etc/nginx/sites-available/private-api /etc/nginx/sites-enabled/private-api
 

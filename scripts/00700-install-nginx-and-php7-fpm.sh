@@ -41,6 +41,10 @@ if [ "$SSLPROVIDER"='lets-encrypt' ]
   apt-get install -yt jessie-backports certbot python-certbot python-acme python-cryptography
 fi
 
+# Remove this
+
+cp /etc/nginx/nginx.conf /etc/nginx/backups/nginx.conf.orgiginal.bak
+
 # The main nginx.conf is also not The Debian Way (tm)
 cat <<EOF > /etc/nginx/nginx.conf
 user www-data;
@@ -128,3 +132,8 @@ http {
 #       }
 #}
 EOF
+
+# ToDo: remove these
+
+mkdir -p /etc/nginx/backups
+cp /etc/nginx/nginx.conf /etc/nginx/backups/nginx.conf.bak
