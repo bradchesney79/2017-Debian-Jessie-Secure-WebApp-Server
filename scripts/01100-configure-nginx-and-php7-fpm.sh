@@ -1,4 +1,4 @@
-#@IgnoreInspection BashAddShebang
+
 printf "\n\n##### Beginning 01100-configure-nginx-and-php7-fpm.sh\n\n" >> /root/report/build-report.txt
 
 # sidestepping a missing variable issue
@@ -41,6 +41,21 @@ EOF
     certbot certonly --renew-by-default --agree-tos --non-interactive $STAGING --text --allow-subset-of-names --rsa-key-size $KEYSIZE --email $USERID1001EMAIL --webroot --webroot-path $HTTPSWEBROOT --domains "$DOMAIN, $HOSTNAME.$DOMAIN, api.$DOMAIN"
     
     echo "certbot certonly --renew-by-default --agree-tos --non-interactive $STAGING --text --allow-subset-of-names --rsa-key-size $KEYSIZE --email $USERID1001EMAIL --webroot --webroot-path $HTTPSWEBROOT --domains \"$DOMAIN, $HOSTNAME.$DOMAIN, api.$DOMAIN\""
+    
+    # certbot certonly --renew-by-default --agree-tos --non-interactive --staging --text --allow-subset-of-names --rsa-key-size 4096 --email bradchesney79@gmail.com --webroot --webroot-path /var/www/html --domains "kingchesney.com, www.kingchesney.com, api.kingchesney.com"
+
+## CONFIGURING NGINX ###
+## CONFIG PHP-FPM ###
+
+## DEFAULT HTTPS POOL ###
+
+## API POOL ###
+
+## CONFIGURE PHP ###
+
+########## INSTALL WEBDEVELOPER RESOURCES ###
+
+
     
     systemctl stop nginx
     

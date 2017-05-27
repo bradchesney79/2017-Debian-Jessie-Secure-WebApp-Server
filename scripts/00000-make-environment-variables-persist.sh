@@ -1,5 +1,4 @@
-#@IgnoreInspection BashAddShebang
-
+printf "\n\n##### Beginning 00000-make-environment-variables-persist.sh\n\n" >> /root/report/build-report.txt
 
 ##### CONVERT BASH VARIABLES TO ENVIRONMENT VARIABLES
 
