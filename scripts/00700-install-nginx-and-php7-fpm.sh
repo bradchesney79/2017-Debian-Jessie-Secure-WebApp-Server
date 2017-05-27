@@ -43,7 +43,7 @@ fi
 
 # Remove this
 
-cp /etc/nginx/nginx.conf /etc/nginx/backups/nginx.conf.orgiginal.bak
+cp /etc/nginx/nginx.conf /etc/nginx/backups/nginx.conf.original.bak
 
 # The main nginx.conf is also not The Debian Way (tm)
 cat <<EOF > /etc/nginx/nginx.conf
@@ -136,4 +136,4 @@ EOF
 # ToDo: remove these
 
 mkdir -p /etc/nginx/backups
-cp /etc/nginx/nginx.conf /etc/nginx/backups/nginx.conf.bak
+cp /etc/nginx/nginx.conf /etc/nginx/backups/nginx.conf.certbot.bak
