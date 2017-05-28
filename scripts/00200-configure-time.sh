@@ -5,4 +5,4 @@ printf "\n## SET THE TIME & TIME ZONE\n\n"
 echo $TIMEZONE > /etc/timezone                     
 cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime # This sets the time
 
-apt-get install ntp
+apt-get -y install ntp
