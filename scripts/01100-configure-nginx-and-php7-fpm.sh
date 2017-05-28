@@ -30,12 +30,6 @@ server {
 }
 EOF
   
-    # ToDo: remove this
-    
-    cp /etc/nginx/sites-available/default etc/nginx/backups/default.cert.bak
-    
-    
-    
     systemctl start nginx
     
     printf "\n## INVOKE CERTBOT FOR LETS ENCRYPT MULTIDOMAIN CERT ###\n"
