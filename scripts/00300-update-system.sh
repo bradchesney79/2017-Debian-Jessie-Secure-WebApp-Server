@@ -3,25 +3,25 @@ printf "\n\n##### Beginning 00300-update-system.sh\n\n" >> /root/report/build-re
 printf "\n## UPDATE THE APT SOURCES \n\n"
 
 cat <<EOF > /etc/apt/sources.list
-deb http://ftp.us.debian.org/debian stretch main contrib non-free
+deb http://ftp.us.debian.org/debian jessie main contrib non-free
 
-deb http://httpredir.debian.org/debian stretch-updates main contrib non-free
+deb http://httpredir.debian.org/debian jessie-updates main contrib non-free
 
-deb http://security.debian.org/ stretch/updates main contrib non-free
+deb http://security.debian.org/ jessie/updates main contrib non-free
 
-deb http://http.debian.net/debian stretch-backports main contrib non-free
+deb http://http.debian.net/debian jessie-backports main contrib non-free
 
-deb https://packages.sury.org/php/ stretch main
+deb https://packages.sury.org/php/ jessie main
 
-deb http://nginx.org/packages/debian/ stretch nginx
+#deb http://nginx.org/packages/debian/ jessie nginx
 
-deb http://repo.mysql.com/apt/debian/ stretch mysql-5.7
+deb http://repo.mysql.com/apt/debian/ jessie mysql-5.7
 EOF
 
 apt-get -qy install apt-transport-https lsb-release ca-certificates
 #FIXME You know better than to shove something unconfirmed in... bah
 
-curl -s https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+#curl -s https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
 
 wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 #echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list

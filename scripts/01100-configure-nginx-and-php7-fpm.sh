@@ -100,6 +100,8 @@ EOF
 
 cp /etc/nginx/fastcgi_params /etc/nginx/fastcgi.conf
 
+
+
 # ToDo: remove this
 
 cp /etc/nginx/fastcgi_params /etc/nginx/backups/fastcgi.conf.bak
@@ -166,9 +168,7 @@ server {
 }
 EOF
 
-# ToDo: remove this
 
-cp /etc/nginx/sites-available/default /etc/nginx/backups/default.ssl.bak
 
 ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
@@ -226,9 +226,6 @@ server {
 }
 EOF
 
-# ToDo: remove this
-
-cp /etc/nginx/sites-available/open-api /etc/nginx/backups/open-api.bak
 
 ln -s /etc/nginx/sites-available/open-api /etc/nginx/sites-enabled/open-api
 
@@ -286,9 +283,7 @@ server {
 }
 EOF
 
-# ToDo: remove this
 
-cp /etc/nginx/sites-available/private-api /etc/nginx/backups/private-api.bak
 
 ln -s /etc/nginx/sites-available/private-api /etc/nginx/sites-enabled/private-api
 
