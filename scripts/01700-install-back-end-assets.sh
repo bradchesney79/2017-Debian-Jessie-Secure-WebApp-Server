@@ -171,15 +171,13 @@ cat <<EOF > $PROJECTROOT/composer.json
     },
     "autoload": {
         "psr-4": {
-            "$PROJECTNAME\\Src": "$PROJECTROOT/$PROJECTNAME/src",
-
-
+             "$PROJECTNAME\\\\": "$PROJECTROOT/$PROJECTNAME/src"
         },
         "classmap": ["$PROJECTROOT/$PROJECTNAME/dal/generated-classes/"]
     },
     "autoload-dev": {
         "psr-4": {
-            "$PROJECTNAME\\Test": "$PROJECTROOT/$PROJECTNAME/tests"
+            "$PROJECTNAME\\\\Test\\\\": "$PROJECTROOT/$PROJECTNAME/tests"
         }
     }
 }
