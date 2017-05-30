@@ -93,6 +93,10 @@ printf "\n########## INSTALL NODEJS VIA NVM ###\n"
 
 . /root/bin/scripts/02100-install-front-end-tools.sh
 
+printf "\n########## INSTALL MONITORING TOOLS ###\n"
+
+# ToDo: install monitoring tools
+
 printf "\n########## CLEAN UP ###\n"
 
 printf "\nLast autoremove of packages\n\n"
