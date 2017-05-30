@@ -48,8 +48,6 @@ TARGETEMAIL=<your email with the junk email service>
 
 TODO:
 
-configure global webdev resources like composer, node, fonts to run tests & builds
-
 improve troubleshooting resources
 
 remedy broken GUI SFTP -- works fine CLI
@@ -61,6 +59,10 @@ break into modular Ansible scripts
 NICE TO HAVE:
 
 disk partitions
+
+SIMILAR PROJECTS:
+
+[https://github.com/bogdanvlviv/i-vagrant](https://github.com/bogdanvlviv/i-vagrant)
 
 THANKS:
 
