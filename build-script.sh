@@ -93,9 +93,14 @@ printf "\n########## INSTALL NODEJS VIA NVM ###\n"
 
 . /root/bin/scripts/02100-install-front-end-tools.sh
 
+printf "\n########## INSTALL REDIS ###\n"
+
+. /root/bin/scripts/02300-install-redis.sh
+
 printf "\n########## INSTALL MONITORING TOOLS ###\n"
 
 # ToDo: install monitoring tools
+#. /root/bin/scripts/02500-install-monitoring-tools.sh
 
 printf "\n########## CLEAN UP ###\n"
 

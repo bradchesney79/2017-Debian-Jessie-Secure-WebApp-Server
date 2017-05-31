@@ -2,7 +2,8 @@ printf "\n\n##### Beginning 00400-configure-sshd.sh\n\n" >> /root/report/build-r
 
 printf "\n## CONFIGURE SSH TO USE SUPPLEMENTAL ALGORITHMS ###\n"
 
-#TODO Permit root login, no
+# Todo: Permit root login, no
+# Todo: MaxStartups should be tweaked, 3rd party lockout issue 
 
 cat <<EOF > /etc/ssh/sshd_config
 # Additional encryption algorithms for connecting via SSH
