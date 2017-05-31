@@ -70,6 +70,8 @@ simplified logging - http://reddit.com/user/cheaphomemadeacid
 
 reminder that my instructions sucked - https://www.reddit.com/user/iAMthePRONY
 
+reevaluation of sshd MaxStartups - petn-randall: freenode/#debian || irc.debian.org/#debian
+
 For me to test the whole thing as-is:
 
 linode rebuild rust-belt-rebellion --distribution "Debian 8" --password "ffff4444"; printf 'curl https://raw.githubusercontent.com/bradchesney79/2017-Debian-Jessie-Secure-WebApp-Server/master/init.sh | /bin/bash && cd /root/bin && . /root/bin/build-script.sh'
