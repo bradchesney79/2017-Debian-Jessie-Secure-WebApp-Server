@@ -5,7 +5,7 @@ printf "\n\n##### Beginning 01100-configure-nginx-and-php7-fpm.sh\n\n" >> /root/
 # $ is both a native dynamic character in nginx.conf & bash
 DOLLARSIGN='$'
 
-if [ "$SSLPROVIDER"='letsencrypt' ]
+if [ "$SSLPROVIDER" = 'letsencrypt' ]
   then
 
     printf "\n## TEMPORARY NGINX HTTP SERVER FOR CERTBOT VERIFICATION ###\n"

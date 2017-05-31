@@ -35,7 +35,7 @@ fi
 
 systemctl stop php7.1-fpm
 
-if [ "$SSLPROVIDER"='lets-encrypt' ]
+if [ "$SSLPROVIDER" = 'lets-encrypt' ]
   then
   printf "\n## INSTALLING CERTBOT ###\n"
   apt-get install -yt jessie-backports certbot python-certbot python-acme python-cryptography

@@ -18,13 +18,13 @@ deb https://packages.sury.org/php/ jessie main
 deb http://repo.mysql.com/apt/debian/ jessie mysql-5.7
 EOF
 
-apt-get -qy install apt-transport-https lsb-release ca-certificates
-#FIXME You know better than to shove something unconfirmed in... bah
-
-#curl -s https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
-
-wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 #echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
+
+apt-get -qy install apt-transport-https lsb-release ca-certificates
+
+#FIXME You know better than to shove something unconfirmed in... bah
+wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+
 
 cd /root
 
@@ -514,6 +514,11 @@ printf "\n## INSTALL THE FIRST BATCHES OF PACKAGES ###\n"
 #apt-get -y install sudo tcl perl python3 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git curl imagemagick
 
 apt-get -y install sudo perl python3 ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban curl expect
+
+if [ "$DEV" = "true" ]
+  then
+    apt-get -y install make gcc g++
+fi
 
 printf "\n## CLEAN UP ###\n"
 
