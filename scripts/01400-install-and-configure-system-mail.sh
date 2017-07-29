@@ -122,3 +122,20 @@ printf "Email from $(hostname)" | mail "$TARGETEMAIL" -s "$DATE $UNIXTIMESTAMP E
 printf "\nNo DNS configuration mail testing:"
 printf "\nThe trick is that you have to use 'disposable email' services that exist because in some cases it is not always the wisest decision to only do business with the best of the best. These services allow otherwise questionable mail to come in, melded into mail stamped as legit from a sender with sufficient SPF, DMARC, & DKIM-- and is sent along to your real mail box --or at least that is how it works with 33mail.com"
 printf "\nWelcome to the seedy world of email laundering."
+
+printf "\n## REVERSE DNS\n"
+
+printf "\nThis is a extra fun zone file thing. You may find that you have to add this manually or in an 'advanced' area\n"
+printf "\nof youre DNS settings of your DNS registrar and/or nameserver company you work with.\n"
+
+printf "\nHow might you know whether your reverse DNS is there, isn't there, or even if it is correct or not?\n"
+printf "\ndig -x ###.###.###.###\n
+printf "\nor with fake numbers\n"
+printf "\ndig -x 192.168.0.1/n"
+printf "\n(which is unlikely and could be problematic)./n"
+
+printf "\nYou will need a PTR record that may look as follows:\n" 
+printf "\n112.33.45.in-addr.arpa. 86400   IN      NS      ns3.linode.com.\n"
+
+printf "\n"http://www.itworld.com/article/2833006/networking/how-to-setup-reverse-dns-and-ptr-records.html\n"
+
