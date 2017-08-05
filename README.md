@@ -1,10 +1,12 @@
 # 2017-Debian-Jessie-Secure-WebApp-Server
 
-I am facing a really neat and exciting fundamental change to how I've done autoloading-- I thought I'd be working on this next month. However, my situation has changed and I need to know the up to date now context of modern way of doing things well enough to teach it. So here we are.
-
 This is the 2017 version updated using the things I learned from the 2015 version
 
-A setup script for a Debian LAMP Webserver. Building with a security focus & geared towards higher performance than stock configuration that should run well everywhere-- considering that if we dumped all this shenanigans on a stock host it would possibly get bogged down.
+A setup script for a Debian LAMP Webserver for learning concepts. Building with a security focus & geared towards higher performance than stock configuration that should run well everywhere-- considering that if we dumped all this shenanigans on a stock host it would possibly get bogged down. This is mostly to show relationships and it would probably be fine as a guide to set up a proof of concept or development environment.
+
+For instance-- your ORM generated code would likely point at a database not on the same machine. If you are going to take the time to separate anything-- put your database on a second machine. Next is your "in memory" cache service.
+
+My ultimate goal is to use this project to learn and teach end to end tools from system administration to back end infrastructure to front end web client resources.
 
 Initially this will be in implemented with bash until I arrive at an end result I am happy with.
 
@@ -20,9 +22,9 @@ How to use this on a very basic level:
 
 #2 SSH into the machine
 
-#3 cut/paste this mess into the command line:
+#3 cut/paste time:
 
-We are supplying a user agent string as Chrome on Linux. Think about someone conditionally supplying content based on the information you are giving to the remote host and then disguising to the receiving server that you may be doing more than just browsing the source code.
+We are supplying a user agent string as Chrome on Linux. Think about someone conditionally supplying content based on the information you are giving to the remote host. By behaving and appearing as a web browser we will get treated like a web browser-- which is our intended goal. We just want to appear to be merely browsing the source code.
 
 curl -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36" https://raw.githubusercontent.com/bradchesney79/2017-Debian-Jessie-Secure-WebApp-Server/master/init.sh | sh
 
@@ -48,9 +50,13 @@ TARGETEMAIL=<your email with the junk email service>
 
 TODO:
 
+improve install instructions
+
+limit DB permissions taking into consideration constraints introduced by ORM usage -- right now ORM can read/write all app data in the DB
+
 improve troubleshooting resources
 
-remedy broken GUI SFTP -- works fine CLI
+remedy broken GUI SFTP -- works fine CLI (might be the ciphers Filezilla is trying to use aren't as strong as the config file whitelist...)
 
 update troubleshooting resources on github
 
