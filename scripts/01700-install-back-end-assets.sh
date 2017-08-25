@@ -92,8 +92,11 @@ printf "\n## REVERSE ENGINEER DB XML SCHEMA FOR ORM\n\n"
 # Set up directories and reverse engineer the DB for the Propel ORM
 mkdir -p $PROJECTROOT/$PROJECTNAME/dal/config
 
-cd $PROJECTROOT/$PROJECTNAME/dal
-$PROJECTROOT/vendor/propel/propel/bin/propel reverse "mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$DEFAULTSITEDBUSER;password=$DEFAULTSITEDBPASSWORD" --output-dir=$PROJEDTROOT/$PROJECTNAME/dal/config
+#cd $PROJECTROOT/$PROJECTNAME/dal
+
+CONNECTIONSTRING="mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$DEFAULTSITEDBUSER;password=$DEFAULTSITEDBPASSWORD"
+echo $CONNECTIONSTRING
+$PROJECTROOT/vendor/propel/propel/bin/propel reverse $CONNECTIONSTRING --output-dir=$PROJEDTROOT/$PROJECTNAME/dal/config
 
 #Configure the DSN and settings for the model classes generation
 
