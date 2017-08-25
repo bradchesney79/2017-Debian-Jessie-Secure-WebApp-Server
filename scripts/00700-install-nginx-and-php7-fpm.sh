@@ -27,7 +27,7 @@ printf "\n## INSTALLING PHP7 ###\n"
 if [ "$DEMO" = "true" ]
   then
     # Shorter list of packages for the demo install
-    apt-get install -y php7.1-fpm php7.1-common php7.1-xml php7.1-gd php7.1-mbstring php7.1-mcrypt php7.1-curl
+    apt-get install -y php7.1-fpm php7.1-common php7.1-xml php7.1-gd php7.1-mbstring php7.1-mcrypt php7.1-curl php7.1-mysql
 else
   # Full list of intended packages
   apt-get install -y php7.1-fpm php7.1-common php7.1-curl php7.1-gd php7.1-imagick php7.1-json php7.1-mbstring php7.1-mcrypt php7.1-mysql php7.1-xml php7.1-intl php7.1-xmlrpc php7.1-zip php-pear
