@@ -480,7 +480,8 @@ EOF
 
 printf "\n## CLEAN UP\n\n"
 
-#rm -rf $PROJECTROOT/composer.lock $PROJECTROOT/
+echo "Deleting /var/www/vendor in a way less likely to cause filesystem inconsistencies" >> /root/report/build-report.txt
+echo "File system inconsistencies result in the filesystem being remounted read-only FYI..."
 
 rm -rf $PROJECTROOT/vendor/a* && echo "delete" >> /root/report/build-report.txt
 rm -rf $PROJECTROOT/vendor/b* && echo "delete" >> /root/report/build-report.txt
@@ -497,15 +498,21 @@ rm -rf $PROJECTROOT/vendor/p* && echo "delete" >> /root/report/build-report.txt
 rm -rf $PROJECTROOT/vendor/s* && echo "delete" >> /root/report/build-report.txt
 rm -rf $PROJECTROOT/vendor/w* && echo "delete" >> /root/report/build-report.txt
 
+rm -rf $PROJECTROOT/composer.lock $PROJECTROOT/vendor
+
+#To Do: better indicate in the report successful deletion
+echo "check to see if everything was deleted"
+ls -la /var/www/vendor
+
 printf "\n## HERE WE GO, COMPOSER INSTALL\n\n"
 
 cd /var/www
 
 if [ "$DEV" = "true" ]
     then
-    composer composer install --optimize-autoloader
+    composer install --optimize-autoloader
     else
-    composer.phar install --no-ansi --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
+    composer install --no-ansi --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
 fi
 
 cd $PROJECTROOT
