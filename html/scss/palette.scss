@@ -1,0 +1,19 @@
+/* Blue-Grey/Blue Angular Material Design Palette */
+
+$dark-primary-color:        #455A64;
+$default-primary-color:     #607D8B;
+$light-primary-color:       #CFD8DC;
+$text-primary-color:        #FFFFFF;
+$accent-color:              #448AFF;
+$primary-text-color:        #212121;
+$secondary-text-color:      #757575;
+$divider-color:             #BDBDBD;
+
+.dark-primary-color    { background: $dark-primary-color; }
+.default-primary-color { background: $default-primary-color; }
+.light-primary-color   { background: $light-primary-color; }
+.text-primary-color    { color: $text-primary-color; }
+.accent-color          { background: $accent-color; }
+.primary-text-color    { color: $primary-text-color; }
+.secondary-text-color  { color: $secondary-text-color; }
+.divider-color         { border-color: $divider-color; }
