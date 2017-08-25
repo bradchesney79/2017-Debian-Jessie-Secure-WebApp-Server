@@ -94,7 +94,7 @@ mkdir -p $PROJECTROOT/$PROJECTNAME/dal/config
 
 #cd $PROJECTROOT/$PROJECTNAME/dal
 
-$PROJECTROOT/vendor/propel/propel/bin/propel reverse --output-dir=$PROJEDTROOT/$PROJECTNAME/dal/config "mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$DEFAULTSITEDBUSER;password=$DEFAULTSITEDBPASSWORD"
+$PROJECTROOT/vendor/propel/propel/bin/propel reverse --output-dir=$PROJECTROOT/$PROJECTNAME/dal/config "mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$DEFAULTSITEDBUSER;password=$DEFAULTSITEDBPASSWORD"
 
 #Configure the DSN and settings for the model classes generation
 
@@ -129,7 +129,7 @@ printf "\n## GENERATE ORM DB ACCESS CODE\n\n"
 #Build the model classes and put them in a more convenient place
 $PROJECTROOT/vendor/propel/propel/bin/propel model:build
 
-mv $PROJECTROOT/$PROJECTNAME/dal/config/generated-classes $PROJECTROOT/$PROJECTNAME/dal
+# mv $PROJECTROOT/$PROJECTNAME/dal/config/generated-classes $PROJECTROOT/$PROJECTNAME/dal
 
 printf "\n## REWRITE COMPOSER.JSON TO USE ORM ACCESS CODE\n\n"
 
