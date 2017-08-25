@@ -243,240 +243,240 @@ class InitPropel {
 }
 EOF
 
-#if [ "$DEMO" = "true" ]
-#    then
-#
-## build user object based on DB data related to the user
-#
-#printf "
-#Once logged in to mysql client...
-#
-#mysql> describe users;
-#+----------------+------------------+------+-----+---------+----------------+
-#| Field          | Type             | Null | Key | Default | Extra          |
-#+----------------+------------------+------+-----+---------+----------------+
-#| userid         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
-#| active         | char(1)          | YES  |     | NULL    |                |
-#| fname          | char(50)         | YES  |     | NULL    |                |
-#| nickname       | char(50)         | YES  |     | NULL    |                |
-#| lname          | char(50)         | YES  |     | NULL    |                |
-#| password       | char(255)        | YES  |     | NULL    |                |
-#| sessionStart   | int(10) unsigned | YES  |     | NULL    |                |
-#| sessionRenewal | int(10) unsigned | YES  |     | NULL    |                |
-#| lastModified   | int(10) unsigned | YES  |     | NULL    |                |
-#+----------------+------------------+------+-----+---------+----------------+
-#9 rows in set (0.00 sec)
-#
-#mysql> describe emails;
-#+--------------+----------------------------------------------------------------------+------+-----+---------+----------------+
-#| Field        | Type                                                                 | Null | Key | Default | Extra          |
-#+--------------+----------------------------------------------------------------------+------+-----+---------+----------------+
-#| emailsid     | int(10) unsigned                                                     | NO   | PRI | NULL    | auto_increment |
-#| userid       | int(10) unsigned                                                     | YES  | MUL | NULL    |                |
-#| title        | char(80)                                                             | YES  |     | NULL    |                |
-#| account      | char(70)                                                             | YES  | MUL | NULL    |                |
-#| host         | char(255)                                                            | YES  | MUL | NULL    |                |
-#| level        | enum('all','marketing','information','notifications','legal','none') | YES  |     | NULL    |                |
-#| lastModified | int(10) unsigned                                                     | YES  |     | NULL    |                |
-#+--------------+----------------------------------------------------------------------+------+-----+---------+----------------+
-#7 rows in set (0.00 sec)
-#
-#mysql> describe phones;
-#+--------------+----------------------------------------------------------------+------+-----+---------+----------------+
-#| Field        | Type                                                           | Null | Key | Default | Extra          |
-#+--------------+----------------------------------------------------------------+------+-----+---------+----------------+
-#| phonesid     | int(10) unsigned                                               | NO   | PRI | NULL    | auto_increment |
-#| userid       | int(10) unsigned                                               | YES  | MUL | NULL    |                |
-#| phoneType    | enum('landline','mobile','multi-ring','fax','tdd-tty','other') | YES  |     | NULL    |                |
-#| sms          | char(1)                                                        | YES  |     | NULL    |                |
-#| title        | char(80)                                                       | YES  |     | NULL    |                |
-#| areaCode     | smallint(6)                                                    | YES  |     | NULL    |                |
-#| prefix       | smallint(6)                                                    | YES  |     | NULL    |                |
-#| number       | smallint(6)                                                    | YES  |     | NULL    |                |
-#| extention    | char(80)                                                       | YES  |     | NULL    |                |
-#| lastModified | int(10) unsigned                                               | YES  |     | NULL    |                |
-#+--------------+----------------------------------------------------------------+------+-----+---------+----------------+
-#10 rows in set (0.00 sec)"
-#fi
-#
-#printf "\n## GENERATING EXAMPLE OBJECT CODE\n\n"
-#
-#cat <<EOF > $PROJECTROOT/$PROJECTNAME/src/user.php
-#<?php namespace $PROJECTNAME
-#
-#// Include the composer autoload file
-#require $PROJECTROOT/vendor/autoload.php
-#
-#use Propel\Common\Config\ConfigurationManager;
-#use Propel\Runtime\Connection\ConnectionManagerSingle;
-#use Propel\Runtime\Propel;
-#
-#use Firebase\JWT;
-#use app\src\Utility;
-#
-#class User {
-#
-#  public userid;
-#  public active;
-#  public fname;
-#  public lname;
-#  public password;
-#  public sessionStart;
-#  public sessionRenewal;
-#  public emails; //object list
-#  public phones; //object list
-#
-#  public function __construct(int $userid = null, string $email = null) {
-#    // on instantiating a user object-- just populate all the data from users. Need most of it for many things.
-#      if(isset($userid)) {
-#        setUserFromUserId($userid);
-#      }
-#      elseif(isset($email)) {
-#        // Use email to suss out a userid
-#        // check for doublequotes --> Exception
-#        // check for more than one @ sign --> Exception
-#        //
-#        // split the email address
-#        setUserFromUserId(
-#          getUserIdFromEmail($account,$host);
-#        );
-#      }
-#      else {
-#        // We got nothing to give to the clothing industry or there's been a mistake.... --> Exception
-#      }
-#
-#      return $this;
-#  }
-#
-#  private function setUserFromUserId(int $userid) {
-#    $basicUserDetailsQuery = new UserQuery();
-#    $userData = $basicUserDetailsQuery->create()->filterByUserid($userid)->find()->getData();
-#    // populate this.{{properties}}
-#  }
-#
-#  private function getUserIdFromEmail(string $account, string $host) {
-#    $basicEmailDetailsQuery = new EmailsQuery();
-#    $emailData = $basicEmailsDetailsQuery->create()->filterByAccount($account)->filterByHost($host)find()->getData();
-#
-#    // isolate the userid
-#
-#    return $userid
-#
-#  }
-#
-#  private function setEmailsFromUserId(int $userid) {
-#
-#  }
-#
-#  private function setPhonesFromUserId(int $userid) {
-#
-#  }
-#
-#  private function setDeepUserObject() {
-#    setEmailsFromUserId($this.userid);
-#    setPhonesFromUserId($this.userid);
-#  }
-#
-#  function getDeepUserObject() {
-#    setDeepUserObject();
-#    return $this
-#  }
-#
-#}
-#EOF
-#
-#cat <<EOF > "$APIWEBROOT/1/user/logout"
-#<?php
-#
-#?>
-#EOF
-#
-#cat <<EOF > "$APIWEBROOT/1/user/register"
-#<?php
-#require $PROJECTROOT/vendor/autoload.php;
-#
-#$credentials = [
-#    'email'    => $clean['email'],
-#    'password' => $clean['password']
-#];
-#
-#$user = Sentinel::register($credentials);
-#
-#?>
-#EOF
-#
-#cat <<EOF > "$APIWEBROOT/1/user/activate"
-#<?php
-#
-#?>
-#EOF
-#
-#cat <<EOF > "$APIWEBROOT/1/user/login"
-#<?php
-#
-#$email = trim(str_replace("\xc2\xa0", ' ', $_POST['email']));
-#$password = trim(str_replace("\xc2\xa0", ' ', $_POST['password']));
-#
-#}
-#?>
-#EOF
-#
-#cat <<EOF > "$APIWEBROOT/1/user/read"
-#<?php
-#
-#?>
-#EOF
-#
-#cat <<EOF > "$APIWEBROOT/1/user/modify"
-#<?php
-#
-#?>
-#EOF
-#
-#cat <<EOF > "$APIWEBROOT/1/user/remove"
-#<?php
-#
-#?>
-#EOF
-#
-#printf "\n## SETUP PHPUNIT CONFIG\n\n"
-#
-#cat <<EOF > $PROJECTROOT/phpunit.xml
-#<phpunit bootstrap="vendor/autoload.php"
-#  colors="true"
-#  convertErrorsToExceptions="true"
-#  convertNoticesToExceptions="true"
-#  convertWarningsToExceptions="true"
-#  processIsolation="false"
-#  stopOnFailure="false"
-#  syntaxCheck="false"
-#
-#  <testsuites>
-#    <testsuite name="$PROJECTNAME Tests">
-#      <directory>test</directory>
-#    </testsuite>
-#  </testsuites>
-#</phpunit>
-#EOF
-#
-#printf "\n## WRITE EXAMPLE TEST CODE\n\n"
-#
-#cat <<EOF > $PROJECTROOT/$PROJECTNAME/tests/initpropelTest.php
-#<?php
-#
-#require $PROJECTROOT/vendor/autoload.php
-#
-#use App\Src\Database;
-#
-#class PropelTest extends PHPUnit_Framework_TestCase {
-#  public function testInitializationOfPropel()
-#  {
-#    $connectionReady = new Initpropel;
-#
-#    $this->assertInstanceOf('Initpropel',$connectionReady);
-#  }
-#}
-#EOF
+if [ "$DEMO" = "true" ]
+    then
+
+# build user object based on DB data related to the user
+
+printf "
+Once logged in to mysql client...
+
+mysql> describe users;
++----------------+------------------+------+-----+---------+----------------+
+| Field          | Type             | Null | Key | Default | Extra          |
++----------------+------------------+------+-----+---------+----------------+
+| userid         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| active         | char(1)          | YES  |     | NULL    |                |
+| fname          | char(50)         | YES  |     | NULL    |                |
+| nickname       | char(50)         | YES  |     | NULL    |                |
+| lname          | char(50)         | YES  |     | NULL    |                |
+| password       | char(255)        | YES  |     | NULL    |                |
+| sessionStart   | int(10) unsigned | YES  |     | NULL    |                |
+| sessionRenewal | int(10) unsigned | YES  |     | NULL    |                |
+| lastModified   | int(10) unsigned | YES  |     | NULL    |                |
++----------------+------------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+mysql> describe emails;
++--------------+----------------------------------------------------------------------+------+-----+---------+----------------+
+| Field        | Type                                                                 | Null | Key | Default | Extra          |
++--------------+----------------------------------------------------------------------+------+-----+---------+----------------+
+| emailsid     | int(10) unsigned                                                     | NO   | PRI | NULL    | auto_increment |
+| userid       | int(10) unsigned                                                     | YES  | MUL | NULL    |                |
+| title        | char(80)                                                             | YES  |     | NULL    |                |
+| account      | char(70)                                                             | YES  | MUL | NULL    |                |
+| host         | char(255)                                                            | YES  | MUL | NULL    |                |
+| level        | enum('all','marketing','information','notifications','legal','none') | YES  |     | NULL    |                |
+| lastModified | int(10) unsigned                                                     | YES  |     | NULL    |                |
++--------------+----------------------------------------------------------------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> describe phones;
++--------------+----------------------------------------------------------------+------+-----+---------+----------------+
+| Field        | Type                                                           | Null | Key | Default | Extra          |
++--------------+----------------------------------------------------------------+------+-----+---------+----------------+
+| phonesid     | int(10) unsigned                                               | NO   | PRI | NULL    | auto_increment |
+| userid       | int(10) unsigned                                               | YES  | MUL | NULL    |                |
+| phoneType    | enum('landline','mobile','multi-ring','fax','tdd-tty','other') | YES  |     | NULL    |                |
+| sms          | char(1)                                                        | YES  |     | NULL    |                |
+| title        | char(80)                                                       | YES  |     | NULL    |                |
+| areaCode     | smallint(6)                                                    | YES  |     | NULL    |                |
+| prefix       | smallint(6)                                                    | YES  |     | NULL    |                |
+| number       | smallint(6)                                                    | YES  |     | NULL    |                |
+| extention    | char(80)                                                       | YES  |     | NULL    |                |
+| lastModified | int(10) unsigned                                               | YES  |     | NULL    |                |
++--------------+----------------------------------------------------------------+------+-----+---------+----------------+
+10 rows in set (0.00 sec)"
+fi
+
+printf "\n## GENERATING EXAMPLE OBJECT CODE\n\n"
+
+cat <<EOF > $PROJECTROOT/$PROJECTNAME/src/user.php
+<?php namespace $PROJECTNAME
+
+// Include the composer autoload file
+require $PROJECTROOT/vendor/autoload.php
+
+use Propel\Common\Config\ConfigurationManager;
+use Propel\Runtime\Connection\ConnectionManagerSingle;
+use Propel\Runtime\Propel;
+
+use Firebase\JWT;
+use app\src\Utility;
+
+class User {
+
+  public userid;
+  public active;
+  public fname;
+  public lname;
+  public password;
+  public sessionStart;
+  public sessionRenewal;
+  public emails; //object list
+  public phones; //object list
+
+  public function __construct(int $userid = null, string $email = null) {
+    // on instantiating a user object-- just populate all the data from users. Need most of it for many things.
+      if(isset($userid)) {
+        setUserFromUserId($userid);
+      }
+      elseif(isset($email)) {
+        // Use email to suss out a userid
+        // check for doublequotes --> Exception
+        // check for more than one @ sign --> Exception
+        //
+        // split the email address
+        setUserFromUserId(
+          getUserIdFromEmail($account,$host);
+        );
+      }
+      else {
+        // We got nothing to give to the clothing industry or there's been a mistake.... --> Exception
+      }
+
+      return $this;
+  }
+
+  private function setUserFromUserId(int $userid) {
+    $basicUserDetailsQuery = new UserQuery();
+    $userData = $basicUserDetailsQuery->create()->filterByUserid($userid)->find()->getData();
+    // populate this.{{properties}}
+  }
+
+  private function getUserIdFromEmail(string $account, string $host) {
+    $basicEmailDetailsQuery = new EmailsQuery();
+    $emailData = $basicEmailsDetailsQuery->create()->filterByAccount($account)->filterByHost($host)find()->getData();
+
+    // isolate the userid
+
+    return $userid
+
+  }
+
+  private function setEmailsFromUserId(int $userid) {
+
+  }
+
+  private function setPhonesFromUserId(int $userid) {
+
+  }
+
+  private function setDeepUserObject() {
+    setEmailsFromUserId($this.userid);
+    setPhonesFromUserId($this.userid);
+  }
+
+  function getDeepUserObject() {
+    setDeepUserObject();
+    return $this
+  }
+
+}
+EOF
+
+cat <<EOF > "$APIWEBROOT/1/user/logout"
+<?php
+
+?>
+EOF
+
+cat <<EOF > "$APIWEBROOT/1/user/register"
+<?php
+require $PROJECTROOT/vendor/autoload.php;
+
+$credentials = [
+    'email'    => $clean['email'],
+    'password' => $clean['password']
+];
+
+$user = Sentinel::register($credentials);
+
+?>
+EOF
+
+cat <<EOF > "$APIWEBROOT/1/user/activate"
+<?php
+
+?>
+EOF
+
+cat <<EOF > "$APIWEBROOT/1/user/login"
+<?php
+
+$email = trim(str_replace("\xc2\xa0", ' ', $_POST['email']));
+$password = trim(str_replace("\xc2\xa0", ' ', $_POST['password']));
+
+}
+?>
+EOF
+
+cat <<EOF > "$APIWEBROOT/1/user/read"
+<?php
+
+?>
+EOF
+
+cat <<EOF > "$APIWEBROOT/1/user/modify"
+<?php
+
+?>
+EOF
+
+cat <<EOF > "$APIWEBROOT/1/user/remove"
+<?php
+
+?>
+EOF
+
+printf "\n## SETUP PHPUNIT CONFIG\n\n"
+
+cat <<EOF > $PROJECTROOT/phpunit.xml
+<phpunit bootstrap="vendor/autoload.php"
+  colors="true"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  processIsolation="false"
+  stopOnFailure="false"
+  syntaxCheck="false"
+
+  <testsuites>
+    <testsuite name="$PROJECTNAME Tests">
+      <directory>test</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>
+EOF
+
+printf "\n## WRITE EXAMPLE TEST CODE\n\n"
+
+cat <<EOF > $PROJECTROOT/$PROJECTNAME/tests/initpropelTest.php
+<?php
+
+require $PROJECTROOT/vendor/autoload.php
+
+use App\Src\Database;
+
+class PropelTest extends PHPUnit_Framework_TestCase {
+  public function testInitializationOfPropel()
+  {
+    $connectionReady = new Initpropel;
+
+    $this->assertInstanceOf('Initpropel',$connectionReady);
+  }
+}
+EOF
 
 printf "\n## CLEAN UP\n\n"
 
@@ -505,6 +505,8 @@ echo "check to see if everything was deleted"
 ls -la /var/www/vendor
 
 printf "\n## HERE WE GO, COMPOSER INSTALL\n\n"
+
+read varname
 
 cd /var/www
 
