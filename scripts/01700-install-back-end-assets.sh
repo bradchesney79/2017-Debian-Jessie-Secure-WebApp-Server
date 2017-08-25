@@ -94,9 +94,7 @@ mkdir -p $PROJECTROOT/$PROJECTNAME/dal/config
 
 #cd $PROJECTROOT/$PROJECTNAME/dal
 
-CONNECTIONSTRING="mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$DEFAULTSITEDBUSER;password=$DEFAULTSITEDBPASSWORD"
-echo $CONNECTIONSTRING
-$PROJECTROOT/vendor/propel/propel/bin/propel reverse --output-dir=$PROJEDTROOT/$PROJECTNAME/dal/config $CONNECTIONSTRING
+$PROJECTROOT/vendor/propel/propel/bin/propel reverse --output-dir=$PROJEDTROOT/$PROJECTNAME/dal/config CONNECTIONSTRING="mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$DEFAULTSITEDBUSER;password=$DEFAULTSITEDBPASSWORD"
 
 #Configure the DSN and settings for the model classes generation
 
@@ -485,6 +483,8 @@ printf "\n## CLEAN UP\n\n"
 rm -rf $PROJECTROOT/vendor $PROJECTROOT/composer.lock
 
 printf "\n## HERE WE GO, COMPOSER INSTALL\n\n"
+
+cd /var/www
 
 if [ "$DEV" = "true" ]
     then
