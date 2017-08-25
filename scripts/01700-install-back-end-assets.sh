@@ -128,6 +128,7 @@ printf "\n## GENERATE ORM DB ACCESS CODE\n\n"
 
 #Build the model classes and put them in a more convenient place
 $PROJECTROOT/vendor/propel/propel/bin/propel model:build
+$PROJECTROOT/vendor/propel/propel/bin/propel model:build --config-dir $PROJECTROOT/$PROJECTNAME/dal/config --schema-dir $PROJECTROOT/$PROJECTNAME/dal/config --output-dir=$PROJECTROOT/$PROJECTNAME/dal/generated-classes
 
 # mv $PROJECTROOT/$PROJECTNAME/dal/config/generated-classes $PROJECTROOT/$PROJECTNAME/dal
 
