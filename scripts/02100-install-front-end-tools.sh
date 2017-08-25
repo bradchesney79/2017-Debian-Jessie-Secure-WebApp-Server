@@ -33,6 +33,7 @@ cat <<EOF > $PROJECTROOT/package.json
     "url": "$BUGREPORTING"
   },
   "homepage": "$PROJECTINFOURL"
+}
 EOF
 
 cd $PROJECTROOT
