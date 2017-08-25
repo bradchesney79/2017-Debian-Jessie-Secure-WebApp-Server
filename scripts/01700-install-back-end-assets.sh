@@ -94,7 +94,7 @@ mkdir -p $PROJECTROOT/$PROJECTNAME/dal/config
 
 #cd $PROJECTROOT/$PROJECTNAME/dal
 
-$PROJECTROOT/vendor/propel/propel/bin/propel reverse --output-dir=$PROJEDTROOT/$PROJECTNAME/dal/config CONNECTIONSTRING="mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$DEFAULTSITEDBUSER;password=$DEFAULTSITEDBPASSWORD"
+$PROJECTROOT/vendor/propel/propel/bin/propel reverse --output-dir=$PROJEDTROOT/$PROJECTNAME/dal/config "mysql:host=$PROJECTDBHOST;dbname=$PROJECTDB;user=$DEFAULTSITEDBUSER;password=$DEFAULTSITEDBPASSWORD"
 
 #Configure the DSN and settings for the model classes generation
 
