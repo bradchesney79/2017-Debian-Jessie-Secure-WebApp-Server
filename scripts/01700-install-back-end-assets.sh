@@ -507,8 +507,6 @@ ls -la /var/www/vendor
 
 printf "\n## HERE WE GO, COMPOSER INSTALL\n\n"
 
-read varname
-
 cd /var/www
 
 if [ "$DEV" = "true" ]
