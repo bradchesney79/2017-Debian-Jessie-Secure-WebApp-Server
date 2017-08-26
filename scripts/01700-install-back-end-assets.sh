@@ -302,7 +302,9 @@ fi
 
 printf "\n## GENERATING EXAMPLE OBJECT CODE\n\n"
 
-cat <<EOF > $PROJECTROOT/$PROJECTNAME/src/user.php
+mkdir -p $PROJECTROOT/$PROJECTNAME/src/user
+
+cat <<EOF > $PROJECTROOT/$PROJECTNAME/src/user/index.php
 <?php namespace $PROJECTNAME
 
 // Include the composer autoload file
@@ -386,13 +388,17 @@ class User {
 }
 EOF
 
-cat <<EOF > "$APIWEBROOT/1/user/logout"
+mkdir -p $APIWEBROOT/1/user/logout
+
+cat <<EOF > "$APIWEBROOT/1/user/logout/index.php"
 <?php
 
 ?>
 EOF
 
-cat <<EOF > "$APIWEBROOT/1/user/register"
+mkdir -p $APIWEBROOT/1/user/register
+
+cat <<EOF > "$APIWEBROOT/1/user/register/index.php"
 <?php
 require $PROJECTROOT/vendor/autoload.php;
 
@@ -406,13 +412,17 @@ $user = Sentinel::register($credentials);
 ?>
 EOF
 
-cat <<EOF > "$APIWEBROOT/1/user/activate"
+mkdir -p $APIWEBROOT/1/user/activate
+
+cat <<EOF > "$APIWEBROOT/1/user/activate/index.php"
 <?php
 
 ?>
 EOF
 
-cat <<EOF > "$APIWEBROOT/1/user/login"
+mkdir -p $APIWEBROOT/1/user/login
+
+cat <<EOF > "$APIWEBROOT/1/user/login/index.php"
 <?php
 
 $email = trim(str_replace("\xc2\xa0", ' ', $_POST['email']));
@@ -422,19 +432,25 @@ $password = trim(str_replace("\xc2\xa0", ' ', $_POST['password']));
 ?>
 EOF
 
-cat <<EOF > "$APIWEBROOT/1/user/read"
+mkdir -p $APIWEBROOT/1/user/read
+
+cat <<EOF > "$APIWEBROOT/1/user/read/index.php"
 <?php
 
 ?>
 EOF
 
-cat <<EOF > "$APIWEBROOT/1/user/modify"
+mkdir -p $APIWEBROOT/1/user/modify/
+
+cat <<EOF > "$APIWEBROOT/1/user/modify/index.php"
 <?php
 
 ?>
 EOF
 
-cat <<EOF > "$APIWEBROOT/1/user/remove"
+mkdir -p $APIWEBROOT/1/user/remove
+
+cat <<EOF > "$APIWEBROOT/1/user/remove/index.php"
 <?php
 
 ?>
