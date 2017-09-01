@@ -37,7 +37,7 @@ export NPM_CONFIG_PREFIX=/opt/n/.npm-global
 # install nodejs
 curl -L https://git.io/n-install | N_PREFIX=~/opt bash -s -- -y
 
-cat <<EOF > $HOME/.bashrc
+cat <<"EOF" > ${HOME}/.bashrc
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 # Note: PS1 and umask are already set in /etc/profile. You should not
