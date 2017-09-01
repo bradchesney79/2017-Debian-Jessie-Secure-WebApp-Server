@@ -67,6 +67,8 @@ mkdir -p /opt/.npm-global/node/
 
 cp -R "${HOME}/opt/n/" "/opt/n/"
 
+rm -rf "${HOME}/opt/n/"
+
 npm config set prefix "/opt/n/.npm-global"
 N_PREFIX=/opt/n/.npm-global/node
 PATH=/opt/n/.npm-global/node/bin:$PATH
