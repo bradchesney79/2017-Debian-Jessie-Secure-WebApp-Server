@@ -31,8 +31,12 @@ printf "\n\n##### Beginning 01900-install-nodejs.sh\n\n" >> /root/report/build-r
 
 # prep for global nodejs install
 
-echo "NPM_CONFIG_PREFIX=/opt/n/.npm-global" /etc/environment
-export NPM_CONFIG_PREFIX=/opt/n/.npm-global
+echo "NPM_CONFIG_PREFIX=${PROJECTROOT}/.npm-global" >> /etc/environment
+export "NPM_CONFIG_PREFIX=${PROJECTROOT}/.npm-global"
+
+# create the global npm config directory
+
+mkdir -p $PROJECTROOT/.npm-global
 
 # install nodejs
 curl -L https://git.io/n-install | N_PREFIX=~/opt bash -s -- -y
@@ -57,26 +61,28 @@ cat <<"EOF" > ${HOME}/.bashrc
 # alias cp='cp -i'
 # alias mv='mv -i'
 
-export N_PREFIX="/opt/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+# Added by n-install (see http://git.io/n-install-repo)
+# Then tweaked to put node in the /opt directory
+# ToDo: add these lines to etc/skel so all accounts get it
+export N_PREFIX="/opt/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+
+
+export PATH=${PROJECTROOT}/.npm-global/bin:${PATH}
 EOF
 
-mv $HOME/opt/n /opt/
+mv "${HOME}/opt/n" "/opt/"
+
+. "${HOME}/.bashrc"
 
 n stable # install this version, set to default, & switch to it
 
 n  -d lts # download only
 
-npm install -g npm
-
-# Change the npm default directory
-
-mkdir -p $PROJECTROOT/.npm-global
-
-echo "NPM_CONFIG_PREFIX=${PROJECTROOT}/.npm-global" >> /etc/environment
-
-# Make it available now
+# Make the prefix available now
 
 npm config set prefix ${PROJECTROOT}/.npm-global
+
+npm install -g npm
 
 export PATH=${PROJECTROOT}/.npm-global/bin:${PATH}
 
