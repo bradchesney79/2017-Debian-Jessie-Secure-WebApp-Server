@@ -41,6 +41,7 @@ cd $PROJECTROOT
 if [ "$DEV" = "true" ]
   then
     npm install
+    npm install -g @angular/cli
 
 else
 
