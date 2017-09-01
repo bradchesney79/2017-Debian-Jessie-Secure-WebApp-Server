@@ -21,13 +21,12 @@ nvm install iojs
 nvm install argon
 
 # Most recent LTS release
-nvm install v6.10.3
+nvm install v6.11.2
 
 # Latest version
-nvm install v7.10.0
+nvm install v8.4.0
 
 # Set LTS version as active
-nvm use v6.10.3
-
+nvm alias default v6.10.3
 
 npm install -g npm
