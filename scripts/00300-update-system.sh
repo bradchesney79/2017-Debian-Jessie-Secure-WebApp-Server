@@ -511,9 +511,7 @@ printf "\n## INSTALL THE FIRST BATCHES OF PACKAGES ###\n"
 
 #TODO Set this back to more full install
 # Full list of intended packages
-#apt-get -y install sudo tcl perl python3 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git curl imagemagick
-
-apt-get -y install sudo perl python3 ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban curl expect
+apt-get -y install sudo tcl perl python3 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git curl imagemagick
 
 if [ "$DEV" = "true" ]
   then
