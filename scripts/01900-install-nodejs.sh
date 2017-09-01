@@ -77,7 +77,8 @@ PATH=/opt/n/.npm-global/node/bin:$PATH
 
 . "${HOME}/.bashrc"
 
-chmod -r 777 /opt/n
+# 777 works... let's try 775
+chmod -r 775 /opt/n
 
 n stable # install this version, set to default, & switch to it
 
