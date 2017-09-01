@@ -3,11 +3,11 @@ printf "\n\n##### Beginning 01900-install-nodejs.sh\n\n" >> /root/report/build-r
 
 # Install nvm -- this gives me the willies
 # ToDo: Rig up some kind of checksum checking logic here
-mkdir -p /root/tmp/node
+mkdir -p $PROJECTROOT/tmp/node
 
-curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh > /root/tmp/node/install.js
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh > $PROJECTROOT/tmp/node/install.js
 
-chmod 700 /root/tmp/node/install.js
+chmod 700 $PROJECTROOT/tmp/node/install.js
 
 /root/tmp/node/install.js
 
@@ -30,3 +30,9 @@ nvm install v8.4.0
 nvm alias default v6.10.3
 
 npm install -g npm
+
+# Change the npm default directory
+
+mkdir -p $PROJECTROOT/.npm-global
+
+echo "NPM_CONFIG_PREFIX=${PROJECTROOT}/.npm-global" >> /etc/environment
