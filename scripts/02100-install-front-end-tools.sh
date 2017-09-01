@@ -1,7 +1,9 @@
 printf "\n\n##### Beginning 02100-install-front-end-tools.sh\n\n" >> /root/report/build-report.txt
 
+mkdir -p $PROJECTROOT/dist
+
 # ToDo: set front-end testing information
-cat <<EOF > $PROJECTROOT/package.json
+cat <<EOF > $PROJECTROOT/dist/package.json
 {
   "name": "$LOWERCASEPROJECTNAME",
   "version": "$VERSION",
@@ -36,7 +38,7 @@ cat <<EOF > $PROJECTROOT/package.json
 }
 EOF
 
-cd $PROJECTROOT
+cd $PROJECTROOT/dist
 
 if [ "$DEV" = "true" ]
   then
