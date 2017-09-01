@@ -61,11 +61,15 @@ export N_PREFIX="/opt/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PRE
 export PATH=/opt/.npm-global/node/bin:$PATH
 EOF
 
-mv "${HOME}/opt/n" "/opt/"
 
-npm config set prefix "/opt/.npm-global"
-N_PREFIX=/opt/.npm-global/node
-PATH=/opt/.npm-global/node/bin:$PATH
+
+mkdir -p /opt/.npm-global/node/
+
+mv "${HOME}/opt/*" "/opt/n/"
+
+npm config set prefix "/opt/n/.npm-global"
+N_PREFIX=/opt/n/.npm-global/node
+PATH=/opt/n/.npm-global/node/bin:$PATH
 
 # Make the prefix available now
 
