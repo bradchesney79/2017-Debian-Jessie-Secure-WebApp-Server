@@ -30,7 +30,7 @@ printf "\n\n##### Beginning 01900-install-nodejs.sh\n\n" >> /root/report/build-r
 #nvm alias default v6.10.3
 
 # install nodejs
-curl -L https://git.io/n-install | N_PREFIX=~/opt bash -s -- -y
+curl -L https://git.io/n-install | N_PREFIX=~/opt/n bash -s -- -y
 
 cat <<"EOF" > ${HOME}/.bashrc
 # ~/.bashrc: executed by bash(1) for non-login shells.
@@ -65,7 +65,7 @@ EOF
 
 mkdir -p /opt/.npm-global/node/
 
-mv "${HOME}/opt/*" "/opt/n/"
+cp -R "${HOME}/opt/n/" "/opt/n/"
 
 npm config set prefix "/opt/n/.npm-global"
 N_PREFIX=/opt/n/.npm-global/node
