@@ -77,6 +77,8 @@ PATH=/opt/n/.npm-global/node/bin:$PATH
 
 . "${HOME}/.bashrc"
 
+chmod -r 777 /opt/n
+
 n stable # install this version, set to default, & switch to it
 
 n  -d lts # download only
