@@ -40,6 +40,8 @@ EOF
 
 cd $PROJECTROOT/dist
 
+read SLOWDOWNWHIPPERSNAPPPER
+
 if [ "$DEV" = "true" ]
   then
     npm install
