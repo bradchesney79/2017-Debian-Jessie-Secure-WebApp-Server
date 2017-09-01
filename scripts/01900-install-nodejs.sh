@@ -36,3 +36,11 @@ npm install -g npm
 mkdir -p $PROJECTROOT/.npm-global
 
 echo "NPM_CONFIG_PREFIX=${PROJECTROOT}/.npm-global" >> /etc/environment
+
+# Make it available now
+
+npm config set prefix ${PROJECTROOT}/.npm-global
+
+export PATH=${PROJECTROOT}/.npm-global/bin:${PATH}
+
+
