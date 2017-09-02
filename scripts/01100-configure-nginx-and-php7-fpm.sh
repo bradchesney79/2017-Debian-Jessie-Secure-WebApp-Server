@@ -294,8 +294,8 @@ sed -i "s/\[www\]/\[$DOMAIN\]/" /etc/php/7.1/fpm/pool.d/${DOMAIN}.conf
 #sed delimiters are not a fixed character -- pipe symbol used to avoid escaping path in substitution
 sed -i "s|listen =.*|listen = /var/run/$DOMAIN.sock|" /etc/php/7.1/fpm/pool.d/${DOMAIN}.conf
 
-sed -i "s/user = www-data/user = $USER/" /etc/php/7.1/fpm/pool.d/${DOMAIN}.conf
-sed -i "s/group = www-data/group = $USER/" /etc/php/7.1/fpm/pool.d/${DOMAIN}.conf
+sed -i "s/user = www-data/user = $WEBUSER/" /etc/php/7.1/fpm/pool.d/${DOMAIN}.conf
+sed -i "s/group = www-data/group = $WEBUSER/" /etc/php/7.1/fpm/pool.d/${DOMAIN}.conf
 
 sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php/7.1/fpm/pool.d/${DOMAIN}.conf
 

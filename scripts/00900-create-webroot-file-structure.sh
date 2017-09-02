@@ -19,7 +19,7 @@ mkdir -p "$PROJECTROOT/tmp"
 mkdir -p "$PROJECTROOT/api/o/v1"
 mkdir -p "$PROJECTROOT/api/p/v1"
 
-chown -R $USER:$USER $PROJECTROOT
+chown -R $WEBUSER:$WEBUSER $PROJECTROOT
 chmod -R 774 $PROJECTROOT
 
 chown -R www-data:www-data $PROJECTROOT/sockets

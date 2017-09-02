@@ -129,7 +129,7 @@ printf "\n Add a person user. Best practices dictate using the root account less
 
 #. /root/bin/add-web-person-user.sh $USERID1001 TRUE
 
-#usermod -a --groups $USER $USERID1001
+#usermod -a --groups $WEBUSER $USERID1001
 
 printf "\nSSL Certs come from a third-party, be sure to back up the applicable files and link them in the appropriate directory.\n"
 
