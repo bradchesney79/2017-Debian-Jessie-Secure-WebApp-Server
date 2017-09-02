@@ -39,9 +39,9 @@ EOF
 
 
 
-mkdir -p /opt/.npm-global/node/
+mkdir -p /opt/n/.npm-global/node
 
-cp -R "${HOME}/opt/n/" "/opt/n/"
+cp -R "${HOME}/opt/n" "/opt/"
 
 rm -rf "${HOME}/opt/n/"
 

@@ -42,6 +42,9 @@ cd $PROJECTROOT/dist
 
 read SLOWDOWNWHIPPERSNAPPPER
 
+mkdir -p /opt/n/lib/node_modules/@angular/cli/node_modules/node-sass/vendor
+chmod -r 777 /opt/n
+
 if [ "$DEV" = "true" ]
   then
     npm install
@@ -49,7 +52,11 @@ if [ "$DEV" = "true" ]
 
 else
 
+  # install app depencencies
+
   npm install --production
+
+  # ToDo pull in compiled front end app code from dev repo or something
 
 fi
 
