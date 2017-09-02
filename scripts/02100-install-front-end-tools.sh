@@ -55,6 +55,7 @@ read -rsp $'Press any key to continue (all permissions on /opt/n)...\n' -n 1
 
 if [ "$DEV" = "true" ]
   then
+
     npm install
 
     read -rsp $'Press any key to continue (dev npm install)...\n' -n 1
