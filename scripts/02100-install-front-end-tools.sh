@@ -49,7 +49,7 @@ mkdir -p /opt/n/lib/node_modules/@angular/cli/node_modules/node-sass/vendor
 
 read -rsp $'Press any key to continue (created node-sass/vendor dir)...\n' -n 1
 
-chmod -r 777 /opt/n
+chmod -R 777 /opt/n
 
 read -rsp $'Press any key to continue (all permissions on /opt/n)...\n' -n 1
 
