@@ -37,8 +37,6 @@ export N_PREFIX="/opt/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PRE
 export PATH=/opt/n/.npm-global/node/bin:$PATH
 EOF
 
-
-
 mkdir -p /opt/n/.npm-global/node
 
 cp -R "${HOME}/opt/n" "/opt/"
