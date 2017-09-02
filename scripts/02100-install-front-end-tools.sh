@@ -2,6 +2,8 @@ printf "\n\n##### Beginning 02100-install-front-end-tools.sh\n\n" >> /root/repor
 
 mkdir -p $PROJECTROOT/dist
 
+read -rsp $'Press any key to continue (created dist dir)...\n' -n 1
+
 # ToDo: set front-end testing information
 cat <<EOF > $PROJECTROOT/dist/package.json
 {
@@ -37,19 +39,29 @@ cat <<EOF > $PROJECTROOT/dist/package.json
   "homepage": "$PROJECTINFOURL"
 }
 EOF
+read -rsp $'Press any key to continue (wrote package.json)...\n' -n 1
 
 cd $PROJECTROOT/dist
 
-read SLOWDOWNWHIPPERSNAPPPER
+read -rsp $'Press any key to continue (cd dist dir)...\n' -n 1
 
 mkdir -p /opt/n/lib/node_modules/@angular/cli/node_modules/node-sass/vendor
+
+read -rsp $'Press any key to continue (created node-sass/vendor dir)...\n' -n 1
+
 chmod -r 777 /opt/n
+
+read -rsp $'Press any key to continue (all permissions on /opt/n)...\n' -n 1
 
 if [ "$DEV" = "true" ]
   then
     npm install
+
+    read -rsp $'Press any key to continue (dev npm install)...\n' -n 1
+
     npm install -g @angular/cli
 
+    read -rsp $'Press any key to continue (npm install -g angular/cli)...\n' -n 1
 else
 
   # install app depencencies

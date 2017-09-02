@@ -85,11 +85,11 @@ printf "\n########## INSTALL AND CONFIGURE BACK END ASSETS ###\n"
 
 . /root/bin/scripts/01700-install-back-end-assets.sh
 
-printf "\n########## INSTALL NODEJS VIA NVM ###\n"
+printf "\n########## INSTALL NODEJS VIA N ###\n"
 
 . /root/bin/scripts/01900-install-nodejs.sh
 
-printf "\n########## INSTALL NODEJS VIA NVM ###\n"
+printf "\n########## INSTALL NODEJS PROJECT DEPENDENCIES ###\n"
 
 . /root/bin/scripts/02100-install-front-end-tools.sh
 
