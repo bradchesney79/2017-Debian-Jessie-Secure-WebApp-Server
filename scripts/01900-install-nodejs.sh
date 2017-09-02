@@ -45,8 +45,6 @@ cp -R "${HOME}/opt/n" "/opt/"
 
 rm -rf "${HOME}/opt/n/"
 
-npm config set prefix "/opt/n/.npm-global"
-
 N_PREFIX=/opt/n/.npm-global/node >> /etc/environment
 export N_PREFIX=/opt/n/.npm-global/node
 
@@ -62,3 +60,5 @@ chmod -R 777 /opt/n
 n stable # install this version, set to default, & switch to it
 
 n  -d lts # download only
+
+npm config set prefix "/opt/n/.npm-global"

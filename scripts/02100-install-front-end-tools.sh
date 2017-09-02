@@ -45,9 +45,9 @@ cd $PROJECTROOT/dist
 
 read -rsp $'Press any key to continue (cd dist dir)...\n' -n 1
 
-mkdir -p /opt/n/lib/node_modules/@angular/cli/node_modules/node-sass/vendor
+#mkdir -p /opt/n/lib/node_modules/@angular/cli/node_modules/node-sass/vendor
 
-read -rsp $'Press any key to continue (created node-sass/vendor dir)...\n' -n 1
+#read -rsp $'Press any key to continue (created node-sass/vendor dir)...\n' -n 1
 
 chmod -R 777 /opt/n
 
