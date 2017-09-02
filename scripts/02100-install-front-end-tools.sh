@@ -47,11 +47,7 @@ if [ "$DEV" = "true" ]
 
     npm install
 
-    read -rsp $'Press any key to continue (dev npm install)...\n' -n 1
-
     npm install -g --unsafe-perm @angular/cli
-
-    read -rsp $'Press any key to continue (npm install -g angular/cli)...\n' -n 1
 else
 
   # install app depencencies
