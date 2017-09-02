@@ -34,7 +34,7 @@ cat <<"EOF" > ${HOME}/.bashrc
 export N_PREFIX="/opt/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 
 
-export PATH=/opt/n/.npm-global/node/bin:$PATH
+export PATH=/opt/n/bin:/opt/n/.npm-global/bin:$PATH
 EOF
 
 mkdir -p /opt/n/.npm-global/node
@@ -43,15 +43,14 @@ cp -R "${HOME}/opt/n" "/opt/"
 
 rm -rf "${HOME}/opt/n/"
 
-N_PREFIX=/opt/n/.npm-global/node >> /etc/environment
-export N_PREFIX=/opt/n/.npm-global/node
 
-PATH=/opt/n/.npm-global/node/bin:$PATH  >> /etc/environment
-export PATH=/opt/n/.npm-global/node/bin:$PATH
+export N_PREFIX=/opt/n/.npm-global/node
+N_PREFIX=$N_PREFIX >> /etc/environment
 
 # Make the prefix available now
 
-. "${HOME}/.bashrc"
+export PATH=/opt/n/bin:/opt/n/.npm-global/bin:$PATH
+PATH=$PATH  >> /etc/environment
 
 chmod -R 777 /opt/n
 
